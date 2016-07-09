@@ -14,10 +14,16 @@ namespace medic.Forms {
     //Форма списка сотрудников
     public partial class WorkersListForm : EntityListForm {
 
+        private string[] tableColumnNames = new string[] { "Имя", "Фамилия", "Отчество", "Телефон", "Адрес" };
+        private string[] tableFields = new string[] { "first_name", "last_name", "middle_name", "phone", "address" };
+
         private ListData<Worker> listData;      //Список сотрудников
 
         private SqlFilter filter;
         private SqlFilterCondition[] fullNameFilter;
+
+        private SqlSorter sorter;
+        private SqlSorterItem sorterItem;
 
         private ToolStripLabel tlsLblWorkerName;
         private ToolStripTextBox tlsTxtWorkerName;
@@ -29,12 +35,9 @@ namespace medic.Forms {
             Text = "Список работников";
 
             //Инициализируем столбцы таблицы
-            table.ColumnCount = 5;
-            table.Columns[0].HeaderText = "Имя";
-            table.Columns[1].HeaderText = "Фамилия";
-            table.Columns[2].HeaderText = "Отчество";
-            table.Columns[3].HeaderText = "Телефон";
-            table.Columns[4].HeaderText = "Адрес";
+            table.ColumnCount = tableColumnNames.Length;
+            for (int i = 0; i < tableColumnNames.Length; i++)
+                table.Columns[i].HeaderText = tableColumnNames[i];
             DisableSort();
 
             //Добавляем компоненты фильтра
@@ -49,6 +52,7 @@ namespace medic.Forms {
             AddRemoveEvent(btnRemove_Click);
             AddSearchEvent(btnSearch_Click);
             AddPageChangeEvent(btnPageChange_Event);
+            AddSortChangeEvent(tblSortChange_Event);
 
 
             //Создаем фильтр
@@ -67,6 +71,11 @@ namespace medic.Forms {
 
             //Добавляем условия в фильтр
             filter.AddItems(fullNameFilter);
+
+            //Добавляем сортировку
+            sorter = new SqlSorter();
+            sorterItem = new SqlSorterItem();
+            sorter.AddItem(sorterItem);
 
             //Подгружаем начальные данные
             LoadData(initialListData);
@@ -93,7 +102,7 @@ namespace medic.Forms {
 
         //Перезагрузка
         private void reloadData() {
-            listData = Worker.GetList(connection, listData.limit, tblPager.GetPage(), filter);
+            listData = Worker.GetList(connection, listData.limit, tblPager.GetPage(), filter, sorter);
             LoadData(listData);
         }
 
@@ -163,6 +172,26 @@ namespace medic.Forms {
 
         //Событие измения страницы таблицы
         private void btnPageChange_Event(object sender, EventArgs e) {
+            reloadData();
+        }
+
+        private void tblSortChange_Event(object sender, DataGridViewCellMouseEventArgs e) {
+            DataGridViewColumnHeaderCell headerCell = table.Columns[e.ColumnIndex].HeaderCell;
+
+            sorterItem.SetField(Worker.GetTableName(), tableFields[e.ColumnIndex]);
+
+            switch (headerCell.SortGlyphDirection) {
+                case SortOrder.Ascending: 
+                    sorterItem.SetOrder(SqlSorterOrder.asc);
+                    break;
+                case SortOrder.Descending:
+                    sorterItem.SetOrder(SqlSorterOrder.desc);
+                    break;
+                case SortOrder.None:
+                    sorterItem.SetOrder(SqlSorterOrder.none);
+                    break;
+            }
+
             reloadData();
         }
     }

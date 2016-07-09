@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Database\DBConnection.cs" />
     <Compile Include="Database\QueryBuilder.cs" />
+    <Compile Include="Database\SqlSorter.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

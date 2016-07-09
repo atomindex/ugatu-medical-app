@@ -17,28 +17,10 @@ namespace medic {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            SqlFilterCondition a = new SqlFilterCondition("test", "test_field", SqlFilterConditionOperator.equals);
-            SqlFilterCondition b = new SqlFilterCondition("test", "test_field_1", SqlFilterConditionOperator.larger);
-            SqlFilterCondition c = new SqlFilterCondition("test", "test_field_2", SqlFilterConditionOperator.lessEquals);
-            SqlFilterCondition d = new SqlFilterCondition("test", "test_field_2", SqlFilterConditionOperator.lessEquals);
-
-            SqlFilter cd = new SqlFilter(SqlFilterOperator.or, new SqlFilterItem[] {c, d});
-            SqlFilter sqlFilter = new SqlFilter(
-                SqlFilterOperator.and,
-                new SqlFilterItem[] { a, b, cd }
-            );
-
-            a.SetValue(QueryBuilder.EscapeString("bla", true));
-            b.SetValue(2);
-            c.SetValue(4);
-            d.SetValue(100);
-
-            MessageBox.Show(sqlFilter.ToString());
-
             DBConnection connection = new DBConnection("localhost", "medic", "root", "");
             connection.OpenConnection();
 
-            ListData<Worker> listData = Worker.GetList(connection, 2);
+            ListData<Worker> listData = Worker.GetList(connection, 25);
 
             WorkersListForm workerListForm = new WorkersListForm(connection, listData);
             workerListForm.Show();

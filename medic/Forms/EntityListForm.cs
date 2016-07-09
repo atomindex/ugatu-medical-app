@@ -17,6 +17,8 @@ namespace medic.Forms {
 
         protected DBConnection connection;    //Подключение к базе
 
+        private int sortedColumnIndex;
+
         protected TablePager tblPager;           //Пейджер таблицы
 
 
@@ -43,12 +45,13 @@ namespace medic.Forms {
         public EntityListForm(DBConnection connection) {
             InitializeComponent();
 
-            this.connection = connection;
-
             //Создаем пейджер
             tblPager = new TablePager();
             tblPager.Parent = this;
             tblPager.Dock = DockStyle.Bottom;
+
+            this.connection = connection;
+            sortedColumnIndex = -1;
         }
 
 
@@ -56,7 +59,7 @@ namespace medic.Forms {
         //Отключение сортировки по полям
         protected void DisableSort() {
             for (int i = 0; i < table.ColumnCount; i++)
-                table.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                table.Columns[i].SortMode = DataGridViewColumnSortMode.Programmatic;
         }
 
 
@@ -76,6 +79,7 @@ namespace medic.Forms {
             btnRemove.Click += handler;
         }
 
+        //Добавление события на клик по кнопке поиск
         public void AddSearchEvent(EventHandler handler) {
             btnSearch.Click += handler;
         } 
@@ -84,7 +88,32 @@ namespace medic.Forms {
         public void AddPageChangeEvent(EventHandler handler) {
             tblPager.AddChangeEvent(handler);
         }
-    
+
+        public void AddSortChangeEvent(DataGridViewCellMouseEventHandler handler) {
+            table.ColumnHeaderMouseClick += handler;
+        }
+
+        //Событие клика по ячейке в шапке таблицы
+        private void table_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
+            if (sortedColumnIndex != e.ColumnIndex && sortedColumnIndex >= 0)
+                table.Columns[sortedColumnIndex].HeaderCell.SortGlyphDirection = SortOrder.None;
+            sortedColumnIndex = e.ColumnIndex;
+
+            DataGridViewColumnHeaderCell headerCell = table.Columns[e.ColumnIndex].HeaderCell;
+            switch (headerCell.SortGlyphDirection) {
+                case SortOrder.None: 
+                    headerCell.SortGlyphDirection = SortOrder.Ascending;
+                    break;
+                case SortOrder.Ascending:
+                    headerCell.SortGlyphDirection = SortOrder.Descending;
+                    break;
+                case SortOrder.Descending:
+                    sortedColumnIndex = -1;
+                    headerCell.SortGlyphDirection = SortOrder.None;
+                    break;
+            }
+          
+        }
     }
 
 }

@@ -28,12 +28,13 @@ namespace medic {
         }
 
         //Возвращает список сотрудников
-        public static ListData<Worker> GetList(DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null) {
+        public static ListData<Worker> GetList(DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
             string where_statement = filter != null ? filter.ToString("AND ", " ") : "";
+            string order_statement = sorter != null ? sorter.ToString("ORDER BY ", " ") : "";
             string limit_statement = QueryBuilder.BuildLimit(limit, pageIndex);
             
             //Получаем список сотрудников и общее количество
-            List<string[]> data = connection.Select("SELECT id, " + Worker.fields + " FROM " + Worker.tableName + " WHERE removed = 0 " + where_statement + limit_statement);
+            List<string[]> data = connection.Select("SELECT id, " + Worker.fields + " FROM " + Worker.tableName + " WHERE removed = 0 " + order_statement + where_statement + limit_statement);
             List<string[]> countData = connection.Select("SELECT count(*) as row_count FROM " + Worker.tableName + " WHERE removed = 0 " + where_statement);
             int count = Int32.Parse(countData[0][0]);
 
