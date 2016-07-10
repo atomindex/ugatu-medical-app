@@ -23,7 +23,7 @@ namespace medic {
 
 
         //Статический конструктор
-        public static Worker() {
+        static Worker() {
             tableName = "workers";
             fields = "first_name, middle_name, last_name, phone, address";
             fieldsArray = new string[] { "first_name", "middle_name", "last_name", "phone", "address" };
