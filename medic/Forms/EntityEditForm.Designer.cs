@@ -36,9 +36,9 @@
             // 
             this.toolsPanel.Controls.Add(this.toolsAligner);
             this.toolsPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolsPanel.Location = new System.Drawing.Point(0, 328);
+            this.toolsPanel.Location = new System.Drawing.Point(0, 311);
             this.toolsPanel.Name = "toolsPanel";
-            this.toolsPanel.Size = new System.Drawing.Size(389, 50);
+            this.toolsPanel.Size = new System.Drawing.Size(400, 50);
             this.toolsPanel.TabIndex = 0;
             // 
             // toolsAligner
@@ -46,7 +46,7 @@
             this.toolsAligner.Controls.Add(this.saveButton);
             this.toolsAligner.Controls.Add(this.cancelButton);
             this.toolsAligner.Dock = System.Windows.Forms.DockStyle.Right;
-            this.toolsAligner.Location = new System.Drawing.Point(219, 0);
+            this.toolsAligner.Location = new System.Drawing.Point(230, 0);
             this.toolsAligner.Name = "toolsAligner";
             this.toolsAligner.Size = new System.Drawing.Size(170, 50);
             this.toolsAligner.TabIndex = 0;
@@ -56,9 +56,10 @@
             this.panel.AutoSize = true;
             this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel.Location = new System.Drawing.Point(0, 0);
+            this.panel.MinimumSize = new System.Drawing.Size(400, 30);
             this.panel.Name = "panel";
             this.panel.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
-            this.panel.Size = new System.Drawing.Size(389, 328);
+            this.panel.Size = new System.Drawing.Size(400, 311);
             this.panel.TabIndex = 1;
             // 
             // cancelButton
@@ -86,7 +87,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(389, 378);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(400, 361);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.toolsPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

@@ -13,6 +13,8 @@ namespace medic.Components {
     //Класс поля ввода
     public abstract partial class FieldWrapper : Panel {
 
+        private bool hasError;
+
         public Label LblLabel;          //Подпись
         public Control CtrlField;       //Поле ввода
         public Label LblError;          //Ошибка
@@ -23,7 +25,10 @@ namespace medic.Components {
         public FieldWrapper(string labelText, Control field) {
             InitializeComponent();
 
+            hasError = false;
+
             AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             Padding = new Padding(0, 5, 0, 5);
 
             //Создаем надпись для вывода ошибок
@@ -51,16 +56,23 @@ namespace medic.Components {
 
 
 
+        //Возвращает true, если есть ли ошибка в поле
+        public bool HasError() {
+            return hasError;
+        }
+
         //Показывает ошибку
         public void ShowError(string errorText) {
             LblError.Text = errorText;
             LblError.Visible = true;
+            hasError = true;
         }
 
         //Скрывает ошибку
         public void HideError() {
             LblError.Text = "";
-            LblError.Visible = true;
+            LblError.Visible = false;
+            hasError = false;
         }
 
 

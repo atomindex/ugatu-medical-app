@@ -19,26 +19,32 @@ namespace medic.Forms {
         TextBoxWrapper phone;
         TextBoxWrapper address;
 
+
+
         public WorkerEditForm(Worker worker) : base() {
+            InitializeComponent();
+
+            Panel panel = GetPanel();
+
             address = new TextBoxWrapper("Адрес", new TextBox());
             address.Dock = DockStyle.Top;
-            address.Parent = GetPanel();
+            address.Parent = panel;
 
             phone = new TextBoxWrapper("Телефон", new TextBox());
             phone.Dock = DockStyle.Top;
-            phone.Parent = GetPanel();
+            phone.Parent = panel;
 
             middleName = new TextBoxWrapper("Отчество", new TextBox());
             middleName.Dock = DockStyle.Top;
-            middleName.Parent = GetPanel();
+            middleName.Parent = panel;
 
             lastName = new TextBoxWrapper("Фамилия", new TextBox());
             lastName.Dock = DockStyle.Top;
-            lastName.Parent = GetPanel();
+            lastName.Parent = panel;
 
             firstName = new TextBoxWrapper("Имя", new TextBox());
             firstName.Dock = DockStyle.Top;
-            firstName.Parent = GetPanel();
+            firstName.Parent = panel;
 
             AssignWorker(worker);
         }

@@ -2,7 +2,6 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\bin\Debug\medic.
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\bin\Debug\medic.exe
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\bin\Debug\medic.pdb
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\bin\Debug\MySql.Data.dll
-C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Form1.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.EntityEditForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.EntityListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.WorkerEditForm.resources
@@ -12,3 +11,6 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.exe
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.pdb
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.csprojResolveAssemblyReference.cache
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.ServiceEditForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.ServicesListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.mainForm.resources

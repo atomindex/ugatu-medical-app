@@ -96,7 +96,7 @@ namespace medic.Forms {
         public void LoadData(ListData<Worker> workersListData) {
             listData = workersListData;
 
-            if (listData.list == null) {
+            if (listData.list.Count == 0) {
                 table.RowCount = 1;
                 ClearTable(table);
             } else {

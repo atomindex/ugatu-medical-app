@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data;
 
 namespace medic.Database {
 
@@ -13,25 +14,32 @@ namespace medic.Database {
     public class DBConnection {
 
         private MySqlConnection connection;     //Подключение к базе
-
+        private Timer closeTimer;
 
 
         //Конструктор
-        public DBConnection(string server, string database, string username, string password) {
+        public DBConnection(string server, string database, string username, string password, int closeTimeout = 60) {
             connection = new MySqlConnection(
                 "SERVER=" + server + ";" +
                 "DATABASE=" + database + ";" +
                 "UID=" + username + ";" +
                 "PASSWORD=" + password + ";"
             );
+
+            closeTimer = new Timer();
+            closeTimer.Interval = closeTimeout * 1000;
+            closeTimer.Tick += closeTimerTick_Event;
         }
 
 
 
         //Соединение с базой
         public bool OpenConnection() {
+            if (connection.State != ConnectionState.Closed) return true;
+            
             try {
                 connection.Open();
+                closeTimer.Start();
                 return true;
             } catch (MySqlException ex) {
                 switch (ex.Number) {
@@ -53,8 +61,11 @@ namespace medic.Database {
 
         //Отключение от базы
         public bool CloseConnection() {
+            if (connection.State == ConnectionState.Closed) return true;
+
             try {
                 connection.Close();
+                closeTimer.Stop();
                 return true;
             } catch (MySqlException ex) {
                 MessageBox.Show(ex.Message);
@@ -66,26 +77,29 @@ namespace medic.Database {
 
         //Функция для выполняния Insert запроса, возвращает id записи
         public int Insert(string query) {
+            OpenConnection();
             MySqlCommand command = new MySqlCommand(query, connection);
-            if (command.ExecuteNonQuery() > 0) {
-                return (int)command.LastInsertedId;
-            } else return -1;
+            return command.ExecuteNonQuery() > 0 ? (int)command.LastInsertedId : -1;
         }
 
         //Функция для выполнения Update запроса, возвращает количество обновленных записей
         public int Update(string query) {
+            OpenConnection();
             MySqlCommand command = new MySqlCommand(query, connection);
             return command.ExecuteNonQuery();
         }
 
         //Функция для выполнения Delete запроса, возвращает количество удаленных записей
         public int Delete(string query) {
+            OpenConnection();
             MySqlCommand command = new MySqlCommand(query, connection);
             return command.ExecuteNonQuery();
         }
 
         //Функция для выполнения Select запроса, возвращает список массивов
         public List<string[]> Select(string query) {
+            OpenConnection();
+
             MySqlCommand command = new MySqlCommand(query, connection);
             MySqlDataReader reader = command.ExecuteReader();
             List<string[]> result = new List<string[]>();
@@ -102,6 +116,13 @@ namespace medic.Database {
             reader.Close();
 
             return result.Count > 0 ? result : null;
+        }
+
+
+
+        //Автоотключение базы
+        private void closeTimerTick_Event(object sender, EventArgs e) {
+            CloseConnection();
         }
 
     }
