@@ -51,6 +51,58 @@ namespace medic.Database {
             return "LIMIT " + limit.ToString() + " OFFSET " + (limit * pageIndex).ToString();
         }
 
+        //Возвращает sql для concat полей, с разделителем в виде пробела
+        public static string BuildConcatStatement(string tableName, string[] fieldsNames) {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("CONCAT(");
+            for (int i = 0; i < fieldsNames.Length; i++) {
+                sb.Append(tableName);
+                sb.Append(".");
+                sb.Append(fieldsNames[i]);
+                if (i < fieldsNames.Length - 1) sb.Append(",\" \",");
+            }
+            sb.Append(")");
+
+            return sb.ToString();
+        }
+
+
+
+        //Возвращает строковое представление логического оператора
+        public static string ConvertLogicalOperator(SqlLogicalOperator op) {
+            switch (op) {
+                case SqlLogicalOperator.And: return "AND";
+                case SqlLogicalOperator.Or: return "OR";
+                case SqlLogicalOperator.AndNot: return "AND NOT";
+                case SqlLogicalOperator.OrNot: return "OR NOT";
+            }
+            return "AND";
+        }
+
+        //Возвращает строковое представление оператора сравнения
+        public static string ConvertComparisonOperator(SqlComparisonOperator op) {
+            switch (op) {
+                case SqlComparisonOperator.Equal: return "=";
+                case SqlComparisonOperator.Less: return "<";
+                case SqlComparisonOperator.Larger: return ">";
+                case SqlComparisonOperator.LessEqual: return "<=";
+                case SqlComparisonOperator.LargerEqual: return ">=";
+                case SqlComparisonOperator.Like: return "LIKE";
+            }
+            return "=";
+        }
+
+        //Возвращает строковое представление порядка сортировки
+        public static string ConvertOrder(SqlOrder order) {
+            switch (order) {
+                case SqlOrder.Asc: return "ASC";
+                case SqlOrder.Desc: return "DESC";
+                case SqlOrder.None: return "";
+            }
+            return "";
+        }
+
     }
 
 }

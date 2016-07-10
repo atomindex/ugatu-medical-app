@@ -10,15 +10,24 @@ namespace medic {
     //Класс сотрудника
     public class Worker : Entity {
 
-        public string FirstName;        //Имя сотрудника
-        public string MiddleName;       //Отчество сотрудника
-        public string LastName;         //Фамилия сотрудника
-        public string Phone;            //Телефон сотрудника
-        public string Address;          //Адрес сотрудника
+        private static string tableName;        //Имя таблицы
+        private static string fields;           //Поля таблицы для выборки
+        private static string[] fieldsArray;    //Массив полей для вставки
 
-        private static string tableName = "workers";
-        private static string fields = "first_name, middle_name, last_name, phone, address";
-        private static string[] fieldsArray = new string[] { "first_name", "middle_name", "last_name", "phone", "address" };
+        public string FirstName;                //Имя сотрудника
+        public string MiddleName;               //Отчество сотрудника
+        public string LastName;                 //Фамилия сотрудника
+        public string Phone;                    //Телефон сотрудника
+        public string Address;                  //Адрес сотрудника
+
+
+
+        //Статический конструктор
+        public static Worker() {
+            tableName = "workers";
+            fields = "first_name, middle_name, last_name, phone, address";
+            fieldsArray = new string[] { "first_name", "middle_name", "last_name", "phone", "address" };
+        }
 
 
 
@@ -93,4 +102,5 @@ namespace medic {
         }
     
     }
+
 }

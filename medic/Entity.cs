@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using medic.Database;
 
 namespace medic {
+
     public abstract class Entity {
 
         protected DBConnection connection;      //Соединение с базой
@@ -22,16 +23,16 @@ namespace medic {
 
 
 
+        //Возвращает идентификатор
+        public long GetId() {
+            return id;
+        }
+
         //Сохраняет запись
         public abstract int Save();
 
         //Удаляет запись
         public abstract void Remove();
-
-        //Возвращает идентификатор
-        public long GetId() {
-            return id;
-        }
 
 
 
@@ -58,4 +59,5 @@ namespace medic {
         }
 
     }
+
 }

@@ -14,8 +14,10 @@ namespace medic {
         public int pageIndex;       //Текущая страница
         public int pages;           //Количество страниц
 
+        //Конструктор
         public ListData() { }
 
+        //Конструктор
         public ListData(List<T> list, int count, int limit, int pageIndex) {
             this.list = list;
             this.count = count;
@@ -26,4 +28,5 @@ namespace medic {
         }
 
     }
+
 }

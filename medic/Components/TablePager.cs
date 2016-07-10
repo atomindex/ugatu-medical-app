@@ -28,6 +28,7 @@ namespace medic.Components {
             Height = 35;
             Padding = new Padding(10, 5, 10, 5);
 
+            //Инициализируем надпись общего количества найденых записей
             lblFinded = new Label();
             lblFinded.AutoSize = true;
             lblFinded.MinimumSize = new Size(0, 25);
@@ -35,12 +36,14 @@ namespace medic.Components {
             lblFinded.Dock = DockStyle.Right;
             lblFinded.Parent = this;
             
+            //Иницализируем панель пейджера
             pnlPager = new Panel();
             pnlPager.AutoSize = true;
             pnlPager.Padding = new Padding(10, 0, 0, 0);
             pnlPager.Dock = DockStyle.Right;
             pnlPager.Parent = this;
 
+            //Инициализируем надпись номера текущей страницы
             lblPagerPage = new Label();
             lblPagerPage.AutoSize = true;
             lblPagerPage.MinimumSize = new Size(0, 25);
@@ -49,6 +52,7 @@ namespace medic.Components {
             lblPagerPage.Dock = DockStyle.Fill;
             lblPagerPage.Parent = pnlPager;
 
+            //Инициализируем кнопку Предыдущая страница
             btnPrevious = new Button();
             btnPrevious.Text = "<";
             btnPrevious.Dock = DockStyle.Left;
@@ -56,6 +60,7 @@ namespace medic.Components {
             btnPrevious.Parent = pnlPager;
             btnPrevious.Click += btnPrevious_Click;
 
+            //Инициализируем кнопку Следующая страница
             btnNext = new Button();
             btnNext.Text = ">";
             btnNext.Dock = DockStyle.Right;

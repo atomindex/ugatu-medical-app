@@ -17,9 +17,9 @@ namespace medic.Forms {
 
         protected DBConnection connection;    //Подключение к базе
 
-        private int sortedColumnIndex;
+        private int sortedColumnIndex;        //Индекс колонки с сортировкой
 
-        protected TablePager tblPager;           //Пейджер таблицы
+        protected TablePager tblPager;        //Пейджер таблицы
 
 
 
@@ -29,11 +29,10 @@ namespace medic.Forms {
                 table.Rows[i].DefaultCellStyle.BackColor = Color.White;
                 for (int j = 0; j < table.ColumnCount; j++)
                     table.Rows[i].Cells[j].Value = "";
-           
-            
             }
         }
 
+        //Очистка цвета таблицы
         protected static void ClearTableColor(DataGridView table) {
             for (int i = 0; i < table.RowCount; i++)
                 table.Rows[i].DefaultCellStyle.BackColor = Color.White;
@@ -45,21 +44,13 @@ namespace medic.Forms {
         public EntityListForm(DBConnection connection) {
             InitializeComponent();
 
+            this.connection = connection;
+            sortedColumnIndex = -1;
+
             //Создаем пейджер
             tblPager = new TablePager();
             tblPager.Parent = this;
             tblPager.Dock = DockStyle.Bottom;
-
-            this.connection = connection;
-            sortedColumnIndex = -1;
-        }
-
-
-
-        //Отключение сортировки по полям
-        protected void DisableSort() {
-            for (int i = 0; i < table.ColumnCount; i++)
-                table.Columns[i].SortMode = DataGridViewColumnSortMode.Programmatic;
         }
 
 
@@ -89,6 +80,7 @@ namespace medic.Forms {
             tblPager.AddChangeEvent(handler);
         }
 
+        //Добавление события изменения колонки и типа сортировки
         public void AddSortChangeEvent(DataGridViewCellMouseEventHandler handler) {
             table.ColumnHeaderMouseClick += handler;
         }
@@ -113,6 +105,11 @@ namespace medic.Forms {
                     break;
             }
           
+        }
+
+        //Событие добавление колонки
+        private void table_ColumnAdded(object sender, DataGridViewColumnEventArgs e) {
+            e.Column.SortMode = DataGridViewColumnSortMode.Programmatic;
         }
     }
 
