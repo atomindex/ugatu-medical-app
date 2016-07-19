@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace medic.Database {
 
     //Класс группы сортировок
-    public class SqlSorter {
+    public class SqlSorter : SqlSorterItem {
 
         private List<SqlSorterItem> items;      //Список элементов сортировки
 
@@ -22,7 +22,13 @@ namespace medic.Database {
 
         //Добавление элемента в список сортировок
         public void AddItem(SqlSorterItem item) {
-            items.Add(item);
+            if (item != null)
+                items.Add(item);
+        }
+
+        //Добавляет массив элементов в список сортировок
+        public void AddItems(SqlSorterItem[] items) {
+            this.items.AddRange(items.ToList<SqlSorterItem>());
         }
 
 

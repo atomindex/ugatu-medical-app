@@ -10,6 +10,6 @@ namespace medic.Database {
     public enum SqlLogicalOperator { And, Or, AndNot, OrNot };
 
     //Перечисление операторов сравнения
-    public enum SqlComparisonOperator { Equal, Less, Larger, LessEqual, LargerEqual, Like };
+    public enum SqlComparisonOperator { Equal, NotEqual, Less, Larger, LessEqual, LargerEqual, Like, NotLike, In, NotIn };
 
 }

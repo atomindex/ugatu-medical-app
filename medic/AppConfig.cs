@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 
 namespace medic {
+
+    //Класс настроек приложения
     public static class AppConfig {
 
         public static Color BlueColor = Color.FromArgb(0, 108, 255);
@@ -13,5 +15,12 @@ namespace medic {
         public static Color OrangeColor = Color.FromArgb(255, 108, 0);
         public static Color LightOrangeColor = Color.FromArgb(255, 220, 195);
 
+        public static string DatabaseHost = "localhost";
+        public static string DatabaseName = "medic";
+        public static string DatabaseUser = "root";
+        public static string DatabasePassword = "";
+        public static int DatabaseConnectTime = 60;
+
     }
+
 }

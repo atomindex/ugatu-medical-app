@@ -15,6 +15,7 @@ namespace medic.Database {
 
         private MySqlConnection connection;     //Подключение к базе
         private Timer closeTimer;
+        private bool transactionStarted;
 
 
         //Конструктор
@@ -63,6 +64,8 @@ namespace medic.Database {
         public bool CloseConnection() {
             if (connection.State == ConnectionState.Closed) return true;
 
+            if (transactionStarted) return false;
+
             try {
                 connection.Close();
                 closeTimer.Stop();
@@ -77,31 +80,59 @@ namespace medic.Database {
 
         //Функция для выполняния Insert запроса, возвращает id записи
         public int Insert(string query) {
-            OpenConnection();
-            MySqlCommand command = new MySqlCommand(query, connection);
-            return command.ExecuteNonQuery() > 0 ? (int)command.LastInsertedId : -1;
+            if (!OpenConnection()) return -1;
+
+            try {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                int rowsCount = command.ExecuteNonQuery();
+                return rowsCount > 0 ? (int)command.LastInsertedId : 0;
+            } catch (MySqlException ex) {
+                MessageBox.Show(ex.Message);
+                return -1;
+            }
         }
 
         //Функция для выполнения Update запроса, возвращает количество обновленных записей
         public int Update(string query) {
-            OpenConnection();
-            MySqlCommand command = new MySqlCommand(query, connection);
-            return command.ExecuteNonQuery();
+            if (!OpenConnection()) return -1;
+
+            try {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                int rowsCount = command.ExecuteNonQuery();
+                return rowsCount;
+            } catch (MySqlException ex) {
+                MessageBox.Show(ex.Message);
+                return -1;
+            }
         }
 
         //Функция для выполнения Delete запроса, возвращает количество удаленных записей
         public int Delete(string query) {
-            OpenConnection();
-            MySqlCommand command = new MySqlCommand(query, connection);
-            return command.ExecuteNonQuery();
+            if (!OpenConnection()) return -1;
+
+            try {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                int rowsCount = command.ExecuteNonQuery();
+                return rowsCount;
+            } catch (MySqlException ex) {
+                MessageBox.Show(ex.Message);
+                return -1;
+            }
         }
 
-        //Функция для выполнения Select запроса, возвращает список массивов
+        //Функция для выполнения Select запроса, возвращает список массивов с данными
         public List<string[]> Select(string query) {
-            OpenConnection();
+            if (!OpenConnection()) return null;
 
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataReader reader = command.ExecuteReader();
+            MySqlDataReader reader;
+            try {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                reader = command.ExecuteReader();
+            } catch (MySqlException ex) {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            
             List<string[]> result = new List<string[]>();
 
             while (reader.Read()) {
@@ -115,9 +146,56 @@ namespace medic.Database {
 
             reader.Close();
 
-            return result.Count > 0 ? result : null;
+            return result;
         }
 
+
+
+        public bool StartTransaction() {
+            if (transactionStarted) return false;
+            if (!OpenConnection()) return false;
+
+            try {
+                MySqlCommand command = new MySqlCommand("SET AUTOCOMMIT = 0; START TRANSACTION;", connection);
+                command.ExecuteNonQuery();
+                transactionStarted = true;
+                return true;
+            } catch (MySqlException ex) {
+                transactionStarted = false;
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        public bool CommitTransaction() {
+            if (!transactionStarted) return false;
+            if (!OpenConnection()) return false;
+
+            try {
+                MySqlCommand command = new MySqlCommand("COMMIT; SET AUTOCOMMIT = 1;", connection);
+                command.ExecuteNonQuery();
+                transactionStarted = false;
+                return true;
+            } catch (MySqlException ex) {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        public bool RollbackTransaction() {
+            if (!transactionStarted) return false;
+            if (!OpenConnection()) return false;
+
+            try {
+                MySqlCommand command = new MySqlCommand("ROLLBACK; SET AUTOCOMMIT = 1;", connection);
+                command.ExecuteNonQuery();
+                transactionStarted = false;
+                return true;
+            } catch (MySqlException ex) {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
 
 
         //Автоотключение базы

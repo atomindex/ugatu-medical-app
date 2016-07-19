@@ -1,5 +1,5 @@
 ﻿namespace medic.Forms {
-    partial class ServicesListForm {
+    partial class WorkerListForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -23,15 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.SuspendLayout();
-            // 
-            // WorkersListForm
-            // 
-
-            this.Name = "ServicesListForm";
-            this.Text = "Список услуг";
-            this.ResumeLayout(false);
-
+            this.Text = "WorkerListForm";
         }
 
         #endregion

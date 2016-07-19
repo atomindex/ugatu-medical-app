@@ -5,12 +5,15 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\bin\Debug\MySql.
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.EntityEditForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.EntityListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.WorkerEditForm.resources
-C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.WorkersListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Properties.Resources.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.csproj.GenerateResource.Cache
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.exe
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.pdb
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.csprojResolveAssemblyReference.cache
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.ServiceEditForm.resources
-C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.ServicesListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.mainForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.EntitySelectForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.ServiceListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.WorkerListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.WorkerSelectForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.ServiceSelectForm.resources

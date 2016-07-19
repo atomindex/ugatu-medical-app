@@ -7,6 +7,7 @@ using medic.Database;
 
 namespace medic {
 
+    //Базовый класс сущности
     public abstract class Entity {
 
         protected DBConnection connection;      //Соединение с базой
@@ -22,11 +23,17 @@ namespace medic {
         }
 
 
+        //Возвращает соединение с базой
+        public DBConnection GetConnection() {
+            return connection;
+        }
 
-        //Возвращает идентификатор
-        public long GetId() {
+        //Возвращает идентификатор записи
+        public int GetId() {
             return id;
         }
+
+
 
         //Сохраняет запись
         public abstract int Save();

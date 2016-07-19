@@ -23,15 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.SuspendLayout();
-            // 
-            // ServiceEditForm
-            // 
-            this.Name = "ServiceEditForm";
             this.Text = "ServiceEditForm";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
         }
 
         #endregion

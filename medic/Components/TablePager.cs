@@ -67,6 +67,8 @@ namespace medic.Components {
             btnNext.Width = 18;
             btnNext.Parent = pnlPager;
             btnNext.Click += btnNext_Click;
+
+            SetData(0, 0, 0);
         }
 
 

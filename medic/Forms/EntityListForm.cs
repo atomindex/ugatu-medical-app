@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using medic.Components;
 using medic.Database;
+using medic.Components;
 
 namespace medic.Forms {
 
@@ -51,7 +45,14 @@ namespace medic.Forms {
             tblPager = new TablePager();
             tblPager.Parent = this;
             tblPager.Dock = DockStyle.Bottom;
+
+            AddPageChangeEvent(tblPagerPageChange_Event);
         }
+
+
+
+        //Перезагружкает данные в таблицу
+        protected virtual void reloadData(bool resetPageIndex = false) { }
 
 
 
@@ -85,6 +86,13 @@ namespace medic.Forms {
             table.ColumnHeaderMouseClick += handler;
         }
 
+
+
+        //Событие измения страницы таблицы
+        private void tblPagerPageChange_Event(object sender, EventArgs e) {
+            reloadData();
+        }
+
         //Событие клика по ячейке в шапке таблицы
         private void table_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
             if (sortedColumnIndex != e.ColumnIndex && sortedColumnIndex >= 0)
@@ -107,10 +115,11 @@ namespace medic.Forms {
           
         }
 
-        //Событие добавление колонки
+        //Событие добавления колонки
         private void table_ColumnAdded(object sender, DataGridViewColumnEventArgs e) {
             e.Column.SortMode = DataGridViewColumnSortMode.Programmatic;
         }
+    
     }
 
 }

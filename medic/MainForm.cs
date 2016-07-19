@@ -18,18 +18,24 @@ namespace medic {
         public mainForm() {
             InitializeComponent();
 
-            connection = new DBConnection("localhost", "medic", "root", "");
+            connection = new DBConnection(
+                AppConfig.DatabaseHost, 
+                AppConfig.DatabaseName, 
+                AppConfig.DatabaseUser, 
+                AppConfig.DatabasePassword,
+                AppConfig.DatabaseConnectTime
+            );
         }
 
         private void menuItemWorkers_Click(object sender, EventArgs e) {
-            ListData<Worker> listData = Worker.GetList(connection, 25);
-            WorkersListForm workersListForm = new WorkersListForm(connection, listData);
+            ListData listData = Worker.GetListData(connection, 2);
+            WorkerListForm workersListForm = new WorkerListForm(listData);
             workersListForm.Show();
         }
 
         private void menuItemServices_Click(object sender, EventArgs e) {
-            ListData<Service> listData = Service.GetList(connection, 25);
-            ServicesListForm servicesListForm = new ServicesListForm(connection, listData);
+            ListData listData = Service.GetListData(connection, 25);
+            ServiceListForm servicesListForm = new ServiceListForm(listData);
             servicesListForm.Show();
         }
 

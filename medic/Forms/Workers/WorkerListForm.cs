@@ -1,47 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using medic.Database;
 
 namespace medic.Forms {
 
     //Форма списка сотрудников
-    public partial class WorkersListForm : EntityListForm {
+    public partial class WorkerListForm : EntityListForm {
 
-        private string[] tableColumnNames;             //Список имен колонок
-        private string[] tableFields;                  //Список полей соответвующих колонкам
+        private string[] tableColumnNames;              //Список имен колонок
+        private string[] tableFields;                   //Список полей соответвующих колонкам
 
-        private ListData<Worker> listData;             //Список сотрудников
+        private ListData listData;                      //Данные списка сотрудников
+        private List<Worker> workersList;               //Список сотрудников
 
-        private SqlFilter filter;                      //Фильтр для запросов
-        private SqlFilterCondition[] fullNameFilter;   //Условия фильтра
+        private SqlFilter filter;                       //Фильтр для запросов
+        private SqlFilterCondition[] fullNameFilter;    //Условия фильтра
 
-        private SqlSorter sorter;                      //Сортировка для запросов
-        private SqlSorterItem sorterItem;              //Поля сортировки
+        private SqlSorter sorter;                       //Сортировка для запросов
+        private SqlSorterCondition sorterItem;          //Поля сортировки
 
-        private ToolStripLabel tlsLblWorkerName;       //Подпись к полю ФИО
-        private ToolStripTextBox tlsTxtWorkerName;     //Поле ФИО
+        private ToolStripLabel tlsLblWorkerName;        //Подпись к полю ФИО
+        private ToolStripTextBox tlsTxtWorkerName;      //Поле ФИО
 
 
 
         //Конструктор
-        public WorkersListForm(DBConnection connection, ListData<Worker> initialListData) : base(connection) {
+        public WorkerListForm(ListData initialListData) : base(initialListData.Connection) {
             InitializeComponent();
 
             //Инициализируем имена
             tableColumnNames = new string[] { "Имя", "Фамилия", "Отчество", "Телефон", "Адрес" };
             tableFields = new string[] { "first_name", "last_name", "middle_name", "phone", "address" };
 
-            //Создаем фильтр
+            //Создаем фильтр по имени
             filter = new SqlFilter(SqlLogicalOperator.And);
-
-            //Создаем условия для фильтра по имени 
             string fullNameFilterField = QueryBuilder.BuildConcatStatement(
                 Worker.GetTableName(),
                 new string[] { "first_name", "last_name", "middle_name" }
@@ -51,18 +44,28 @@ namespace medic.Forms {
                 new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like),
                 new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like)
             };
-
-            //Добавляем условия в фильтр
             filter.AddItems(fullNameFilter);
+            filter.AddItem(initialListData.Filter);
 
-            //Добавляем сортировку
+            //Создаем сртировщик
             sorter = new SqlSorter();
-            sorterItem = new SqlSorterItem();
+            sorterItem = new SqlSorterCondition();
             sorter.AddItem(sorterItem);
+            sorter.AddItem(initialListData.Sorter);
+
+            //Создаем данные списка
+            listData = new ListData(
+                connection: initialListData.Connection,
+                baseSql: initialListData.BaseSql,
+                countSql: initialListData.CountSql,
+                filter: filter,
+                sorter: sorter,
+                limit: initialListData.Limit,
+                pageIndex: initialListData.PageIndex
+            );
 
 
-
-            Text = "Список работников";
+            Text = "Список сотрудников";
 
             //Инициализируем столбцы таблицы
             table.ColumnCount = tableColumnNames.Length;
@@ -83,20 +86,20 @@ namespace medic.Forms {
             AddEditEvent(btnEdit_Click);
             AddRemoveEvent(btnRemove_Click);
             AddSearchEvent(btnSearch_Click);
-            AddPageChangeEvent(btnPageChange_Event);
             AddSortChangeEvent(tblSortChange_Event);
 
             //Подгружаем начальные данные
-            LoadData(initialListData);
+            reloadData();
         }
 
 
 
-        //Подгрузка данных в таблицу и пейджер
-        public void LoadData(ListData<Worker> workersListData) {
-            listData = workersListData;
+        //Перезагрузка данных в таблицу
+        protected override void reloadData(bool resetPageIndex = false) {
+            listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
+            workersList = Worker.GetList(listData);
 
-            if (listData.list.Count == 0) {
+            if (workersList.Count == 0) {
                 table.RowCount = 1;
                 ClearTable(table);
             } else {
@@ -104,15 +107,7 @@ namespace medic.Forms {
                 ClearTableColor(table);
             }
 
-            tblPager.SetData(workersListData.count, workersListData.pages, workersListData.pageIndex);
-        }
-
-
-
-        //Перезагрузка
-        private void reloadData(bool resetPageIndex = false) {
-            listData = Worker.GetList(connection, listData.limit, resetPageIndex ? 0 : tblPager.GetPage(), filter, sorter);
-            LoadData(listData);
+            tblPager.SetData(listData.Count, listData.Pages, listData.PageIndex);
         }
 
         //Загрузка данных сотрудника в строку таблицы
@@ -126,9 +121,9 @@ namespace medic.Forms {
 
         //Загрузка данных сотрудников в таблицу
         private void loadDataToTable() {
-            table.RowCount = listData.list.Count;
-            for (int i = 0; i < listData.list.Count; i++)
-                loadDataToRow(i, listData.list[i]);
+            table.RowCount = listData.List.Count;
+            for (int i = 0; i < listData.List.Count; i++)
+                loadDataToRow(i, workersList[i]);
         }
 
 
@@ -141,7 +136,7 @@ namespace medic.Forms {
             workerEditForm.Text = "Добавление нового сотрудника";
 
             if (workerEditForm.ShowDialog() == DialogResult.OK) {
-                listData.list.Insert(0, worker);
+                workersList.Insert(0, worker);
                 table.Rows.Insert(0, 1);
                 table.Rows[0].DefaultCellStyle.BackColor = AppConfig.LightOrangeColor;
                 loadDataToRow(0, worker);
@@ -150,19 +145,21 @@ namespace medic.Forms {
 
         //Событие клика по кнопке Редактирование сотрудника
         private void btnEdit_Click(object sender, EventArgs e) {
-            Worker worker = listData.list[table.CurrentCell.RowIndex];
+            Worker worker = workersList[table.CurrentCell.RowIndex].Clone();
 
             WorkerEditForm workerEditForm = new WorkerEditForm(worker);
             workerEditForm.Text = "Редактирование сотрудника";
 
-            if (workerEditForm.ShowDialog() == DialogResult.OK)
+            if (workerEditForm.ShowDialog() == DialogResult.OK) {
                 loadDataToRow(table.CurrentCell.RowIndex, worker);
+                workersList[table.CurrentCell.RowIndex] = worker;
+            }
         }
 
         //Событие клика по кнопке Удаление сотрудника
         private void btnRemove_Click(object sender, EventArgs e) {
             int index = table.CurrentCell.RowIndex;
-            Worker worker = listData.list[index];
+            Worker worker = workersList[index];
 
             if (MessageBox.Show("Вы дейсвительно хотите удалить сотрудника?", "Удаление сотрудника", MessageBoxButtons.OKCancel) == DialogResult.OK) {
                 worker.Remove();
@@ -178,11 +175,6 @@ namespace medic.Forms {
                 fullNameFilter[i].SetValue(i < names.Length ? "\"%"+QueryBuilder.EscapeLikeString(names[i])+"%\"" : null);
 
             reloadData(true);
-        }
-
-        //Событие измения страницы таблицы
-        private void btnPageChange_Event(object sender, EventArgs e) {
-            reloadData();
         }
 
         //Событие сортировки таблицы по полю
@@ -207,4 +199,5 @@ namespace medic.Forms {
         }
 
     }
+
 }

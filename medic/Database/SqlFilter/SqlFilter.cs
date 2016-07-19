@@ -33,12 +33,18 @@ namespace medic.Database {
 
         //Добавляет элемент в список условий
         public void AddItem(SqlFilterItem item) {
-            items.Add(item);
+            if (item != null)
+                items.Add(item);
         }
 
         //Добавляет массив элементов в список условий
         public void AddItems(SqlFilterItem[] items) {
             this.items.AddRange(items.ToList<SqlFilterItem>());
+        }
+
+        //Очистка списка условий
+        public void Clear() {
+            items.Clear();
         }
 
 

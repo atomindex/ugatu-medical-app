@@ -67,6 +67,11 @@ namespace medic.Database {
             return sb.ToString();
         }
 
+        //Возвращает sql для in условия
+        public static string BuildInStatement(string[] values) {
+            return values != null && values.Length > 0 ? "(" + String.Join(",", values) + ")" : null;
+        }
+
 
 
         //Возвращает строковое представление логического оператора
@@ -84,11 +89,15 @@ namespace medic.Database {
         public static string ConvertComparisonOperator(SqlComparisonOperator op) {
             switch (op) {
                 case SqlComparisonOperator.Equal: return "=";
+                case SqlComparisonOperator.NotEqual: return "<>";
                 case SqlComparisonOperator.Less: return "<";
                 case SqlComparisonOperator.Larger: return ">";
                 case SqlComparisonOperator.LessEqual: return "<=";
                 case SqlComparisonOperator.LargerEqual: return ">=";
                 case SqlComparisonOperator.Like: return "LIKE";
+                case SqlComparisonOperator.NotLike: return "NOT LIKE";
+                case SqlComparisonOperator.In: return "IN";
+                case SqlComparisonOperator.NotIn: return "NOT IN";
             }
             return "=";
         }

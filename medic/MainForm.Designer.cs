@@ -56,14 +56,14 @@
             // menuItemWorkers
             // 
             this.menuItemWorkers.Name = "menuItemWorkers";
-            this.menuItemWorkers.Size = new System.Drawing.Size(152, 22);
+            this.menuItemWorkers.Size = new System.Drawing.Size(140, 22);
             this.menuItemWorkers.Text = "Сотрудники";
             this.menuItemWorkers.Click += new System.EventHandler(this.menuItemWorkers_Click);
             // 
             // menuItemServices
             // 
             this.menuItemServices.Name = "menuItemServices";
-            this.menuItemServices.Size = new System.Drawing.Size(152, 22);
+            this.menuItemServices.Size = new System.Drawing.Size(140, 22);
             this.menuItemServices.Text = "Услуги";
             this.menuItemServices.Click += new System.EventHandler(this.menuItemServices_Click);
             // 
@@ -78,7 +78,7 @@
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(149, 22);
             this.menuItemAbout.Text = "О программе";
             // 
             // mainForm
