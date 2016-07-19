@@ -66,6 +66,38 @@ namespace medic {
             );
         }
 
+        //Возвращает данные списка сотрудников имеющие указанную специальность
+        public static ListData GetSpecialtyWorkersListData(int specialtyId, DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
+            string baseSql = "SELECT " + Worker.fields +
+                            " FROM " + Worker.GetTableName() +
+                            " JOIN workers_specialties ON workers_specialties.worker_id = " + Worker.GetFieldName("id");
+
+            string countSql = "SELECT count(*) as row_count FROM " + Worker.GetTableName() +
+                             " JOIN workers_specialties ON workers_specialties.worker_id = " + Worker.GetFieldName("id");
+
+            //Создаем фильтр по статусу Удален и идентификатору сервиса
+            SqlFilter filterGroup = new SqlFilter(SqlLogicalOperator.And);
+            SqlFilterCondition removedFilter = new SqlFilterCondition(Worker.GetFieldName("removed"), SqlComparisonOperator.Equal);
+            SqlFilterCondition serviceFilter = new SqlFilterCondition("workers_specialties.specialty_id", SqlComparisonOperator.Equal);
+
+            removedFilter.SetValue("0");
+            serviceFilter.SetValue(specialtyId.ToString());
+
+            filterGroup.AddItem(removedFilter);
+            filterGroup.AddItem(serviceFilter);
+            filterGroup.AddItem(filter);
+
+            return new ListData(
+                connection: connection,
+                baseSql: baseSql,
+                countSql: countSql,
+                filter: filterGroup,
+                sorter: sorter,
+                limit: limit,
+                pageIndex: pageIndex
+            );
+        }
+
         //Возвращает данные списка сотрудников предоставляющих указанную услугу
         public static ListData GetServiceWorkersListData(int serviceId, DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
             string baseSql = "SELECT " + Worker.fields +
@@ -187,6 +219,31 @@ namespace medic {
             for (int i = 0; i < servicesList.Count; i++)
                 servicesIds[i] = servicesList[i].GetId().ToString();
             string sql = "DELETE FROM workers_services WHERE worker_id = " + id + " AND service_id IN " + QueryBuilder.BuildInStatement(servicesIds);
+            return connection.Delete(sql);
+        }
+
+
+
+        //Добавляет список специальностей сотрудника
+        public int AddSpecialties(List<Specialty> specialtiesList) {
+            if (specialtiesList.Count == 0) return 0;
+
+            string[] values = new string[specialtiesList.Count];
+            for (int i = 0; i < specialtiesList.Count; i++)
+                values[i] = "(" + id + ", " + specialtiesList[i].GetId().ToString() + ")";
+
+            string sql = "INSERT IGNORE INTO workers_specialties (worker_id, specialty_id) VALUES " + String.Join(",", values);
+            return connection.Insert(sql);
+        }
+
+        //Удаляет список специальностей
+        public int RemoveSpecialties(List<Specialty> specialtiesList) {
+            if (specialtiesList.Count == 0) return 0;
+
+            string[] specialtiesIds = new string[specialtiesList.Count];
+            for (int i = 0; i < specialtiesList.Count; i++)
+                specialtiesIds[i] = specialtiesList[i].GetId().ToString();
+            string sql = "DELETE FROM workers_specialties WHERE worker_id = " + id + " AND specialty_id IN " + QueryBuilder.BuildInStatement(specialtiesIds);
             return connection.Delete(sql);
         }
 

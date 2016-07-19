@@ -39,6 +39,12 @@ namespace medic {
             servicesListForm.Show();
         }
 
+        private void menuItemSpecialties_Click(object sender, EventArgs e) {
+            ListData listData = Specialty.GetListData(connection, 25);
+            SpecialtyListForm specialtiesListForm = new SpecialtyListForm(listData);
+            specialtiesListForm.Show();
+        }
+
     }
 
 }

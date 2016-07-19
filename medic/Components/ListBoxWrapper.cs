@@ -18,6 +18,7 @@ namespace medic.Components {
 
 
         public ListBoxWrapper(string labelText, ListBox field) : base(labelText, field) {
+            field.Height = 60;
             LblLabel.Visible = false;
 
             tlsListManager = new ToolStrip();

@@ -9,19 +9,24 @@ namespace medic.Forms {
     //Форма редактирования сотрудника
     public partial class WorkerEditForm : EntityEditForm {
 
-        private DBConnection connection;                //Соединение с базой
+        private DBConnection connection;                    //Соединение с базой
 
-        private Worker worker;                          //Редактируемый сотрудник
-        private List<Service> workerServices;           //Услуги предоставляемые сотрудником
-        private List<Service> workerRemovedServices;    //Удаленные услуги предоставляемые сотрудником
+        private Worker worker;                              //Редактируемый сотрудник
 
-        private TextBoxWrapper tbwFirstName;            //Поле Имя
-        private TextBoxWrapper tbwLastName;             //Поле Фамилия
-        private TextBoxWrapper tbwMiddleName;           //Поле Отчество
-        private TextBoxWrapper tbwPhone;                //Поле Телефон
-        private TextBoxWrapper tbwAddress;              //Поле Адрес
+        private List<Specialty> workerSpecialties;          //Специальности сотрудника
+        private List<Specialty> workerRemovedSpecialties;   //Удаленные специальности сотрудника
 
-        private ListBoxWrapper lbwServices;             //Поле Предоставляемые услуги
+        private List<Service> workerServices;               //Услуги предоставляемые сотрудником
+        private List<Service> workerRemovedServices;        //Удаленные услуги предоставляемые сотрудником
+
+        private TextBoxWrapper tbwFirstName;                //Поле Имя
+        private TextBoxWrapper tbwLastName;                 //Поле Фамилия
+        private TextBoxWrapper tbwMiddleName;               //Поле Отчество
+        private TextBoxWrapper tbwPhone;                    //Поле Телефон
+        private TextBoxWrapper tbwAddress;                  //Поле Адрес
+
+        private ListBoxWrapper lbwSpecialties;              //Поле Специальности
+        private ListBoxWrapper lbwServices;                 //Поле Предоставляемые услуги
 
 
 
@@ -36,6 +41,12 @@ namespace medic.Forms {
             lbwServices.Parent = panel;
             lbwServices.AddAddEvent(btnAddService_Event);
             lbwServices.AddRemoveEvent(btnRemoveService_Event);
+
+            lbwSpecialties = new ListBoxWrapper("Специальности", new ListBox());
+            lbwSpecialties.Dock = DockStyle.Top;
+            lbwSpecialties.Parent = panel;
+            lbwSpecialties.AddAddEvent(btnAddSpecialty_Event);
+            lbwSpecialties.AddRemoveEvent(btnRemoveSpecialty_Event);
 
             tbwAddress = new TextBoxWrapper("Адрес", new TextBox());
             tbwAddress.Dock = DockStyle.Top;
@@ -74,17 +85,30 @@ namespace medic.Forms {
             tbwPhone.SetValue(worker.Phone);
             tbwAddress.SetValue(worker.Address);
 
+            ListData specialtiesData = Specialty.GetWorkerSpecialtiesListData(worker.GetId(), worker.GetConnection());
+            specialtiesData.Update();
+            workerSpecialties = Specialty.GetList(specialtiesData);
+            workerRemovedSpecialties = new List<Specialty>();
+
             ListData servicesData = Service.GetWorkerServicesListData(worker.GetId(), worker.GetConnection());
             servicesData.Update();
             workerServices = Service.GetList(servicesData);
-            workerRemovedServices = new List<Service>(); 
+            workerRemovedServices = new List<Service>();
 
-            ListBox serviceList = (lbwServices.CtrlField as ListBox);
-            serviceList.SuspendLayout();
-            serviceList.Items.Clear();
+            //Подгружаем данные 
+            ListBox lstBoxSpecialties = (lbwSpecialties.CtrlField as ListBox);
+            lstBoxSpecialties.SuspendLayout();
+            lstBoxSpecialties.Items.Clear();
+            foreach (Specialty workerSpecialty in workerSpecialties)
+                lstBoxSpecialties.Items.Add(workerSpecialty.Name);
+            lstBoxSpecialties.ResumeLayout();
+
+            ListBox lstBoxServices = (lbwServices.CtrlField as ListBox);
+            lstBoxServices.SuspendLayout();
+            lstBoxServices.Items.Clear();
             foreach(Service workerService in workerServices)
-                serviceList.Items.Add(workerService.Name);
-            serviceList.ResumeLayout();
+                lstBoxServices.Items.Add(workerService.Name);
+            lstBoxServices.ResumeLayout();
         }
 
         //Проверяет кооректность введенных данных
@@ -125,13 +149,62 @@ namespace medic.Forms {
             else if (worker.AddServices(workerServices) == -1)
                 connection.RollbackTransaction();
 
+            else if (worker.RemoveSpecialties(workerRemovedSpecialties) == -1)
+                connection.RollbackTransaction();
+
+            else if (worker.AddSpecialties(workerSpecialties) == -1)
+                connection.RollbackTransaction();
+
             else if (connection.CommitTransaction())
                 return true;
 
             return false;
         }
 
-        
+
+        //Событие клика на кнопку Добавить специальность
+        private void btnAddSpecialty_Event(object sender, EventArgs e) {
+            //Создаем фильтр для отсечения уже добавленных услуг
+            SqlFilter selectedFilter = new SqlFilter(SqlLogicalOperator.And);
+            if (workerSpecialties.Count > 0) {
+                SqlFilterCondition selectedFilterCondition = new SqlFilterCondition(Specialty.GetFieldName("id"), SqlComparisonOperator.NotIn);
+
+                string[] workerSpecialtiesIds = new string[workerSpecialties.Count];
+                for (int i = 0; i < workerSpecialties.Count; i++)
+                    workerSpecialtiesIds[i] = workerSpecialties[i].GetId().ToString();
+                selectedFilterCondition.SetValue(QueryBuilder.BuildInStatement(workerSpecialtiesIds));
+
+                selectedFilter.AddItem(selectedFilterCondition);
+            }
+
+            //Создаем формы для добавления услуг
+            ListData specialtiesListData = Specialty.GetListData(connection, 25, 0, selectedFilter);
+            SpecialtySelectForm specialtySelectForm = new SpecialtySelectForm(specialtiesListData);
+
+            if (specialtySelectForm.ShowDialog() == DialogResult.OK) {
+                //Добавление выбранных услуг в список
+                List<Specialty> selectedSpetialties = specialtySelectForm.GetSelected();
+                workerSpecialties.AddRange(selectedSpetialties);
+
+                //Добавляем выбранных услуг в список на форме
+                ListBox lstBoxSpecialties = (lbwSpecialties.CtrlField as ListBox);
+                lstBoxSpecialties.SuspendLayout();
+                foreach (Specialty workerSpecialty in selectedSpetialties)
+                    lstBoxSpecialties.Items.Add(workerSpecialty.Name);
+                lstBoxSpecialties.ResumeLayout();
+            }
+        }
+
+        //Событие клика на кнопку Удалить специальность
+        private void btnRemoveSpecialty_Event(object sender, EventArgs e) {
+            ListBox lstBoxSpecialties = (lbwSpecialties.CtrlField as ListBox);
+            if (lstBoxSpecialties.SelectedIndex == -1)
+                return;
+
+            workerRemovedSpecialties.Add(workerSpecialties[lstBoxSpecialties.SelectedIndex]);
+            workerSpecialties.RemoveAt(lstBoxSpecialties.SelectedIndex);
+            lstBoxSpecialties.Items.RemoveAt(lstBoxSpecialties.SelectedIndex);
+        }
 
         //Событие клика на кнопку Добавить услугу
         private void btnAddService_Event(object sender, EventArgs e) {
@@ -158,20 +231,23 @@ namespace medic.Forms {
                 workerServices.AddRange(selectedServices);
 
                 //Добавляем выбранных услуг в список на форме
-                ListBox lstBoxService = (lbwServices.CtrlField as ListBox);
-                lstBoxService.SuspendLayout();
+                ListBox lstBoxServices = (lbwServices.CtrlField as ListBox);
+                lstBoxServices.SuspendLayout();
                 foreach(Service workerService in selectedServices)
-                    lstBoxService.Items.Add(workerService.Name);
-                lstBoxService.ResumeLayout();
+                    lstBoxServices.Items.Add(workerService.Name);
+                lstBoxServices.ResumeLayout();
             }
         }
 
         //Событие клика на кнопку Удалить услугу
         private void btnRemoveService_Event(object sender, EventArgs e) {
-            ListBox lstBoxService = (lbwServices.CtrlField as ListBox);
-            workerRemovedServices.Add(workerServices[lstBoxService.SelectedIndex]);
-            workerServices.RemoveAt(lstBoxService.SelectedIndex);
-            lstBoxService.Items.RemoveAt(lstBoxService.SelectedIndex);
+            ListBox lstBoxServices = (lbwServices.CtrlField as ListBox);
+            if (lstBoxServices.SelectedIndex == -1)
+                return;
+
+            workerRemovedServices.Add(workerServices[lstBoxServices.SelectedIndex]);
+            workerServices.RemoveAt(lstBoxServices.SelectedIndex);
+            lstBoxServices.Items.RemoveAt(lstBoxServices.SelectedIndex);
         }
 
     }

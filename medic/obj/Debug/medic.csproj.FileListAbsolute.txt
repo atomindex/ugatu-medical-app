@@ -17,3 +17,6 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.WorkerListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.WorkerSelectForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.ServiceSelectForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SpecialtyEditForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SpecialtyListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SpecialtySelectForm.resources

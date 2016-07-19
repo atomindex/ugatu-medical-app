@@ -79,6 +79,24 @@
     <Compile Include="Forms\EntitySelectForm.Designer.cs">
       <DependentUpon>EntitySelectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Specialties\SpecialtyEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Specialties\SpecialtyEditForm.Designer.cs">
+      <DependentUpon>SpecialtyEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Specialties\SpecialtyListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Specialties\SpecialtyListForm.Designer.cs">
+      <DependentUpon>SpecialtyListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Specialties\SpecialtySelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Specialties\SpecialtySelectForm.Designer.cs">
+      <DependentUpon>SpecialtySelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Services\ServiceSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,10 +155,20 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\SqlFilter\SqlFilter.cs" />
+    <Compile Include="Specialty.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Worker.cs" />
     <EmbeddedResource Include="Forms\EntitySelectForm.resx">
       <DependentUpon>EntitySelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Specialties\SpecialtyEditForm.resx">
+      <DependentUpon>SpecialtyEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Specialties\SpecialtyListForm.resx">
+      <DependentUpon>SpecialtyListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Specialties\SpecialtySelectForm.resx">
+      <DependentUpon>SpecialtySelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Services\ServiceSelectForm.resx">
       <DependentUpon>ServiceSelectForm.cs</DependentUpon>

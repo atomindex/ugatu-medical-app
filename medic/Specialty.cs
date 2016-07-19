@@ -7,23 +7,22 @@ using medic.Database;
 
 namespace medic {
 
-    //Класс услуги
-    public class Service : Entity {
+    //Класс специальности
+    public class Specialty : Entity {
 
         private static string tableName;        //Имя таблицы
         private static string fields;           //Поля таблицы для выборки
         private static string[] fieldsArray;    //Массив полей для вставки
 
-        public string Name;                     //Название услуги
-        public int Price;                       //Цена услуги
+        public string Name;                     //Название специальности
 
 
 
         //Статический конструктор
-        static Service() {
-            tableName = "services";
-            fields = "services.id, services.name, services.price";
-            fieldsArray = new string[] { "name", "price" };
+        static Specialty() {
+            tableName = "specialties";
+            fields = "specialties.id, specialties.name";
+            fieldsArray = new string[] { "name" };
         }
 
 
@@ -40,14 +39,14 @@ namespace medic {
 
 
 
-        //Возвращает данные списка услуг
+        //Возвращает данные списка специальностей
         public static ListData GetListData(DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
-            string baseSql = "SELECT " + Service.fields + " FROM " + Service.GetTableName();
-            string countSql = "SELECT count(*) as row_count FROM " + Service.GetTableName();
+            string baseSql = "SELECT " + Specialty.fields + " FROM " + Specialty.GetTableName();
+            string countSql = "SELECT count(*) as row_count FROM " + Specialty.GetTableName();
             
             //Создаем фильтр по статусу Удален
             SqlFilter filterGroup = new SqlFilter(SqlLogicalOperator.And);
-            SqlFilterCondition removedFilter = new SqlFilterCondition(Service.GetFieldName("removed"), SqlComparisonOperator.Equal);
+            SqlFilterCondition removedFilter = new SqlFilterCondition(Specialty.GetFieldName("removed"), SqlComparisonOperator.Equal);
             removedFilter.SetValue("0");
             filterGroup.AddItem(removedFilter);
             filterGroup.AddItem(filter);
@@ -63,19 +62,19 @@ namespace medic {
             );
         }
 
-        //Возвращает данные списка услуг
-        public static ListData GetWorkerServicesListData(int workerId, DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
-            string baseSql = "SELECT " + Service.fields +
-                            " FROM " + Service.GetTableName() +
-                            " JOIN workers_services ON workers_services.service_id = " + Service.GetFieldName("id");
+        //Возвращает данные списка специальностей
+        public static ListData GetWorkerSpecialtiesListData(int workerId, DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
+            string baseSql = "SELECT " + Specialty.fields +
+                            " FROM " + Specialty.GetTableName() +
+                            " JOIN workers_specialties ON workers_specialties.specialty_id = " + Specialty.GetFieldName("id");
 
-            string countSql = "SELECT count(*) as row_count FROM " + Service.GetTableName() +
-                             " JOIN workers_services ON workers_services.service_id = " + Service.GetFieldName("id");
+            string countSql = "SELECT count(*) as row_count FROM " + Specialty.GetTableName() +
+                             " JOIN workers_specialties ON workers_specialties.specialty_id = " + Specialty.GetFieldName("id");
 
             //Создаем фильтр по статусу Удален и идентификатору сотрудника
             SqlFilter filterGroup = new SqlFilter(SqlLogicalOperator.And);
-            SqlFilterCondition removedFilter = new SqlFilterCondition(Service.GetFieldName("removed"), SqlComparisonOperator.Equal);
-            SqlFilterCondition workerFilter = new SqlFilterCondition("workers_services.worker_id", SqlComparisonOperator.Equal);
+            SqlFilterCondition removedFilter = new SqlFilterCondition(Specialty.GetFieldName("removed"), SqlComparisonOperator.Equal);
+            SqlFilterCondition workerFilter = new SqlFilterCondition("workers_specialties.worker_id", SqlComparisonOperator.Equal);
             
             removedFilter.SetValue("0");
             workerFilter.SetValue(workerId.ToString());
@@ -95,15 +94,15 @@ namespace medic {
             );
         }
 
-        //Возвращает список услуг из данных списка
-        public static List<Service> GetList(ListData listData) {
-            //Формируем список услуг
-            List<Service> list = new List<Service>();
+        //Возвращает список специальностей из данных списка
+        public static List<Specialty> GetList(ListData listData) {
+            //Формируем список специальностей
+            List<Specialty> list = new List<Specialty>();
             if (listData.List != null) {
                 foreach (string[] data in listData.List) {
-                    Service service = new Service(listData.Connection);
-                    service.loadData(data);
-                    list.Add(service);
+                    Specialty specialty = new Specialty(listData.Connection);
+                    specialty.loadData(data);
+                    list.Add(specialty);
                 }
             }
 
@@ -113,7 +112,7 @@ namespace medic {
 
 
         //Конструктор
-        public Service(DBConnection connection, int id = 0) : base(connection) {
+        public Specialty(DBConnection connection, int id = 0) : base(connection) {
             if (id <= 0) return;
             List<string[]> data = connection.Select("SELECT id, " + fields + " FROM " + tableName + " WHERE removed = 0 AND id = " + id.ToString());
             if (data != null) return;
@@ -123,31 +122,30 @@ namespace medic {
 
 
         //Возвращает копию
-        public Service Clone() {
-            Service service = new Service(connection);
-            service.id = id;
-            service.Name = Name;
-            service.Price = Price;
-            return service;
+        public Specialty Clone() {
+            Specialty specialty = new Specialty(connection);
+            specialty.id = id;
+            specialty.Name = Name;
+            return specialty;
         }
 
-        //Сохраняет услугу
+        //Сохраняет специальность
         public override int Save() {
             id = save(
                 tableName, fieldsArray,
-                new string[] { Name, Price.ToString() }
+                new string[] { Name }
             );
             return id;
         }
 
-        //Удаляет услугу
+        //Удаляет специальность
         public override void Remove() {
             remove(tableName);
         }
 
 
 
-        //Добавляет список сотрудников предоставляющих услугу
+        //Добавляет список сотрудников имеющих специальность
         public int AddWorkers(List<Worker> workersList) {
             if (workersList.Count == 0) return 0;
 
@@ -155,18 +153,18 @@ namespace medic {
             for (int i = 0; i < workersList.Count; i++)
                 values[i] = "(" + id + ", " + workersList[i].GetId().ToString() + ")";
 
-            string sql = "INSERT IGNORE INTO workers_services (service_id, worker_id) VALUES " + String.Join(",", values);
+            string sql = "INSERT IGNORE INTO workers_specialties (specialty_id, worker_id) VALUES " + String.Join(",", values);
             return connection.Insert(sql);
         }
 
-        //Удаляет список сотрудников предоставляющих услугу
+        //Удаляет список сотрудников имеющих специальность
         public int RemoveWorkers(List<Worker> workersList) {
             if (workersList.Count == 0) return 0;
 
             string[] workersIds = new string[workersList.Count];
             for (int i = 0; i < workersList.Count; i++)
                 workersIds[i] = workersList[i].GetId().ToString();
-            string sql = "DELETE FROM workers_services WHERE service_id = " + id + " AND worker_id IN " + QueryBuilder.BuildInStatement(workersIds);
+            string sql = "DELETE FROM workers_specialties WHERE specialty_id = " + id + " AND worker_id IN " + QueryBuilder.BuildInStatement(workersIds);
             return connection.Delete(sql);
         }
 
@@ -176,7 +174,6 @@ namespace medic {
         private void loadData(string[] data) {
             id = Int32.Parse(data[0]);
             Name = data[1];
-            Price = Int32.Parse(data[2]);
         }
 
     }

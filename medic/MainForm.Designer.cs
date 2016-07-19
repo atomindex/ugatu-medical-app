@@ -30,6 +30,7 @@
             this.menuItemServices = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSpecialties = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +49,8 @@
             // 
             this.menuItemLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemWorkers,
-            this.menuItemServices});
+            this.menuItemServices,
+            this.menuItemSpecialties});
             this.menuItemLists.Name = "menuItemLists";
             this.menuItemLists.Size = new System.Drawing.Size(94, 20);
             this.menuItemLists.Text = "Справочники";
@@ -56,14 +58,14 @@
             // menuItemWorkers
             // 
             this.menuItemWorkers.Name = "menuItemWorkers";
-            this.menuItemWorkers.Size = new System.Drawing.Size(140, 22);
+            this.menuItemWorkers.Size = new System.Drawing.Size(152, 22);
             this.menuItemWorkers.Text = "Сотрудники";
             this.menuItemWorkers.Click += new System.EventHandler(this.menuItemWorkers_Click);
             // 
             // menuItemServices
             // 
             this.menuItemServices.Name = "menuItemServices";
-            this.menuItemServices.Size = new System.Drawing.Size(140, 22);
+            this.menuItemServices.Size = new System.Drawing.Size(152, 22);
             this.menuItemServices.Text = "Услуги";
             this.menuItemServices.Click += new System.EventHandler(this.menuItemServices_Click);
             // 
@@ -80,6 +82,13 @@
             this.menuItemAbout.Name = "menuItemAbout";
             this.menuItemAbout.Size = new System.Drawing.Size(149, 22);
             this.menuItemAbout.Text = "О программе";
+            // 
+            // menuItemSpecialties
+            // 
+            this.menuItemSpecialties.Name = "menuItemSpecialties";
+            this.menuItemSpecialties.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSpecialties.Text = "Должности";
+            this.menuItemSpecialties.Click += new System.EventHandler(this.menuItemSpecialties_Click);
             // 
             // mainForm
             // 
@@ -106,6 +115,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemServices;
         private System.Windows.Forms.ToolStripMenuItem menuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem menuItemAbout;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSpecialties;
     }
 }
 

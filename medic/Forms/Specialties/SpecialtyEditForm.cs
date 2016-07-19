@@ -6,66 +6,60 @@ using medic.Components;
 
 namespace medic.Forms {
 
-    //Форма редактирования услуги
-    public partial class ServiceEditForm : EntityEditForm {
+    //Форма редактирования специальности
+    public partial class SpecialtyEditForm : EntityEditForm {
 
         private DBConnection connection;                //Соединение с базой
 
-        private Service service;                        //Редактируемая услуга
-        private List<Worker> serviceWorkers;            //Сотрудники предоставляющие услугу
-        private List<Worker> serviceRemovedWorkers;     //Удаленные сотрудники предоставляющие услугу
+        private Specialty specialty;                    //Редактируемая специальность
+        private List<Worker> specialtyWorkers;          //Сотрудники имеющие специальность
+        private List<Worker> specialtyRemovedWorkers;   //Удаленные сотрудники имеющие специальность
 
-        private TextBoxWrapper tbwName;                 //Поле Название услуги
-        private TextBoxWrapper tbwPrice;                //Поле Цена услуги
+        private TextBoxWrapper tbwName;                 //Поле Название специальности
 
-        private ListBoxWrapper lbwWorkers;              //Поле Сотрудники предоставляющие услугу
+        private ListBoxWrapper lbwWorkers;              //Поле Сотрудники имеющие специальность
 
 
 
         //Конструктор
-        public ServiceEditForm(Service service) : base() {
+        public SpecialtyEditForm(Specialty specialty) : base() {
             InitializeComponent();
 
             Panel panel = GetPanel();
 
-            lbwWorkers = new ListBoxWrapper("Сотрудники предоставляющие услугу", new ListBox());
+            lbwWorkers = new ListBoxWrapper("Сотрудники имеющие специальность", new ListBox());
             lbwWorkers.Dock = DockStyle.Top;
             lbwWorkers.Parent = panel;
             lbwWorkers.AddAddEvent(btnAddWorker_Event);
             lbwWorkers.AddRemoveEvent(btnRemoveWorker_Event);
 
-            tbwPrice = new TextBoxWrapper("Цена", new TextBox());
-            tbwPrice.Dock = DockStyle.Top;
-            tbwPrice.Parent = panel;
-
             tbwName = new TextBoxWrapper("Название", new TextBox());
             tbwName.Dock = DockStyle.Top;
             tbwName.Parent = panel;
 
-            //Подгружаем данные услуги
-            AssignService(service);
+            //Подгружаем данные специальности
+            AssignSpecialty(specialty);
         }
 
 
 
-        //Привязывает услугу к форме, подгружает данные в форму
-        public void AssignService(Service service) {
-            connection = service.GetConnection();
-            this.service = service;
+        //Привязывает специальность к форме, подгружает данные в форму
+        public void AssignSpecialty(Specialty specialty) {
+            connection = specialty.GetConnection();
+            this.specialty = specialty;
 
-            tbwName.SetValue(service.Name);
-            tbwPrice.SetValue(service.Price.ToString());
+            tbwName.SetValue(specialty.Name);
 
-            ListData workersData = Worker.GetServiceWorkersListData(service.GetId(), service.GetConnection(), 25);
+            ListData workersData = Worker.GetSpecialtyWorkersListData(specialty.GetId(), specialty.GetConnection(), 25);
             workersData.Update();
-            serviceWorkers = Worker.GetList(workersData);
-            serviceRemovedWorkers = new List<Worker>();
+            specialtyWorkers = Worker.GetList(workersData);
+            specialtyRemovedWorkers = new List<Worker>();
 
             ListBox lstBoxWorkers = (lbwWorkers.CtrlField as ListBox);
             lstBoxWorkers.SuspendLayout();
             lstBoxWorkers.Items.Clear();
-            foreach (Worker workerService in serviceWorkers)
-                lstBoxWorkers.Items.Add(workerService.GetFullName());
+            foreach (Worker workerSpecialty in specialtyWorkers)
+                lstBoxWorkers.Items.Add(workerSpecialty.GetFullName());
             lstBoxWorkers.ResumeLayout();
         }
 
@@ -74,7 +68,7 @@ namespace medic.Forms {
             bool success = true;
 
             TextBoxWrapper[] requiredTextBoxes = new TextBoxWrapper[] {
-                tbwName, tbwPrice
+                tbwName
             };
 
             foreach (TextBoxWrapper field in requiredTextBoxes)
@@ -85,29 +79,22 @@ namespace medic.Forms {
                     success = false;
                 }
 
-            if (!tbwPrice.HasError()) {
-                int parsedPrice;
-                if (!Int32.TryParse(tbwPrice.GetValue(), out parsedPrice))
-                    tbwPrice.ShowError("Неверное значение");
-            }
-
             return success;
         }
 
-        //Сохраняет услугу
+        //Сохраняет специальность
         protected override bool Save() {
-            service.Name = tbwName.GetValue();
-            service.Price = Int32.Parse(tbwPrice.GetValue());
+            specialty.Name = tbwName.GetValue();
 
             connection.StartTransaction();
 
-            if (service.Save() == -1)
+            if (specialty.Save() == -1)
                 connection.RollbackTransaction();
 
-            else if (service.RemoveWorkers(serviceRemovedWorkers) == -1)
+            else if (specialty.RemoveWorkers(specialtyRemovedWorkers) == -1)
                 connection.RollbackTransaction();
 
-            else if (service.AddWorkers(serviceWorkers) == -1)
+            else if (specialty.AddWorkers(specialtyWorkers) == -1)
                 connection.RollbackTransaction();
 
             else if (connection.CommitTransaction())
@@ -122,13 +109,13 @@ namespace medic.Forms {
         private void btnAddWorker_Event(object sender, EventArgs e) {
             //Создаем фильтр для отсечения уже добавленных сотрудников
             SqlFilter avalaibleWorkersFilter = new SqlFilter(SqlLogicalOperator.And);
-            if (serviceWorkers.Count > 0) {
+            if (specialtyWorkers.Count > 0) {
                 SqlFilterCondition selectedFilterCondition = new SqlFilterCondition(Worker.GetFieldName("id"), SqlComparisonOperator.NotIn);
 
-                string[] serviceWorkersIds = new string[serviceWorkers.Count];
-                for (int i = 0; i < serviceWorkers.Count; i++)
-                    serviceWorkersIds[i] = serviceWorkers[i].GetId().ToString();
-                selectedFilterCondition.SetValue(QueryBuilder.BuildInStatement(serviceWorkersIds));
+                string[] specialtyWorkersIds = new string[specialtyWorkers.Count];
+                for (int i = 0; i < specialtyWorkers.Count; i++)
+                    specialtyWorkersIds[i] = specialtyWorkers[i].GetId().ToString();
+                selectedFilterCondition.SetValue(QueryBuilder.BuildInStatement(specialtyWorkersIds));
                 
                 avalaibleWorkersFilter.AddItem(selectedFilterCondition);
             }
@@ -140,13 +127,13 @@ namespace medic.Forms {
             if (workerSelectForm.ShowDialog() == DialogResult.OK) {
                 //Добавляем выбранных сотрудников в список
                 List<Worker> selectedWorkers = workerSelectForm.GetSelected();
-                serviceWorkers.AddRange(selectedWorkers);
+                specialtyWorkers.AddRange(selectedWorkers);
 
                 //Добавляем выбранных сотрудников в список на форме
                 ListBox lstBoxWorkers = (lbwWorkers.CtrlField as ListBox);
                 lstBoxWorkers.SuspendLayout();
-                foreach (Worker serviceWorker in selectedWorkers)
-                    lstBoxWorkers.Items.Add(serviceWorker.GetFullName());
+                foreach (Worker specialtyWorker in selectedWorkers)
+                    lstBoxWorkers.Items.Add(specialtyWorker.GetFullName());
                 lstBoxWorkers.ResumeLayout();
             }
         }
@@ -157,8 +144,8 @@ namespace medic.Forms {
             if (lstBoxWorkers.SelectedIndex == -1)
                 return;
 
-            serviceRemovedWorkers.Add(serviceWorkers[lstBoxWorkers.SelectedIndex]);
-            serviceWorkers.RemoveAt(lstBoxWorkers.SelectedIndex);
+            specialtyRemovedWorkers.Add(specialtyWorkers[lstBoxWorkers.SelectedIndex]);
+            specialtyWorkers.RemoveAt(lstBoxWorkers.SelectedIndex);
             lstBoxWorkers.Items.RemoveAt(lstBoxWorkers.SelectedIndex);
         }
 
