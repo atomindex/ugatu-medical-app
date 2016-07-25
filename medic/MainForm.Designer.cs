@@ -28,9 +28,10 @@
             this.menuItemLists = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemWorkers = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemServices = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSpecialties = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSpecialties = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSales = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +51,8 @@
             this.menuItemLists.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemWorkers,
             this.menuItemServices,
-            this.menuItemSpecialties});
+            this.menuItemSpecialties,
+            this.menuItemSales});
             this.menuItemLists.Name = "menuItemLists";
             this.menuItemLists.Size = new System.Drawing.Size(94, 20);
             this.menuItemLists.Text = "Справочники";
@@ -69,6 +71,13 @@
             this.menuItemServices.Text = "Услуги";
             this.menuItemServices.Click += new System.EventHandler(this.menuItemServices_Click);
             // 
+            // menuItemSpecialties
+            // 
+            this.menuItemSpecialties.Name = "menuItemSpecialties";
+            this.menuItemSpecialties.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSpecialties.Text = "Должности";
+            this.menuItemSpecialties.Click += new System.EventHandler(this.menuItemSpecialties_Click);
+            // 
             // menuItemHelp
             // 
             this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -80,15 +89,15 @@
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(149, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
             this.menuItemAbout.Text = "О программе";
             // 
-            // menuItemSpecialties
+            // menuItemSales
             // 
-            this.menuItemSpecialties.Name = "menuItemSpecialties";
-            this.menuItemSpecialties.Size = new System.Drawing.Size(152, 22);
-            this.menuItemSpecialties.Text = "Должности";
-            this.menuItemSpecialties.Click += new System.EventHandler(this.menuItemSpecialties_Click);
+            this.menuItemSales.Name = "menuItemSales";
+            this.menuItemSales.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSales.Text = "Скидки";
+            this.menuItemSales.Click += new System.EventHandler(this.menuItemSales_Click);
             // 
             // mainForm
             // 
@@ -116,6 +125,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem menuItemAbout;
         private System.Windows.Forms.ToolStripMenuItem menuItemSpecialties;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSales;
     }
 }
 

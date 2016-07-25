@@ -115,7 +115,10 @@ namespace medic {
         public Specialty(DBConnection connection, int id = 0) : base(connection) {
             if (id <= 0) return;
             List<string[]> data = connection.Select("SELECT id, " + fields + " FROM " + tableName + " WHERE removed = 0 AND id = " + id.ToString());
-            if (data != null) return;
+            if (data.Count == 0) {
+                this.id = -1;
+                return;
+            }
             loadData(data[0]);
         }
 

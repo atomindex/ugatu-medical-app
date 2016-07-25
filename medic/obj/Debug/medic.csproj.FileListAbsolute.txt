@@ -20,3 +20,5 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SpecialtyEditForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SpecialtyListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SpecialtySelectForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SaleEditForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SaleListForm.resources

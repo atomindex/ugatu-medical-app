@@ -1,5 +1,5 @@
 ﻿namespace medic.Forms {
-    partial class ServiceListForm {
+    partial class SaleListForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.Text = "ServiceListForm";
+            this.Text = "SaleListForm";
         }
 
         #endregion

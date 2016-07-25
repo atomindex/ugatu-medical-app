@@ -17,3 +17,8 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medi
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.exe
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.pdb
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.csprojResolveAssemblyReference.cache
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.SaleEditForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.SaleListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.SpecialtyEditForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.SpecialtyListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.SpecialtySelectForm.resources
