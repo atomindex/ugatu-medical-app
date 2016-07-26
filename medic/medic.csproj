@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
+    <Compile Include="ButtonRenderer.cs" />
     <Compile Include="Components\FieldWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -81,6 +82,12 @@
     </Compile>
     <Compile Include="Forms\EntitySelectForm.Designer.cs">
       <DependentUpon>EntitySelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Patients\PatientEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Patients\PatientEditForm.Designer.cs">
+      <DependentUpon>PatientEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Sales\SaleEditForm.cs">
       <SubType>Form</SubType>
@@ -173,9 +180,13 @@
     <Compile Include="Sale.cs" />
     <Compile Include="Specialty.cs" />
     <Compile Include="Service.cs" />
+    <Compile Include="Patient.cs" />
     <Compile Include="Worker.cs" />
     <EmbeddedResource Include="Forms\EntitySelectForm.resx">
       <DependentUpon>EntitySelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Patients\PatientEditForm.resx">
+      <DependentUpon>PatientEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sales\SaleEditForm.resx">
       <DependentUpon>SaleEditForm.cs</DependentUpon>
@@ -261,6 +272,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search-large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\visit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\visit-list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\patient.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

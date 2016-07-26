@@ -60,13 +60,13 @@ namespace medic.Forms {
             tbwMiddleName.Dock = DockStyle.Top;
             tbwMiddleName.Parent = panel;
 
-            tbwLastName = new TextBoxWrapper("Фамилия", new TextBox());
-            tbwLastName.Dock = DockStyle.Top;
-            tbwLastName.Parent = panel;
-
             tbwFirstName = new TextBoxWrapper("Имя", new TextBox());
             tbwFirstName.Dock = DockStyle.Top;
             tbwFirstName.Parent = panel;
+
+            tbwLastName = new TextBoxWrapper("Фамилия", new TextBox());
+            tbwLastName.Dock = DockStyle.Top;
+            tbwLastName.Parent = panel;
 
             //Подгружаем данные сотрудника
             AssignWorker(worker);
