@@ -64,6 +64,15 @@
     <Compile Include="Components\ComboTextBoxWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Components\DatepickerWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\ComboBoxWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\NumericBoxWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\TextBoxWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -131,6 +140,7 @@
     <Compile Include="Forms\Workers\WorkerSelectForm.Designer.cs">
       <DependentUpon>WorkerSelectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormUtils.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

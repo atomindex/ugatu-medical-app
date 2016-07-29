@@ -68,6 +68,10 @@ namespace medic.Forms {
             tbwLastName.Dock = DockStyle.Top;
             tbwLastName.Parent = panel;
 
+            panel.TabIndex = 0;
+            toolsPanel.TabIndex = 1;
+            FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
+
             //Подгружаем данные сотрудника
             AssignWorker(worker);
         }

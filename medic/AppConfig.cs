@@ -15,6 +15,9 @@ namespace medic {
         public static Color OrangeColor = Color.FromArgb(255, 108, 0);
         public static Color LightOrangeColor = Color.FromArgb(255, 220, 195);
 
+        public static string DateFormat = "dd.MM.yyyy";
+        public static DateTime MinDate = new DateTime(1901, 1, 1, 0, 0, 0);
+
         public static string DatabaseHost = "localhost";
         public static string DatabaseName = "medic";
         public static string DatabaseUser = "root";

@@ -9,13 +9,13 @@ namespace medic.Forms {
     //Форма редактирования скидки
     public partial class SaleEditForm : EntityEditForm {
 
-        private DBConnection connection;                //Соединение с базой
+        private DBConnection connection;                    //Соединение с базой
 
-        private Sale sale;                              //Редактируемая скидка
+        private Sale sale;                                  //Редактируемая скидка
 
-        private TextBoxWrapper tbwName;                 //Поле Название скидки
-        private TextBoxWrapper tbwDescription;          //Поле Описание скидки
-        private TextBoxWrapper tbwPercent;              //Поле Процент скидки
+        private TextBoxWrapper tbwName;                     //Поле Название скидки
+        private TextBoxWrapper tbwDescription;              //Поле Описание скидки
+        private NumericBoxWrapper nbwPercent;               //Поле Процент скидки
 
         private ComboTextBoxWrapper ctbwCondVisitNumber;
 
@@ -31,9 +31,9 @@ namespace medic.Forms {
             ctbwCondVisitNumber.Dock = DockStyle.Top;
             ctbwCondVisitNumber.Parent = panel;
 
-            tbwPercent = new TextBoxWrapper("Процент скидки", new TextBox());
-            tbwPercent.Dock = DockStyle.Top;
-            tbwPercent.Parent = panel;
+            nbwPercent = new NumericBoxWrapper("Процент скидки", new NumericUpDown(), 1, 100);
+            nbwPercent.Dock = DockStyle.Top;
+            nbwPercent.Parent = panel;
 
             tbwDescription = new TextBoxWrapper("Описание", new TextBox());
             tbwDescription.Dock = DockStyle.Top;
@@ -42,6 +42,10 @@ namespace medic.Forms {
             tbwName = new TextBoxWrapper("Название", new TextBox());
             tbwName.Dock = DockStyle.Top;
             tbwName.Parent = panel;
+
+            panel.TabIndex = 0;
+            toolsPanel.TabIndex = 1;
+            FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
 
             //Подгружаем данные скидки
             AssignService(sale);
@@ -56,7 +60,7 @@ namespace medic.Forms {
 
             tbwName.SetValue(sale.Name);
             tbwDescription.SetValue(sale.Description);
-            tbwPercent.SetValue(sale.Percent.ToString());
+            nbwPercent.SetValue(sale.Percent.ToString());
 
             ctbwCondVisitNumber.SetComboValue(sale.CondVisitNumber.op);
             ctbwCondVisitNumber.SetValue(sale.CondVisitNumber.value);            
@@ -66,23 +70,17 @@ namespace medic.Forms {
         protected override bool Validate() {
             bool success = true;
 
-            TextBoxWrapper[] requiredTextBoxes = new TextBoxWrapper[] {
-                tbwName, tbwDescription, tbwPercent
+            FieldWrapper[] requiredTextBoxes = new FieldWrapper[] {
+                tbwName, tbwDescription, nbwPercent
             };
 
-            foreach (TextBoxWrapper field in requiredTextBoxes)
+            foreach (FieldWrapper field in requiredTextBoxes)
                 if (field.GetValue().Trim().Length > 0)
                     field.HideError();
                 else {
                     field.ShowError("Поле обязательно для заполнения");
                     success = false;
                 }
-
-            if (!tbwPercent.HasError()) {
-                int parsedPrice;
-                if (!Int32.TryParse(tbwPercent.GetValue(), out parsedPrice))
-                    tbwPercent.ShowError("Неверное значение");
-            }
 
             return success;
         }
@@ -91,7 +89,7 @@ namespace medic.Forms {
         protected override bool Save() {
             sale.Name = tbwName.GetValue();
             sale.Description = tbwDescription.GetValue();
-            sale.Percent = Int32.Parse(tbwPercent.GetValue());
+            sale.Percent = Int32.Parse(nbwPercent.GetValue());
 
             sale.CondVisitNumber.op = Sale.Operators[ctbwCondVisitNumber.GetComboIndex()];
             sale.CondVisitNumber.value = ctbwCondVisitNumber.GetValue();

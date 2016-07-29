@@ -136,15 +136,21 @@ namespace medic.Forms {
             workerEditForm.Text = "Добавление нового сотрудника";
 
             if (workerEditForm.ShowDialog() == DialogResult.OK) {
-                workersList.Insert(0, worker);
-                table.Rows.Insert(0, 1);
+                if (workersList.Count > 0) 
+                    table.Rows.Insert(0, 1);
+                
                 table.Rows[0].DefaultCellStyle.BackColor = AppConfig.LightOrangeColor;
                 loadDataToRow(0, worker);
+
+                workersList.Insert(0, worker);
             }
         }
 
         //Событие клика по кнопке Редактирование сотрудника
         private void btnEdit_Click(object sender, EventArgs e) {
+            if (workersList.Count == 0)
+                return;
+
             Worker worker = workersList[table.CurrentCell.RowIndex].Clone();
 
             WorkerEditForm workerEditForm = new WorkerEditForm(worker);
@@ -158,8 +164,10 @@ namespace medic.Forms {
 
         //Событие клика по кнопке Удаление сотрудника
         private void btnRemove_Click(object sender, EventArgs e) {
-            int index = table.CurrentCell.RowIndex;
-            Worker worker = workersList[index];
+            if (workersList.Count == 0)
+                return;
+
+            Worker worker = workersList[table.CurrentCell.RowIndex];
 
             if (MessageBox.Show("Вы дейсвительно хотите удалить сотрудника?", "Удаление сотрудника", MessageBoxButtons.OKCancel) == DialogResult.OK) {
                 worker.Remove();

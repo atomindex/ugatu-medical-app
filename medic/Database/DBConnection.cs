@@ -24,7 +24,8 @@ namespace medic.Database {
                 "SERVER=" + server + ";" +
                 "DATABASE=" + database + ";" +
                 "UID=" + username + ";" +
-                "PASSWORD=" + password + ";"
+                "PASSWORD=" + password + ";" +
+                "Convert Zero Datetime=True;Allow Zero Datetime=False;"
             );
 
             closeTimer = new Timer();

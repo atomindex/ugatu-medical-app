@@ -11,13 +11,13 @@ namespace medic.Forms {
 
         private DBConnection connection;                    //Соединение с базой
 
-        private Patient patient;                              //Редактируемый сотрудник
+        private Patient patient;                            //Редактируемый сотрудник
 
         private TextBoxWrapper tbwFirstName;                //Поле Имя
         private TextBoxWrapper tbwLastName;                 //Поле Фамилия
         private TextBoxWrapper tbwMiddleName;               //Поле Отчество
-        private TextBoxWrapper tbwSex;                      //Поле Пол
-        private TextBoxWrapper tbwBirthday;                 //Поле Дата рождения
+        private ComboBoxWrapper cbwSex;                     //Поле Пол
+        private DatepickerWrapper dpwBirthday;              //Поле Дата рождения
 
 
 
@@ -27,13 +27,13 @@ namespace medic.Forms {
 
             Panel panel = GetPanel();
 
-            tbwBirthday = new TextBoxWrapper("Дата рождения", new TextBox());
-            tbwBirthday.Dock = DockStyle.Top;
-            tbwBirthday.Parent = panel;
+            dpwBirthday = new DatepickerWrapper("Дата рождения", new DateTimePicker());
+            dpwBirthday.Dock = DockStyle.Top;
+            dpwBirthday.Parent = panel;
 
-            tbwSex = new TextBoxWrapper("Пол", new TextBox());
-            tbwSex.Dock = DockStyle.Top;
-            tbwSex.Parent = panel;
+            cbwSex = new ComboBoxWrapper("Пол", new ComboBox(), Patient.SexKeys, Patient.SexValues);
+            cbwSex.Dock = DockStyle.Top;
+            cbwSex.Parent = panel;
 
             tbwMiddleName = new TextBoxWrapper("Отчество", new TextBox());
             tbwMiddleName.Dock = DockStyle.Top;
@@ -46,6 +46,10 @@ namespace medic.Forms {
             tbwLastName = new TextBoxWrapper("Фамилия", new TextBox());
             tbwLastName.Dock = DockStyle.Top;
             tbwLastName.Parent = panel;
+
+            panel.TabIndex = 0;
+            toolsPanel.TabIndex = 1;
+            FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
 
             //Подгружаем данные сотрудника
             AssignPatient(patient);
@@ -61,16 +65,16 @@ namespace medic.Forms {
             tbwFirstName.SetValue(patient.FirstName);
             tbwLastName.SetValue(patient.LastName);
             tbwMiddleName.SetValue(patient.MiddleName);
-            tbwSex.SetValue(patient.Sex);
-            tbwBirthday.SetValue(patient.Birthday);
+            cbwSex.SetValue(patient.Sex);
+            dpwBirthday.SetDate(patient.Birthday);
         }
 
         //Проверяет кооректность введенных данных
         protected override bool Validate() {
             bool success = true;
 
-            TextBoxWrapper[] requiredTextBoxes = new TextBoxWrapper[] {
-                tbwFirstName, tbwLastName, tbwMiddleName, tbwSex, tbwBirthday
+            FieldWrapper[] requiredTextBoxes = new FieldWrapper[] {
+                tbwFirstName, tbwLastName, tbwMiddleName, cbwSex, dpwBirthday
             };
 
             foreach (TextBoxWrapper field in requiredTextBoxes)
@@ -89,8 +93,8 @@ namespace medic.Forms {
             patient.FirstName = tbwFirstName.GetValue();
             patient.MiddleName = tbwMiddleName.GetValue();
             patient.LastName = tbwLastName.GetValue();
-            patient.Birthday = tbwBirthday.GetValue();
-            patient.Sex = tbwSex.GetValue();
+            patient.Birthday = dpwBirthday.GetDate();
+            patient.Sex = cbwSex.GetValue();
 
             return patient.Save() != -1;
         }

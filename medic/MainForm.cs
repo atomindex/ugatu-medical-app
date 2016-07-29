@@ -93,7 +93,7 @@ namespace medic {
             table.Rows[rowIndex].Cells[1].Value = patient.LastName;
             table.Rows[rowIndex].Cells[2].Value = patient.MiddleName;
             table.Rows[rowIndex].Cells[3].Value = patient.Sex;
-            table.Rows[rowIndex].Cells[4].Value = patient.Birthday;
+            table.Rows[rowIndex].Cells[4].Value = patient.Birthday.ToString(AppConfig.DateFormat);
         }
 
         //Загрузка данных пациентов в таблицу
@@ -158,10 +158,13 @@ namespace medic {
             patientEditForm.Text = "Добавление нового пациента";
 
             if (patientEditForm.ShowDialog() == DialogResult.OK) {
-                patientsList.Insert(0, patient);
-                table.Rows.Insert(0, 1);
+                if (patientsList.Count > 0)
+                    table.Rows.Insert(0, 1);
+
                 table.Rows[0].DefaultCellStyle.BackColor = AppConfig.LightOrangeColor;
                 loadDataToRow(0, patient);
+
+                patientsList.Insert(0, patient);
             }
         }
 

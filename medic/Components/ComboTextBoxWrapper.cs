@@ -7,10 +7,12 @@ using System.Windows.Forms;
 
 namespace medic.Components {
     
-    //Класс текстового поля ввода с надписями
+    //Класс выпадающих списков с текстовым полем ввода и надписями
     class ComboTextBoxWrapper : FieldWrapper {
 
-        private ComboBox cmbList;
+        private ComboBox cmbList;       //Выпадающий список
+
+
 
         //Конструктор
         public ComboTextBoxWrapper(string labelText, string[] comboItems, TextBox field) : base(labelText, field) {
@@ -28,8 +30,8 @@ namespace medic.Components {
             tblLPWrapperLayout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tblLPWrapperLayout.Dock = DockStyle.Top;
 
-            tblLPWrapperLayout.Controls.Add(cmbList, 0, 0);
             tblLPWrapperLayout.Controls.Add(field, 1, 0);
+            tblLPWrapperLayout.Controls.Add(cmbList, 0, 0);
 
             tblLPWrapperLayout.Parent = this;
             Controls.SetChildIndex(tblLPWrapperLayout, Controls.GetChildIndex(LblLabel));
@@ -37,14 +39,17 @@ namespace medic.Components {
 
 
 
+        //Возвращает индекс выбранного элемента списка
         public int GetComboIndex() {
             return cmbList.SelectedIndex;
         }
 
+        //Устанавливает выбранный элемент списка по индекса
         public void SetComboIndex(int value) {
             cmbList.SelectedIndex = value;
         }
 
+        //Устанавливает выбранный элемент списка по значение
         public void SetComboValue(string value) {
             for (int i = 0; i < cmbList.Items.Count; i++) {
                 if (cmbList.GetItemText(cmbList.Items[i]) == value) {
@@ -53,6 +58,8 @@ namespace medic.Components {
                 }
             }
         }
+
+
 
         //Возвращает значение поля ввода
         public override string GetValue() {
@@ -63,7 +70,6 @@ namespace medic.Components {
         public override void SetValue(string value) {
             (CtrlField as TextBox).Text = value;
         }
-
 
     }
 

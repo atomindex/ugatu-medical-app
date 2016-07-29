@@ -125,15 +125,21 @@ namespace medic.Forms {
             specialtyEditForm.Text = "Добавление новой специальности";
 
             if (specialtyEditForm.ShowDialog() == DialogResult.OK) {
-                specialtiesList.Insert(0, specialty);
-                table.Rows.Insert(0, 1);
+                if (specialtiesList.Count > 0)
+                    table.Rows.Insert(0, 1);
+                
                 table.Rows[0].DefaultCellStyle.BackColor = AppConfig.LightOrangeColor;
                 loadDataToRow(0, specialty);
+
+                specialtiesList.Insert(0, specialty);
             }
         }
 
         //Событие клика по кнопке Редактирование сотрудника
         private void btnEdit_Click(object sender, EventArgs e) {
+            if (specialtiesList.Count == 0)
+                return;
+
             Specialty specialty = specialtiesList[table.CurrentCell.RowIndex].Clone();
 
             SpecialtyEditForm specialtyEditForm = new SpecialtyEditForm(specialty);
@@ -147,8 +153,10 @@ namespace medic.Forms {
 
         //Событие клика по кнопке Удаление сотрудника
         private void btnRemove_Click(object sender, EventArgs e) {
-            int index = table.CurrentCell.RowIndex;
-            Specialty specialty = specialtiesList[index];
+            if (specialtiesList.Count == 0)
+                return;
+
+            Specialty specialty = specialtiesList[table.CurrentCell.RowIndex];
 
             if (MessageBox.Show("Вы дейсвительно хотите удалить специальность?", "Удаление специальности", MessageBoxButtons.OKCancel) == DialogResult.OK) {
                 specialty.Remove();

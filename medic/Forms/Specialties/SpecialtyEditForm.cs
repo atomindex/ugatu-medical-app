@@ -37,6 +37,10 @@ namespace medic.Forms {
             tbwName.Dock = DockStyle.Top;
             tbwName.Parent = panel;
 
+            panel.TabIndex = 0;
+            toolsPanel.TabIndex = 1;
+            FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
+
             //Подгружаем данные специальности
             AssignSpecialty(specialty);
         }

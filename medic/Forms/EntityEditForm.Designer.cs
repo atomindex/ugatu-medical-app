@@ -43,8 +43,8 @@
             // 
             // toolsAligner
             // 
-            this.toolsAligner.Controls.Add(this.saveButton);
             this.toolsAligner.Controls.Add(this.cancelButton);
+            this.toolsAligner.Controls.Add(this.saveButton);
             this.toolsAligner.Dock = System.Windows.Forms.DockStyle.Right;
             this.toolsAligner.Location = new System.Drawing.Point(230, 0);
             this.toolsAligner.Name = "toolsAligner";
@@ -106,10 +106,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel toolsPanel;
         private System.Windows.Forms.Panel toolsAligner;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Panel panel;
+        protected System.Windows.Forms.Panel toolsPanel;
     }
 }

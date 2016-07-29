@@ -10,6 +10,9 @@ namespace medic {
     //Класс пациента
     public class Patient : Entity {
 
+        public static string[] SexKeys = new string[] { "", "0", "1" };
+        public static string[] SexValues = new string[] { "Не выбрано", "Мужчина", "Женщина" };
+
         private static string tableName;        //Имя таблицы
         private static string fields;           //Поля таблицы для выборки
         private static string[] fieldsArray;    //Массив полей для вставки
@@ -18,14 +21,14 @@ namespace medic {
         public string MiddleName;               //Отчество пациента
         public string LastName;                 //Фамилия пациента
         public string Sex;                      //Пол пациента
-        public string Birthday;                 //Дата рождения пациента
+        public DateTime Birthday;               //Дата рождения пациента
 
 
 
         //Статический конструктор
         static Patient() {
             tableName = "patients";
-            fields = "patients.id, patients.first_name, patients.middle_name, patients.last_name, patients.sex, patients.birthday";
+            fields = "patients.id, patients.first_name, patients.middle_name, patients.last_name, patients.sex, DATE_FORMAT(patients.birthday, '%Y-%m-%d')";
             fieldsArray = new string[] { "first_name", "middle_name", "last_name", "sex", "birthday" };
         }
 
@@ -123,7 +126,7 @@ namespace medic {
         public override int Save() {
             id = save(
                 tableName, fieldsArray,
-                new string[] { FirstName, MiddleName, LastName, Sex, Birthday }
+                new string[] { FirstName, MiddleName, LastName, Sex, Birthday.ToString("yyyy-MM-dd") }
             );
             return id;
         }
@@ -142,7 +145,7 @@ namespace medic {
             MiddleName = data[2];
             LastName = data[3];
             Sex = data[4];
-            Birthday = data[5];
+            Birthday = DateTime.ParseExact(data[5], "yyyy-MM-dd", null);
         }
     
     }

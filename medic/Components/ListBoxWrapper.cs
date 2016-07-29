@@ -8,15 +8,17 @@ using System.Drawing;
 
 namespace medic.Components {
 
+    //Класс списка с кнопками добавления и удаления, и надписями
     class ListBoxWrapper : FieldWrapper {
 
-        private ToolStrip tlsListManager;
-        private ToolStripLabel tlsLblLabel;
-        private ToolStripButton tlsBtnAdd;
-        private ToolStripButton tlsBtnRemove;
+        private ToolStrip tlsListManager;       //Панель с кнопками
+        private ToolStripLabel tlsLblLabel;     //Подпись к полю
+        private ToolStripButton tlsBtnAdd;      //Кнопка добавления
+        private ToolStripButton tlsBtnRemove;   //Кнопка удаления
        
 
 
+        //Конструктор
         public ListBoxWrapper(string labelText, ListBox field) : base(labelText, field) {
             field.Height = 60;
             LblLabel.Visible = false;
@@ -47,23 +49,28 @@ namespace medic.Components {
 
 
 
+        //Не используется
         public override string GetValue() {
             return "";
         }
 
+        //Не используется
         public override void SetValue(string value) {
-            throw new NotImplementedException();
+
         }
 
 
 
+        //Добавляет событие на кнопку Добавить 
         public void AddAddEvent(EventHandler handler) {
             tlsBtnAdd.Click += handler;
         }
 
+        //Добавляет событие на кнопку Удалить
         public void AddRemoveEvent(EventHandler handler) {
             tlsBtnRemove.Click += handler;
         }
+
     }
 
 }

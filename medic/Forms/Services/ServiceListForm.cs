@@ -126,15 +126,21 @@ namespace medic.Forms {
             serviceEditForm.Text = "Добавление новой услуги";
 
             if (serviceEditForm.ShowDialog() == DialogResult.OK) {
-                servicesList.Insert(0, service);
-                table.Rows.Insert(0, 1);
+                if (servicesList.Count > 0)
+                    table.Rows.Insert(0, 1);
+
                 table.Rows[0].DefaultCellStyle.BackColor = AppConfig.LightOrangeColor;
                 loadDataToRow(0, service);
+
+                servicesList.Insert(0, service);
             }
         }
 
         //Событие клика по кнопке Редактирование сотрудника
         private void btnEdit_Click(object sender, EventArgs e) {
+            if (servicesList.Count == 0)
+                return;
+
             Service service = servicesList[table.CurrentCell.RowIndex].Clone();
 
             ServiceEditForm serviceEditForm = new ServiceEditForm(service);
@@ -148,8 +154,10 @@ namespace medic.Forms {
 
         //Событие клика по кнопке Удаление сотрудника
         private void btnRemove_Click(object sender, EventArgs e) {
-            int index = table.CurrentCell.RowIndex;
-            Service service = servicesList[index];
+            if (servicesList.Count == 0)
+                return;
+
+            Service service = servicesList[table.CurrentCell.RowIndex];
 
             if (MessageBox.Show("Вы дейсвительно хотите удалить услугу?", "Удаление услуги", MessageBoxButtons.OKCancel) == DialogResult.OK) {
                 service.Remove();

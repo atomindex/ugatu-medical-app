@@ -12,7 +12,7 @@ namespace medic.Forms {
         private string[] tableFields;                   //Список полей соответвующих колонкам
 
         private ListData listData;                      //Данные списка скидок
-        private List<Sale> saleList;                    //Список скидок
+        private List<Sale> salesList;                   //Список скидок
 
         private SqlFilter filter;                       //Фильтр для запросов
         private SqlFilter nameFilterGroup;              //Условия фильтра
@@ -90,9 +90,9 @@ namespace medic.Forms {
         //Перезагрузка данных в таблицу
         protected override void reloadData(bool resetPageIndex = false) {
             listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
-            saleList = Sale.GetList(listData);
+            salesList = Sale.GetList(listData);
 
-            if (saleList.Count == 0) {
+            if (salesList.Count == 0) {
                 table.RowCount = 1;
                 ClearTable(table);
             } else {
@@ -113,7 +113,7 @@ namespace medic.Forms {
         private void loadDataToTable() {
             table.RowCount = listData.List.Count;
             for (int i = 0; i < listData.List.Count; i++)
-                loadDataToRow(i, saleList[i]);
+                loadDataToRow(i, salesList[i]);
         }
 
 
@@ -126,30 +126,38 @@ namespace medic.Forms {
             saleEditForm.Text = "Добавление новой скидки";
 
             if (saleEditForm.ShowDialog() == DialogResult.OK) {
-                saleList.Insert(0, sale);
-                table.Rows.Insert(0, 1);
+                if (salesList.Count > 0)
+                    table.Rows.Insert(0, 1);
+                
                 table.Rows[0].DefaultCellStyle.BackColor = AppConfig.LightOrangeColor;
                 loadDataToRow(0, sale);
+
+                salesList.Insert(0, sale);
             }
         }
 
         //Событие клика по кнопке Редактирование сотрудника
         private void btnEdit_Click(object sender, EventArgs e) {
-            Sale sale = saleList[table.CurrentCell.RowIndex].Clone();
+            if (salesList.Count == 0)
+                return;
+
+            Sale sale = salesList[table.CurrentCell.RowIndex].Clone();
 
             SaleEditForm saleEditForm = new SaleEditForm(sale);
             saleEditForm.Text = "Редактирование скидки";
 
             if (saleEditForm.ShowDialog() == DialogResult.OK) {
                 loadDataToRow(table.CurrentCell.RowIndex, sale);
-                saleList[table.CurrentCell.RowIndex] = sale;
+                salesList[table.CurrentCell.RowIndex] = sale;
             }
         }
 
         //Событие клика по кнопке Удаление сотрудника
         private void btnRemove_Click(object sender, EventArgs e) {
-            int index = table.CurrentCell.RowIndex;
-            Sale sale = saleList[index];
+            if (salesList.Count == 0)
+                return;
+
+            Sale sale = salesList[table.CurrentCell.RowIndex];
 
             if (MessageBox.Show("Вы дейсвительно хотите удалить скидку?", "Удаление скидки", MessageBoxButtons.OKCancel) == DialogResult.OK) {
                 sale.Remove();

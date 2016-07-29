@@ -16,7 +16,7 @@ namespace medic.Forms {
         private List<Worker> serviceRemovedWorkers;     //Удаленные сотрудники предоставляющие услугу
 
         private TextBoxWrapper tbwName;                 //Поле Название услуги
-        private TextBoxWrapper tbwPrice;                //Поле Цена услуги
+        private NumericBoxWrapper nbwPrice;             //Поле Цена услуги
 
         private ListBoxWrapper lbwWorkers;              //Поле Сотрудники предоставляющие услугу
 
@@ -34,13 +34,17 @@ namespace medic.Forms {
             lbwWorkers.AddAddEvent(btnAddWorker_Event);
             lbwWorkers.AddRemoveEvent(btnRemoveWorker_Event);
 
-            tbwPrice = new TextBoxWrapper("Цена", new TextBox());
-            tbwPrice.Dock = DockStyle.Top;
-            tbwPrice.Parent = panel;
+            nbwPrice = new NumericBoxWrapper("Цена", new NumericUpDown(), 1);
+            nbwPrice.Dock = DockStyle.Top;
+            nbwPrice.Parent = panel;
 
             tbwName = new TextBoxWrapper("Название", new TextBox());
             tbwName.Dock = DockStyle.Top;
             tbwName.Parent = panel;
+
+            panel.TabIndex = 0;
+            toolsPanel.TabIndex = 1;
+            FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
 
             //Подгружаем данные услуги
             AssignService(service);
@@ -54,7 +58,7 @@ namespace medic.Forms {
             this.service = service;
 
             tbwName.SetValue(service.Name);
-            tbwPrice.SetValue(service.Price.ToString());
+            nbwPrice.SetValue(service.Price.ToString());
 
             ListData workersData = Worker.GetServiceWorkersListData(service.GetId(), service.GetConnection(), 25);
             workersData.Update();
@@ -73,8 +77,8 @@ namespace medic.Forms {
         protected override bool Validate() {
             bool success = true;
 
-            TextBoxWrapper[] requiredTextBoxes = new TextBoxWrapper[] {
-                tbwName, tbwPrice
+            FieldWrapper[] requiredTextBoxes = new FieldWrapper[] {
+                tbwName, nbwPrice
             };
 
             foreach (TextBoxWrapper field in requiredTextBoxes)
@@ -85,19 +89,13 @@ namespace medic.Forms {
                     success = false;
                 }
 
-            if (!tbwPrice.HasError()) {
-                int parsedPrice;
-                if (!Int32.TryParse(tbwPrice.GetValue(), out parsedPrice))
-                    tbwPrice.ShowError("Неверное значение");
-            }
-
             return success;
         }
 
         //Сохраняет услугу
         protected override bool Save() {
             service.Name = tbwName.GetValue();
-            service.Price = Int32.Parse(tbwPrice.GetValue());
+            service.Price = Int32.Parse(nbwPrice.GetValue());
 
             connection.StartTransaction();
 
