@@ -77,7 +77,7 @@ namespace medic.Forms {
                 tbwFirstName, tbwLastName, tbwMiddleName, cbwSex, dpwBirthday
             };
 
-            foreach (TextBoxWrapper field in requiredTextBoxes)
+            foreach (FieldWrapper field in requiredTextBoxes)
                 if (field.GetValue().Trim().Length > 0)
                     field.HideError();
                 else {

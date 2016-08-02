@@ -129,6 +129,11 @@ namespace medic {
             saleListForm.Show();
         }
 
+        private void menuItemPatients_Click(object sender, EventArgs e) {
+            ListData listData = Patient.GetListData(connection, 25);
+            PatientListForm patientListForm = new PatientListForm(listData);
+            patientListForm.Show();
+        }
 
 
 

@@ -122,6 +122,12 @@ namespace medic {
             return fullName.TrimEnd();
         }
 
+
+        public string GetStringSex() {
+            int index = Array.IndexOf(SexKeys, Sex);
+            return SexValues[index > -1 ? index : 0];
+        }
+
         //Сохраняет пациента
         public override int Save() {
             id = save(

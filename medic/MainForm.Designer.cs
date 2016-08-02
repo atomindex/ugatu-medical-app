@@ -46,6 +46,7 @@
             this.btnShowPatientVisits = new System.Windows.Forms.ToolStripButton();
             this.btnSearch = new System.Windows.Forms.ToolStripButton();
             this.btnAddPatient = new System.Windows.Forms.ToolStripButton();
+            this.menuItemPatients = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.mainTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
@@ -69,7 +70,8 @@
             this.menuItemWorkers,
             this.menuItemServices,
             this.menuItemSpecialties,
-            this.menuItemSales});
+            this.menuItemSales,
+            this.menuItemPatients});
             this.menuItemLists.Name = "menuItemLists";
             this.menuItemLists.Size = new System.Drawing.Size(94, 20);
             this.menuItemLists.Text = "Справочники";
@@ -77,28 +79,28 @@
             // menuItemWorkers
             // 
             this.menuItemWorkers.Name = "menuItemWorkers";
-            this.menuItemWorkers.Size = new System.Drawing.Size(140, 22);
+            this.menuItemWorkers.Size = new System.Drawing.Size(152, 22);
             this.menuItemWorkers.Text = "Сотрудники";
             this.menuItemWorkers.Click += new System.EventHandler(this.menuItemWorkers_Click);
             // 
             // menuItemServices
             // 
             this.menuItemServices.Name = "menuItemServices";
-            this.menuItemServices.Size = new System.Drawing.Size(140, 22);
+            this.menuItemServices.Size = new System.Drawing.Size(152, 22);
             this.menuItemServices.Text = "Услуги";
             this.menuItemServices.Click += new System.EventHandler(this.menuItemServices_Click);
             // 
             // menuItemSpecialties
             // 
             this.menuItemSpecialties.Name = "menuItemSpecialties";
-            this.menuItemSpecialties.Size = new System.Drawing.Size(140, 22);
+            this.menuItemSpecialties.Size = new System.Drawing.Size(152, 22);
             this.menuItemSpecialties.Text = "Должности";
             this.menuItemSpecialties.Click += new System.EventHandler(this.menuItemSpecialties_Click);
             // 
             // menuItemSales
             // 
             this.menuItemSales.Name = "menuItemSales";
-            this.menuItemSales.Size = new System.Drawing.Size(140, 22);
+            this.menuItemSales.Size = new System.Drawing.Size(152, 22);
             this.menuItemSales.Text = "Скидки";
             this.menuItemSales.Click += new System.EventHandler(this.menuItemSales_Click);
             // 
@@ -254,6 +256,13 @@
             this.btnAddPatient.Text = "Новый пациент";
             this.btnAddPatient.Click += new System.EventHandler(this.btnAddPatient_Click);
             // 
+            // menuItemPatients
+            // 
+            this.menuItemPatients.Name = "menuItemPatients";
+            this.menuItemPatients.Size = new System.Drawing.Size(152, 22);
+            this.menuItemPatients.Text = "Пациенты";
+            this.menuItemPatients.Click += new System.EventHandler(this.menuItemPatients_Click);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -297,6 +306,7 @@
         private System.Windows.Forms.ToolStripTextBox txtBoxSearch;
         protected System.Windows.Forms.DataGridView table;
         private System.Windows.Forms.ToolStripButton btnSearch;
+        private System.Windows.Forms.ToolStripMenuItem menuItemPatients;
     }
 }
 

@@ -25,12 +25,14 @@ namespace medic.Components {
 
         //Устанавливает значение поля ввода
         public override void SetValue(string value) {
-            (CtrlField as NumericUpDown).Value = Int32.Parse(value);
+            NumericUpDown nud = (CtrlField as NumericUpDown);
+            nud.Value = Math.Min(nud.Maximum, Math.Max(nud.Minimum, Int32.Parse(value)));
         }
 
         //Устанавливает значение поля ввода
         public void SetValue(int value) {
-            (CtrlField as NumericUpDown).Value = value;
+            NumericUpDown nud = (CtrlField as NumericUpDown);
+            nud.Value = Math.Min(nud.Maximum, Math.Max(nud.Minimum, value));
         }
 
     }
