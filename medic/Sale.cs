@@ -8,6 +8,10 @@ using medic.Database;
 namespace medic {
 
     public abstract class SaleCondition {
+
+        public string name;
+        public string op;
+
         public abstract bool Compare(object comparedValue);
 
         public abstract SaleCondition Clone();
@@ -17,20 +21,14 @@ namespace medic {
 
     public class SaleConditionInt : SaleCondition {
         public static string[] Operators = new string[] { "", "=", "<>", ">", "<", ">=", "<=", "%", "!%" };
+        public static string[] OperatorsForArray = new string[] { "", "=", "<>" };
 
-        public string name;
-        public string op;
         public int value;
 
         public SaleConditionInt(string name, string op = "", int value = 0) {
             this.name = name;
             this.op = op;
             this.value = value;
-        }
-
-        public SaleConditionInt(string name, string conditionData) {
-            this.name = name;
-            SetCondition(conditionData);
         }
 
         public override bool Compare(object comparedValue) {
@@ -70,6 +68,23 @@ namespace medic {
             return false;
         }
 
+        public bool Compare(int[] comparedValue) {
+            if (op == null || op.Length == 0)
+                return true;
+
+            switch (op) {
+
+                case "=":
+                    return Array.Exists<int>(comparedValue, element => element == value);
+
+                case "<>":
+                    return !Array.Exists<int>(comparedValue, element => element == value);
+
+            }
+
+            return false;
+        }
+
         public override SaleCondition Clone() {
             return new SaleConditionInt(name, op, value);
         }
@@ -90,19 +105,12 @@ namespace medic {
 
         public static string[] Operators = new string[] { "", "=", "<>", ">", "<", ">=", "<=" };
 
-        public string name;
-        public string op;
         public DateTime value;
 
         public SaleConditionDatetime(string name) {
             this.name = name;
             this.op = "";
             this.value = DateTime.MinValue;
-        }
-
-        public SaleConditionDatetime(string name, string conditionData) {
-            this.name = name;
-            SetCondition(conditionData);
         }
 
         public SaleConditionDatetime(string name, string op, DateTime value) {
@@ -161,6 +169,7 @@ namespace medic {
         public int ServicesSumPrice;
         public int PatientAge;
         public int PatientSex;
+        public int[] PatientCategories;
         public int VisitNumber;
         public DateTime VisitDate;
     }
@@ -183,6 +192,7 @@ namespace medic {
         public SaleConditionInt CondServicesSumPrice;
         public SaleConditionInt CondPatientAge;
         public SaleConditionInt CondPatientSex;
+        public SaleConditionInt CondPatientCategory;
         public SaleConditionInt CondVisitNumber;
         public SaleConditionDatetime CondVisitDate;
 
@@ -201,6 +211,7 @@ namespace medic {
                 "cond_services_sum_price", 
                 "cond_patient_age", 
                 "cond_patient_sex", 
+                "cond_patient_category",
                 "cond_visit_number", 
                 "cond_visit_date" 
             };
@@ -281,6 +292,7 @@ namespace medic {
                     sale.CondServicesSumPrice.Compare(visitData.ServicesSumPrice) &&
                     sale.CondPatientAge.Compare(visitData.PatientAge) &&
                     sale.CondPatientSex.Compare(visitData.PatientSex) &&
+                    sale.CondPatientCategory.Compare(visitData.PatientCategories) &&
                     sale.CondVisitNumber.Compare(visitData.VisitNumber) &&
                     sale.CondVisitDate.Compare(visitData.VisitDate)
                 ) suitableSales.Add(sale);
@@ -296,7 +308,8 @@ namespace medic {
             CondServicesCount = new SaleConditionInt("cond_services_count");
             CondServicesSumPrice = new SaleConditionInt("cond_services_sum_price");
             CondPatientAge = new SaleConditionInt("cond_patient_age");
-            CondPatientSex = new SaleConditionInt("cond_patient_sex");
+            CondPatientSex = new SaleConditionInt("cond_patient_sex", "", -1);
+            CondPatientCategory = new SaleConditionInt("cond_patient_category");
             CondVisitNumber = new SaleConditionInt("cond_visit_number");
             CondVisitDate = new SaleConditionDatetime("cond_visit_date");
 
@@ -322,6 +335,7 @@ namespace medic {
 
             sale.CondServicesCount = (SaleConditionInt)CondServicesCount.Clone();
             sale.CondServicesSumPrice = (SaleConditionInt)CondServicesSumPrice.Clone();
+            sale.CondPatientCategory = (SaleConditionInt)CondPatientCategory.Clone();
             sale.CondPatientAge = (SaleConditionInt)CondPatientAge.Clone();
             sale.CondPatientSex = (SaleConditionInt)CondPatientSex.Clone();
             sale.CondVisitNumber = (SaleConditionInt)CondVisitNumber.Clone();
@@ -343,6 +357,7 @@ namespace medic {
                     CondServicesSumPrice.ToString(),
                     CondPatientAge.ToString(),
                     CondPatientSex.ToString(),
+                    CondPatientCategory.ToString(),
                     CondVisitNumber.ToString(),
                     CondVisitDate.ToString()
                 }
@@ -392,8 +407,9 @@ namespace medic {
             CondServicesSumPrice.SetCondition(data[5]);
             CondPatientAge.SetCondition(data[6]);
             CondPatientSex.SetCondition(data[7]);
-            CondVisitNumber.SetCondition(data[8]);
-            CondVisitDate.SetCondition(data[9]);
+            CondPatientCategory.SetCondition(data[8]);
+            CondVisitNumber.SetCondition(data[9]);
+            CondVisitDate.SetCondition(data[10]);
         }
 
     }

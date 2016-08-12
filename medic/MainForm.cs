@@ -144,7 +144,7 @@ namespace medic {
 
 
         private void menuItemWorkers_Click(object sender, EventArgs e) {
-            ListData listData = Worker.GetListData(connection, 2);
+            ListData listData = Worker.GetListData(connection, 25);
             WorkerListForm workersListForm = new WorkerListForm(listData);
             workersListForm.Show();
         }
@@ -173,6 +173,11 @@ namespace medic {
             patientListForm.Show();
         }
 
+        private void menuItemCategories_Click(object sender, EventArgs e) {
+            ListData listData = Category.GetListData(connection, 25);
+            CategoryListForm categoryListForm = new CategoryListForm(listData);
+            categoryListForm.Show();
+        }
 
 
         private void toolStripButton_MouseEnter(object sender, EventArgs e) {

@@ -6,12 +6,15 @@ using medic.Components;
 
 namespace medic.Forms {
 
-    //Форма редактирования сотрудника
+    //Форма редактирования пациента
     public partial class PatientEditForm : EntityEditForm {
 
         private DBConnection connection;                    //Соединение с базой
 
-        private Patient patient;                            //Редактируемый сотрудник
+        private Patient patient;                            //Редактируемый пациент
+
+        private List<Category> patientCategories;          //Категории пациента
+        private List<Category> patientRemovedCategories;   //Удаленные категории пациента
 
         private TextBoxWrapper tbwFirstName;                //Поле Имя
         private TextBoxWrapper tbwLastName;                 //Поле Фамилия
@@ -19,13 +22,19 @@ namespace medic.Forms {
         private ComboBoxWrapper cbwSex;                     //Поле Пол
         private DatepickerWrapper dpwBirthday;              //Поле Дата рождения
 
-
+        private ListBoxWrapper lbwCategories;               //Поле Категории
 
         //Конструктор
         public PatientEditForm(Patient patient) : base() {
             InitializeComponent();
 
             Panel panel = GetPanel();
+
+            lbwCategories = new ListBoxWrapper("Категории", new ListBox());
+            lbwCategories.Dock = DockStyle.Top;
+            lbwCategories.Parent = panel;
+            lbwCategories.AddAddEvent(btnAddCategory_Event);
+            lbwCategories.AddRemoveEvent(btnRemoveCategory_Event);
 
             dpwBirthday = new DatepickerWrapper("Дата рождения", new DateTimePicker());
             dpwBirthday.Dock = DockStyle.Top;
@@ -51,13 +60,13 @@ namespace medic.Forms {
             toolsPanel.TabIndex = 1;
             FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
 
-            //Подгружаем данные сотрудника
+            //Подгружаем данные пациента
             AssignPatient(patient);
         }
 
 
 
-        //Привязывает сотрудника к форме, подгружает данные в форму
+        //Привязывает пациента к форме, подгружает данные в форму
         public void AssignPatient(Patient patient) {
             this.connection = patient.GetConnection();
             this.patient = patient;
@@ -67,6 +76,19 @@ namespace medic.Forms {
             tbwMiddleName.SetValue(patient.MiddleName);
             cbwSex.SetValue(patient.Sex.ToString());
             dpwBirthday.SetDate(patient.Birthday);
+
+            ListData categoriesData = Category.GetPatientCategoriesListData(patient.GetId(), patient.GetConnection());
+            categoriesData.Update();
+            patientCategories = Category.GetList(categoriesData);
+            patientRemovedCategories = new List<Category>();
+
+            //Подгружаем данные 
+            ListBox lstBoxSpecialties = (lbwCategories.CtrlField as ListBox);
+            lstBoxSpecialties.SuspendLayout();
+            lstBoxSpecialties.Items.Clear();
+            foreach (Category patientCategory in patientCategories)
+                lstBoxSpecialties.Items.Add(patientCategory.Name);
+            lstBoxSpecialties.ResumeLayout();
         }
 
         //Проверяет кооректность введенных данных
@@ -74,7 +96,7 @@ namespace medic.Forms {
             bool success = true;
 
             FieldWrapper[] requiredTextBoxes = new FieldWrapper[] {
-                tbwFirstName, tbwLastName, tbwMiddleName, cbwSex, dpwBirthday
+                tbwFirstName, tbwLastName, tbwMiddleName, dpwBirthday
             };
 
             foreach (FieldWrapper field in requiredTextBoxes)
@@ -85,10 +107,17 @@ namespace medic.Forms {
                     success = false;
                 }
 
+            if (cbwSex.GetValue() != "-1")
+                cbwSex.HideError();
+            else {
+                cbwSex.ShowError("Поле обязательно для заполнения");
+                success = false;
+            }
+
             return success;
         }
 
-        //Сохраняет сотрудника
+        //Сохраняет пациента
         protected override bool Save() {
             patient.FirstName = tbwFirstName.GetValue();
             patient.MiddleName = tbwMiddleName.GetValue();
@@ -96,7 +125,66 @@ namespace medic.Forms {
             patient.Birthday = dpwBirthday.GetDate();
             patient.Sex = Int32.Parse(cbwSex.GetValue());
 
-            return patient.Save() != -1;
+            connection.StartTransaction();
+
+            if (patient.Save() == -1)
+                connection.RollbackTransaction();
+
+            else if (patient.RemoveCategories(patientRemovedCategories) == -1)
+                connection.RollbackTransaction();
+
+            else if (patient.AddCategories(patientCategories) == -1)
+                connection.RollbackTransaction();
+
+            else if (connection.CommitTransaction())
+                return true;
+
+            return false;
+        }
+
+
+        //Событие клика на кнопку Добавить категорию
+        private void btnAddCategory_Event(object sender, EventArgs e) {
+            //Создаем фильтр для отсечения уже добавленных услуг
+            SqlFilter selectedFilter = new SqlFilter(SqlLogicalOperator.And);
+            if (patientCategories.Count > 0) {
+                SqlFilterCondition selectedFilterCondition = new SqlFilterCondition(Category.GetFieldName("id"), SqlComparisonOperator.NotIn);
+
+                string[] patientCategoriesIds = new string[patientCategories.Count];
+                for (int i = 0; i < patientCategories.Count; i++)
+                    patientCategoriesIds[i] = patientCategories[i].GetId().ToString();
+                selectedFilterCondition.SetValue(QueryBuilder.BuildInStatement(patientCategoriesIds));
+
+                selectedFilter.AddItem(selectedFilterCondition);
+            }
+
+            //Создаем формы для добавления услуг
+            ListData categoriesListData = Category.GetListData(connection, 25, 0, selectedFilter);
+            CategorySelectForm specialtySelectForm = new CategorySelectForm(categoriesListData);
+
+            if (specialtySelectForm.ShowDialog() == DialogResult.OK) {
+                //Добавление выбранных услуг в список
+                List<Category> selectedSpetialties = specialtySelectForm.GetSelected();
+                patientCategories.AddRange(selectedSpetialties);
+
+                //Добавляем выбранных услуг в список на форме
+                ListBox lstBoxCategories = (lbwCategories.CtrlField as ListBox);
+                lstBoxCategories.SuspendLayout();
+                foreach (Category patientCategory in selectedSpetialties)
+                    lstBoxCategories.Items.Add(patientCategory.Name);
+                lstBoxCategories.ResumeLayout();
+            }
+        }
+
+        //Событие клика на кнопку Удалить категорию
+        private void btnRemoveCategory_Event(object sender, EventArgs e) {
+            ListBox lstBoxCategories = (lbwCategories.CtrlField as ListBox);
+            if (lstBoxCategories.SelectedIndex == -1)
+                return;
+
+            patientRemovedCategories.Add(patientCategories[lstBoxCategories.SelectedIndex]);
+            patientCategories.RemoveAt(lstBoxCategories.SelectedIndex);
+            lstBoxCategories.Items.RemoveAt(lstBoxCategories.SelectedIndex);
         }
 
     }

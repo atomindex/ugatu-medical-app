@@ -10,8 +10,8 @@ namespace medic {
     //Класс пациента
     public class Patient : Entity {
 
-        public static string[] SexKeys = new string[] { "", "0", "1" };
-        public static string[] SexValues = new string[] { "Не выбрано", "Мужчина", "Женщина" };
+        public static string[] SexKeys;
+        public static string[] SexValues;
 
         private static string tableName;        //Имя таблицы
         private static string fields;           //Поля таблицы для выборки
@@ -27,6 +27,9 @@ namespace medic {
 
         //Статический конструктор
         static Patient() {
+            SexKeys = new string[] { "-1", "0", "1" };
+            SexValues = new string[] { "Не выбрано", "Мужчина", "Женщина" };
+
             tableName = "patients";
             fields = "patients.id, patients.first_name, patients.middle_name, patients.last_name, patients.sex, DATE_FORMAT(patients.birthday,'%Y-%m-%d')";
             fieldsArray = new string[] { "first_name", "middle_name", "last_name", "sex", "birthday" };
@@ -99,6 +102,8 @@ namespace medic {
 
         //Конструктор
         public Patient(DBConnection connection, int id = 0) : base(connection) {
+            Sex = -1;
+
             if (id <= 0) return;
             List<string[]> data = connection.Select("SELECT " + fields + " FROM " + tableName + " WHERE id = " + id.ToString());
             if (data.Count == 0) {
@@ -147,11 +152,23 @@ namespace medic {
         }
 
         public int GetVisitCount() {
-            string sql = "SELECT COUNT(*) FROM visits WHERE patient_id = " + id.ToString();
+            string sql = "SELECT COUNT(*) FROM visits WHERE removed = 0 AND patient_id = " + id.ToString();
             List<string[]> result = connection.Select(sql);
             return Int32.Parse(result[0][0]);
         }
 
+        public int[] GetCategoriesIds() {
+            string sql = "SELECT patients_categories.category_id FROM patients_categories" +
+                        " JOIN categories ON categories.id = patients_categories.category_id " + 
+                        " WHERE categories.removed = 0 AND patient_id = " + id.ToString();
+            List<string[]> result = connection.Select(sql);
+
+            int[] ids = new int[result.Count];
+            for (int i = 0; i < result.Count; i++)
+                ids[i] = Int32.Parse(result[i][0]);
+
+            return ids;
+        }
 
 
         //Сохраняет пациента
@@ -166,6 +183,31 @@ namespace medic {
         //Удаляет пациента
         public override void Remove() {
             remove(tableName);
+        }
+
+
+
+        //Добавляет список категорий
+        public int AddCategories(List<Category> categoriesList) {
+            if (categoriesList.Count == 0) return 0;
+
+            string[] values = new string[categoriesList.Count];
+            for (int i = 0; i < categoriesList.Count; i++)
+                values[i] = "(" + id + ", " + categoriesList[i].GetId().ToString() + ")";
+
+            string sql = "INSERT IGNORE INTO patients_categories (patient_id, category_id) VALUES " + String.Join(",", values);
+            return connection.Insert(sql);
+        }
+
+        //Удаляет список категорий
+        public int RemoveCategories(List<Category> categoriesList) {
+            if (categoriesList.Count == 0) return 0;
+
+            string[] categoriesIds = new string[categoriesList.Count];
+            for (int i = 0; i < categoriesList.Count; i++)
+                categoriesIds[i] = categoriesList[i].GetId().ToString();
+            string sql = "DELETE FROM patients_categories WHERE patient_id = " + id + " AND category_id IN " + QueryBuilder.BuildInStatement(categoriesIds);
+            return connection.Delete(sql);
         }
 
 

@@ -61,12 +61,13 @@ namespace medic.Components {
             return comboBox.SelectedIndex > -1 ? keys[comboBox.SelectedIndex] : "";
         }
 
-        public void SetComboBoxKey(string key) {
+        public void SetComboBoxKey(string key, int defaultIndex = 0) {
             for (int i = 0; i < keys.Length; i++)
                 if (keys[i] == key) {
                     comboBox.SelectedIndex = i;
-                    break;
+                    return;
                 }
+            comboBox.SelectedIndex = defaultIndex;
         }
 
         public void SetComboBoxValues(string[] keys, string[] values) {
@@ -86,6 +87,7 @@ namespace medic.Components {
             SizeF size = g.MeasureString(label.Text, label.Font, label.MaximumSize.Width);
             label.MinimumSize = new Size(label.MinimumSize.Width, (int)size.Height);
         }
+
     }
 
     //Класс текстового поля ввода с надписями
@@ -178,7 +180,7 @@ namespace medic.Components {
             item.comboBox.Tag = lastRowIndex;
             item.btnRemove.Click += btnRemove_Click;
             item.btnRemove.Tag = lastRowIndex;
-            item.btnRemove.Visible = false;
+            item.btnRemove.Visible = editable;
             
             items.Add(item);
 

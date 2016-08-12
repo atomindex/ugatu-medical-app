@@ -13,7 +13,6 @@ namespace medic {
         private static string fields;           //Поля таблицы для выборки
         private static string[] fieldsArray;    //Массив полей для вставки
 
-        public int PatientId;
         public Patient RelatedPatient;
         public DateTime VisitDate;
         public int PatientSex;
@@ -24,7 +23,7 @@ namespace medic {
         //Статический конструктор
         static Visit() {
             tableName = "visits";
-            fields = "visits.id, visits.patient_id, DATE_FORMAT(visits.visit_date,'%Y-%m-%d'), visits.patient_sex, visits.patient_age, visits.price, " + Patient.GetFields();
+            fields = "visits.id, DATE_FORMAT(visits.visit_date,'%Y-%m-%d'), visits.patient_sex, visits.patient_age, visits.price, " + Patient.GetFields();
             fieldsArray = new string[] { "patient_id", "visit_date", "patient_sex", "patient_age", "price" };
 
             patientFieldsCount = Patient.GetFields().Split(new string[] { ", " }, StringSplitOptions.None).Length;
@@ -99,8 +98,8 @@ namespace medic {
         public Visit Clone() {
             Visit visit = new Visit(connection);
             visit.id = id;
-            visit.PatientId = PatientId;
             visit.VisitDate = VisitDate;
+            visit.RelatedPatient = RelatedPatient.Clone();
             return visit;
         }
 
@@ -109,7 +108,7 @@ namespace medic {
             id = save(
                 tableName, fieldsArray,
                 new string[] { 
-                    PatientId.ToString(), 
+                    RelatedPatient.GetId().ToString(), 
                     VisitDate.ToString(AppConfig.DatabaseDateFormat), 
                     PatientSex.ToString(), 
                     PatientAge.ToString(),
@@ -128,14 +127,13 @@ namespace medic {
         //Загружает данные в поля
         private void loadData(string[] data) {
             string[] patientData = new string[patientFieldsCount];
-            Array.Copy(data, 6, patientData, 0, patientFieldsCount);
+            Array.Copy(data, 5, patientData, 0, patientFieldsCount);
 
             id = Int32.Parse(data[0]);
-            PatientId = Int32.Parse(data[1]);
-            VisitDate = DateTime.ParseExact(data[2], AppConfig.DatabaseDateFormat, null);
-            PatientSex = Int32.Parse(data[3]);
-            PatientAge = Int32.Parse(data[4]);
-            Price = Double.Parse(data[5]);
+            VisitDate = DateTime.ParseExact(data[1], AppConfig.DatabaseDateFormat, null);
+            PatientSex = Int32.Parse(data[2]);
+            PatientAge = Int32.Parse(data[3]);
+            Price = Double.Parse(data[4]);
 
             RelatedPatient = new Patient(connection);
             RelatedPatient.LoadData(patientData);

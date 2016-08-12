@@ -39,14 +39,15 @@
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTool = new System.Windows.Forms.ToolStrip();
-            this.btnAddVitit = new System.Windows.Forms.ToolStripButton();
-            this.btnShowPatientVisits = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lblSearch = new System.Windows.Forms.ToolStripLabel();
             this.txtBoxSearch = new System.Windows.Forms.ToolStripTextBox();
+            this.table = new System.Windows.Forms.DataGridView();
+            this.btnAddVitit = new System.Windows.Forms.ToolStripButton();
+            this.btnShowPatientVisits = new System.Windows.Forms.ToolStripButton();
             this.btnSearch = new System.Windows.Forms.ToolStripButton();
             this.btnAddPatient = new System.Windows.Forms.ToolStripButton();
-            this.table = new System.Windows.Forms.DataGridView();
+            this.menuItemCategories = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.mainTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
@@ -71,7 +72,8 @@
             this.menuItemServices,
             this.menuItemSpecialties,
             this.menuItemSales,
-            this.menuItemPatients});
+            this.menuItemPatients,
+            this.menuItemCategories});
             this.menuItemLists.Name = "menuItemLists";
             this.menuItemLists.Size = new System.Drawing.Size(94, 20);
             this.menuItemLists.Text = "Справочники";
@@ -79,35 +81,35 @@
             // menuItemWorkers
             // 
             this.menuItemWorkers.Name = "menuItemWorkers";
-            this.menuItemWorkers.Size = new System.Drawing.Size(140, 22);
+            this.menuItemWorkers.Size = new System.Drawing.Size(152, 22);
             this.menuItemWorkers.Text = "Сотрудники";
             this.menuItemWorkers.Click += new System.EventHandler(this.menuItemWorkers_Click);
             // 
             // menuItemServices
             // 
             this.menuItemServices.Name = "menuItemServices";
-            this.menuItemServices.Size = new System.Drawing.Size(140, 22);
+            this.menuItemServices.Size = new System.Drawing.Size(152, 22);
             this.menuItemServices.Text = "Услуги";
             this.menuItemServices.Click += new System.EventHandler(this.menuItemServices_Click);
             // 
             // menuItemSpecialties
             // 
             this.menuItemSpecialties.Name = "menuItemSpecialties";
-            this.menuItemSpecialties.Size = new System.Drawing.Size(140, 22);
+            this.menuItemSpecialties.Size = new System.Drawing.Size(152, 22);
             this.menuItemSpecialties.Text = "Должности";
             this.menuItemSpecialties.Click += new System.EventHandler(this.menuItemSpecialties_Click);
             // 
             // menuItemSales
             // 
             this.menuItemSales.Name = "menuItemSales";
-            this.menuItemSales.Size = new System.Drawing.Size(140, 22);
+            this.menuItemSales.Size = new System.Drawing.Size(152, 22);
             this.menuItemSales.Text = "Скидки";
             this.menuItemSales.Click += new System.EventHandler(this.menuItemSales_Click);
             // 
             // menuItemPatients
             // 
             this.menuItemPatients.Name = "menuItemPatients";
-            this.menuItemPatients.Size = new System.Drawing.Size(140, 22);
+            this.menuItemPatients.Size = new System.Drawing.Size(152, 22);
             this.menuItemPatients.Text = "Пациенты";
             this.menuItemPatients.Click += new System.EventHandler(this.menuItemPatients_Click);
             // 
@@ -160,30 +162,6 @@
             this.mainTool.TabIndex = 2;
             this.mainTool.Text = "toolStrip1";
             // 
-            // btnAddVitit
-            // 
-            this.btnAddVitit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(108)))), ((int)(((byte)(255)))));
-            this.btnAddVitit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnAddVitit.ForeColor = System.Drawing.Color.White;
-            this.btnAddVitit.Image = global::medic.Properties.Resources.visit;
-            this.btnAddVitit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAddVitit.Margin = new System.Windows.Forms.Padding(0, 1, 7, 2);
-            this.btnAddVitit.Name = "btnAddVitit";
-            this.btnAddVitit.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.btnAddVitit.Size = new System.Drawing.Size(121, 28);
-            this.btnAddVitit.Tag = "1";
-            this.btnAddVitit.Text = "Новый визит";
-            this.btnAddVitit.Click += new System.EventHandler(this.btnAddVitit_Click);
-            // 
-            // btnShowPatientVisits
-            // 
-            this.btnShowPatientVisits.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnShowPatientVisits.Image = global::medic.Properties.Resources.visit_list;
-            this.btnShowPatientVisits.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowPatientVisits.Name = "btnShowPatientVisits";
-            this.btnShowPatientVisits.Size = new System.Drawing.Size(129, 28);
-            this.btnShowPatientVisits.Text = "Визиты пациента";
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
@@ -200,28 +178,6 @@
             // 
             this.txtBoxSearch.Name = "txtBoxSearch";
             this.txtBoxSearch.Size = new System.Drawing.Size(180, 31);
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSearch.Image = global::medic.Properties.Resources.search_large;
-            this.btnSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(28, 28);
-            this.btnSearch.Text = "toolStripButton4";
-            this.btnSearch.ToolTipText = "Поиск";
-            // 
-            // btnAddPatient
-            // 
-            this.btnAddPatient.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnAddPatient.Image = global::medic.Properties.Resources.patient;
-            this.btnAddPatient.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAddPatient.Margin = new System.Windows.Forms.Padding(0, 1, 7, 2);
-            this.btnAddPatient.Name = "btnAddPatient";
-            this.btnAddPatient.Size = new System.Drawing.Size(121, 28);
-            this.btnAddPatient.Text = "Новый пациент";
-            this.btnAddPatient.Click += new System.EventHandler(this.btnAddPatient_Click);
             // 
             // table
             // 
@@ -264,6 +220,59 @@
             this.table.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.table.Size = new System.Drawing.Size(830, 348);
             this.table.TabIndex = 4;
+            // 
+            // btnAddVitit
+            // 
+            this.btnAddVitit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(108)))), ((int)(((byte)(255)))));
+            this.btnAddVitit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnAddVitit.ForeColor = System.Drawing.Color.White;
+            this.btnAddVitit.Image = global::medic.Properties.Resources.visit;
+            this.btnAddVitit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddVitit.Margin = new System.Windows.Forms.Padding(0, 1, 7, 2);
+            this.btnAddVitit.Name = "btnAddVitit";
+            this.btnAddVitit.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.btnAddVitit.Size = new System.Drawing.Size(121, 28);
+            this.btnAddVitit.Tag = "1";
+            this.btnAddVitit.Text = "Новый визит";
+            this.btnAddVitit.Click += new System.EventHandler(this.btnAddVitit_Click);
+            // 
+            // btnShowPatientVisits
+            // 
+            this.btnShowPatientVisits.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnShowPatientVisits.Image = global::medic.Properties.Resources.visit_list;
+            this.btnShowPatientVisits.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowPatientVisits.Name = "btnShowPatientVisits";
+            this.btnShowPatientVisits.Size = new System.Drawing.Size(129, 28);
+            this.btnShowPatientVisits.Text = "Визиты пациента";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSearch.Image = global::medic.Properties.Resources.search_large;
+            this.btnSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(28, 28);
+            this.btnSearch.Text = "toolStripButton4";
+            this.btnSearch.ToolTipText = "Поиск";
+            // 
+            // btnAddPatient
+            // 
+            this.btnAddPatient.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnAddPatient.Image = global::medic.Properties.Resources.patient;
+            this.btnAddPatient.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddPatient.Margin = new System.Windows.Forms.Padding(0, 1, 7, 2);
+            this.btnAddPatient.Name = "btnAddPatient";
+            this.btnAddPatient.Size = new System.Drawing.Size(121, 28);
+            this.btnAddPatient.Text = "Новый пациент";
+            this.btnAddPatient.Click += new System.EventHandler(this.btnAddPatient_Click);
+            // 
+            // menuItemCategories
+            // 
+            this.menuItemCategories.Name = "menuItemCategories";
+            this.menuItemCategories.Size = new System.Drawing.Size(152, 22);
+            this.menuItemCategories.Text = "Категории";
+            this.menuItemCategories.Click += new System.EventHandler(this.menuItemCategories_Click);
             // 
             // mainForm
             // 
@@ -309,6 +318,7 @@
         protected System.Windows.Forms.DataGridView table;
         private System.Windows.Forms.ToolStripButton btnSearch;
         private System.Windows.Forms.ToolStripMenuItem menuItemPatients;
+        private System.Windows.Forms.ToolStripMenuItem menuItemCategories;
     }
 }
 

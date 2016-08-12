@@ -19,8 +19,9 @@ namespace medic.Forms {
 
         public ComboNumericBoxWrapper ctbwCondServicesCount;        //Поле Количество услуг
         public ComboNumericBoxWrapper ctbwCondServicesSumPrice;     //Поле Общая цена услуг
+        public ComboComboBoxWrapper ccbwCondPatientCategory;        //Поле Категория пациента
         public ComboNumericBoxWrapper ctbwCondPatientAge;           //Поле Возраст пациента
-        public ComboNumericBoxWrapper ctbwCondPatientSex;           //Поле Пол пациента
+        public ComboComboBoxWrapper ctbwCondPatientSex;             //Поле Пол пациента
         public ComboNumericBoxWrapper ctbwCondVisitNumber;          //Поле Количество посещений
         public ComboDatetimeWrapper ctbwCondVisitDate;              //Поле Дата посещения
 
@@ -42,7 +43,7 @@ namespace medic.Forms {
             ctbwCondVisitNumber.Parent = panel;
 
             //Создаем поле  Пол пациента
-            ctbwCondPatientSex = new ComboNumericBoxWrapper("Пол пациента", SaleConditionInt.Operators, new NumericUpDown());
+            ctbwCondPatientSex = new ComboComboBoxWrapper("Пол пациента", SaleConditionInt.Operators, Patient.SexKeys, Patient.SexValues, new ComboBox());
             ctbwCondPatientSex.Dock = DockStyle.Top;
             ctbwCondPatientSex.Parent = panel;
 
@@ -50,6 +51,23 @@ namespace medic.Forms {
             ctbwCondPatientAge = new ComboNumericBoxWrapper("Возраст пациента", SaleConditionInt.Operators, new NumericUpDown());
             ctbwCondPatientAge.Dock = DockStyle.Top;
             ctbwCondPatientAge.Parent = panel;
+
+            //Создаем поле Категория пациента
+            ListData categoriesListData = Category.GetListData(sale.GetConnection());
+            categoriesListData.Update();
+            List<Category> categoriesList = Category.GetList(categoriesListData);
+            string[] categoriesKeys = new string[categoriesList.Count+1];
+            string[] categoriesValues = new string[categoriesList.Count+1];
+            categoriesKeys[0] = "0";
+            categoriesValues[0] = "Не выбранно";
+            for (int i = 0; i < categoriesList.Count; i++) {
+                categoriesKeys[i + 1] = categoriesList[i].GetId().ToString();
+                categoriesValues[i + 1] = categoriesList[i].Name;
+            }
+
+            ccbwCondPatientCategory = new ComboComboBoxWrapper("Категория пациента", SaleConditionInt.OperatorsForArray, categoriesKeys, categoriesValues, new ComboBox());
+            ccbwCondPatientCategory.Dock = DockStyle.Top;
+            ccbwCondPatientCategory.Parent = panel;
 
             //Создаем поле Общая цена услуг
             ctbwCondServicesSumPrice = new ComboNumericBoxWrapper("Общая цена услуг", SaleConditionInt.Operators, new NumericUpDown());
@@ -98,7 +116,6 @@ namespace medic.Forms {
             tbwDescription.SetValue(sale.Description);
             nbwPercent.SetValue(sale.Percent.ToString());
 
-         
             //Подгружаем количество услуг в форму
             ctbwCondServicesCount.SetComboValue(sale.CondServicesCount.op);
             ctbwCondServicesCount.SetValue(sale.CondServicesCount.value.ToString());
@@ -106,6 +123,10 @@ namespace medic.Forms {
             //Подгружаем общую цену услуг в форму
             ctbwCondServicesSumPrice.SetComboValue(sale.CondServicesSumPrice.op);
             ctbwCondServicesSumPrice.SetValue(sale.CondServicesSumPrice.value.ToString());
+
+            //Подгружаем категорию пациента в форму
+            ccbwCondPatientCategory.SetComboValue(sale.CondPatientCategory.op);
+            ccbwCondPatientCategory.SetValue(sale.CondPatientCategory.value.ToString());
 
             //Подгружаем возраст пациента в форму
             ctbwCondPatientAge.SetComboValue(sale.CondPatientAge.op);
@@ -140,6 +161,13 @@ namespace medic.Forms {
                     success = false;
                 }
 
+            if (ccbwCondPatientCategory.GetComboIndex() < 1 || ccbwCondPatientCategory.GetValue() != "0")
+                ccbwCondPatientCategory.HideError();
+            else {
+                ccbwCondPatientCategory.ShowError("Укажите значение, или уберите оператор сравнения");
+                success = false;
+            }
+
             return success;
         }
 
@@ -157,23 +185,27 @@ namespace medic.Forms {
             sale.CondServicesCount.value = Int32.Parse(ctbwCondServicesCount.GetValue());
 
             //Общая цена услуг
-            sale.CondServicesSumPrice.op = SaleConditionInt.Operators[ctbwCondServicesSumPrice.GetComboIndex()]; ;
+            sale.CondServicesSumPrice.op = SaleConditionInt.Operators[ctbwCondServicesSumPrice.GetComboIndex()];
             sale.CondServicesSumPrice.value = Int32.Parse(ctbwCondServicesSumPrice.GetValue());
-            
+
+            //Категория пациента
+            sale.CondPatientCategory.op = SaleConditionInt.Operators[ccbwCondPatientCategory.GetComboIndex()];
+            sale.CondPatientCategory.value = Int32.Parse(ccbwCondPatientCategory.GetValue());
+
             //Возраст пациента
-            sale.CondPatientAge.op = SaleConditionInt.Operators[ctbwCondPatientAge.GetComboIndex()]; ;
+            sale.CondPatientAge.op = SaleConditionInt.Operators[ctbwCondPatientAge.GetComboIndex()];
             sale.CondPatientAge.value = Int32.Parse(ctbwCondPatientAge.GetValue());
 
             //Пол пациента
-            sale.CondPatientSex.op = SaleConditionInt.Operators[ctbwCondPatientSex.GetComboIndex()]; ;
+            sale.CondPatientSex.op = SaleConditionInt.Operators[ctbwCondPatientSex.GetComboIndex()];
             sale.CondPatientSex.value = Int32.Parse(ctbwCondPatientSex.GetValue());
 
             //Количество посещений
-            sale.CondVisitNumber.op = SaleConditionInt.Operators[ctbwCondVisitNumber.GetComboIndex()]; ;
+            sale.CondVisitNumber.op = SaleConditionInt.Operators[ctbwCondVisitNumber.GetComboIndex()];
             sale.CondVisitNumber.value = Int32.Parse(ctbwCondVisitNumber.GetValue());
 
             //Дата посещения
-            sale.CondVisitDate.op = SaleConditionDatetime.Operators[ctbwCondVisitDate.GetComboIndex()]; ;
+            sale.CondVisitDate.op = SaleConditionDatetime.Operators[ctbwCondVisitDate.GetComboIndex()];
             sale.CondVisitDate.value = ctbwCondVisitDate.GetDate();
 
             return sale.Save() != -1;

@@ -13,7 +13,6 @@ namespace medic.Forms {
         private DBConnection connection;                    //Соединение с базой
         private List<Sale> sales;
 
-        private Patient patient;
         private Visit visit;                                //Редактируемое посещение
         private List<VisitService> visitServices;
         private List<VisitService> removedVisitServices;
@@ -74,9 +73,10 @@ namespace medic.Forms {
             FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
 
             //Подгружаем данные посещения
-            if (patient == null)
+            if (patient == null) {
                 AssignVisit(visit);
-            else {
+                dpwVisitDate.Visible = false;
+            } else {
                 AssignVisit(visit, patient);
                 dtpVisitDate.ValueChanged += dtpVisitDate_ValueChanged;
             }
@@ -88,11 +88,10 @@ namespace medic.Forms {
         //Привязывает сотрудника к форме, подгружает данные в форму
         private void AssignVisit(Visit visit, Patient patient) {
             this.connection = visit.GetConnection();
-            this.patient = patient;
             this.visit = visit;
 
             visit.VisitDate = dpwVisitDate.GetDate();
-            visit.PatientId = patient.GetId();
+            visit.RelatedPatient = patient;
             visit.PatientSex = patient.Sex;
             visit.PatientAge = patient.GetAge();
 
@@ -117,7 +116,6 @@ namespace medic.Forms {
 
         private void AssignVisit(Visit visit) {
             this.connection = visit.GetConnection();
-            this.patient = new Patient(connection, visit.PatientId);
             this.visit = visit;
 
             ListData salesListData = Sale.GetListData(connection);
@@ -142,7 +140,7 @@ namespace medic.Forms {
 
             //Подгружаем данные в панель
             sidePanel.SetVisitDate(visit.VisitDate.ToString(AppConfig.DateFormat));
-            sidePanel.SetPatientName(patient.GetFullName());
+            sidePanel.SetPatientName(visit.RelatedPatient.GetFullName());
             sidePanel.SetPatientSex(Patient.GetSex(visit.PatientSex));
             sidePanel.SetPatientAge(visit.PatientAge);
 
@@ -162,7 +160,7 @@ namespace medic.Forms {
                 //Получаем ключ - значение для сотрудников
                 string[] workersKeys = new string[serviceWorkers.Count];
                 string[] workersNames = new string[serviceWorkers.Count];
-                int selectedIndex = 0;
+                int selectedIndex = -1;
                 for (int j = 0; j < serviceWorkers.Count; j++) {
                     workersKeys[j] = j.ToString();
                     workersNames[j] = serviceWorkers[j].GetFullName();
@@ -179,7 +177,7 @@ namespace medic.Forms {
                 );
                 sidePanel.AddService(visitService.RelatedService.Name, visitService.RelatedService.Price);
                 
-                item.SetComboBoxKey(selectedIndex.ToString());
+                item.SetComboBoxKey(selectedIndex.ToString(), -1);
             }
             vcbwServices.ResumeLayout();
 
@@ -191,9 +189,10 @@ namespace medic.Forms {
 
         private void updateSales() {
             VisitData visitData = new VisitData();
-            visitData.PatientAge = patient.GetAge();
-            visitData.PatientSex = patient.Sex;
-            visitData.VisitNumber = patient.GetVisitCount() + 1;
+            visitData.PatientAge = visit.RelatedPatient.GetAge();
+            visitData.PatientSex = visit.RelatedPatient.Sex;
+            visitData.PatientCategories = visit.RelatedPatient.GetCategoriesIds();
+            visitData.VisitNumber = visit.RelatedPatient.GetVisitCount() + 1;
             visitData.ServicesCount = visitServices.Count;
             visitData.VisitDate = dpwVisitDate.GetDate();
 
