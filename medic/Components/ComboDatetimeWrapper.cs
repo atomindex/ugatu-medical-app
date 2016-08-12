@@ -8,14 +8,17 @@ using System.Windows.Forms;
 namespace medic.Components {
     
     //Класс выпадающих списков с текстовым полем ввода и надписями
-    public class ComboTextBoxWrapper : FieldWrapper {
+    public class ComboDatetimeWrapper : FieldWrapper {
 
         private ComboBox cmbList;       //Выпадающий список
 
 
 
         //Конструктор
-        public ComboTextBoxWrapper(string labelText, string[] comboItems, TextBox field) : base(labelText, field) {
+        public ComboDatetimeWrapper(string labelText, string[] comboItems, DateTimePicker field) : base(labelText, field) {
+            field.Format = DateTimePickerFormat.Custom;
+            field.CustomFormat = AppConfig.DateFormat;
+            
             cmbList = new ComboBox();
             cmbList.Items.AddRange(comboItems);
             cmbList.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -63,12 +66,35 @@ namespace medic.Components {
 
         //Возвращает значение поля ввода
         public override string GetValue() {
-            return (CtrlField as TextBox).Text;
+            return (CtrlField as DateTimePicker).Value.ToString(AppConfig.DateFormat);
+        }
+
+        //Возвращает значение поля ввода
+        public DateTime GetDate() {
+            return (CtrlField as DateTimePicker).Value;
         }
 
         //Устанавливает значение поля ввода
         public override void SetValue(string value) {
-            (CtrlField as TextBox).Text = value;
+            DateTimePicker dtp = CtrlField as DateTimePicker;
+            DateTime result;
+
+            if (value != null && value.Length > 0 && DateTime.TryParseExact(value, AppConfig.DateFormat, null, System.Globalization.DateTimeStyles.None, out result))
+                dtp.Value = result;
+            else
+                dtp.Value = DateTime.Now;
+        }
+
+        //Устанавливает значение поля ввода
+        public void SetDate(DateTime value) {
+            DateTimePicker dtp = CtrlField as DateTimePicker;
+
+            if (value < dtp.MinDate)
+                dtp.Value = DateTime.Now < dtp.MinDate ? dtp.MinDate : DateTime.Now;
+            else if (value > dtp.MaxDate)
+                dtp.Value = dtp.MaxDate;
+            else
+                dtp.Value = value;
         }
 
     }

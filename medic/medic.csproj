@@ -49,6 +49,12 @@
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
     <Compile Include="ButtonRenderer.cs" />
+    <Compile Include="Components\ComboDatetimeWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\ComboNumericBoxWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\FieldWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -73,7 +79,13 @@
     <Compile Include="Components\NumericBoxWrapper.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Components\ValueComboBoxWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\TextBoxWrapper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\VisitInfoPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Database\DBConnection.cs" />
@@ -140,6 +152,18 @@
     <Compile Include="Forms\Services\ServiceSelectForm.Designer.cs">
       <DependentUpon>ServiceSelectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Visits\VisitListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Visits\VisitListForm.Designer.cs">
+      <DependentUpon>VisitListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Visits\VisitEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Visits\VisitEditForm.Designer.cs">
+      <DependentUpon>VisitEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Workers\WorkerSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,9 +218,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\SqlFilter\SqlFilter.cs" />
     <Compile Include="Sale.cs" />
+    <Compile Include="VisitSale.cs" />
+    <Compile Include="VisitService.cs" />
     <Compile Include="Specialty.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Patient.cs" />
+    <Compile Include="Visit.cs" />
     <Compile Include="Worker.cs" />
     <EmbeddedResource Include="Forms\EntitySelectForm.resx">
       <DependentUpon>EntitySelectForm.cs</DependentUpon>
@@ -224,6 +251,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Services\ServiceSelectForm.resx">
       <DependentUpon>ServiceSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Visits\VisitListForm.resx">
+      <DependentUpon>VisitListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Visits\VisitEditForm.resx">
+      <DependentUpon>VisitEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Workers\WorkerSelectForm.resx">
       <DependentUpon>WorkerSelectForm.cs</DependentUpon>

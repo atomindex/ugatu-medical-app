@@ -38,7 +38,9 @@ namespace medic {
             return tableName + "." + field;
         }
 
-
+        public static string GetFields() {
+            return fields;
+        }
 
         //Возвращает данные списка услуг
         public static ListData GetListData(DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
@@ -95,6 +97,8 @@ namespace medic {
             );
         }
 
+
+
         //Возвращает список услуг из данных списка
         public static List<Service> GetList(ListData listData) {
             //Формируем список услуг
@@ -102,7 +106,7 @@ namespace medic {
             if (listData.List != null) {
                 foreach (string[] data in listData.List) {
                     Service service = new Service(listData.Connection);
-                    service.loadData(data);
+                    service.LoadData(data);
                     list.Add(service);
                 }
             }
@@ -111,16 +115,15 @@ namespace medic {
         }
 
 
-
         //Конструктор
         public Service(DBConnection connection, int id = 0) : base(connection) {
             if (id <= 0) return;
-            List<string[]> data = connection.Select("SELECT id, " + fields + " FROM " + tableName + " WHERE removed = 0 AND id = " + id.ToString());
+            List<string[]> data = connection.Select("SELECT " + fields + " FROM " + tableName + " WHERE id = " + id.ToString());
             if (data.Count == 0) {
                 this.id = -1;
                 return;
             }
-            loadData(data[0]);
+            LoadData(data[0]);
         }
 
 
@@ -176,7 +179,7 @@ namespace medic {
 
 
         //Загружает данные в поля
-        private void loadData(string[] data) {
+        public void LoadData(string[] data) {
             id = Int32.Parse(data[0]);
             Name = data[1];
             Price = Int32.Parse(data[2]);

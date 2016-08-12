@@ -11,7 +11,7 @@ namespace medic {
     public class Worker : Entity {
 
         private static string tableName;        //Имя таблицы
-        private static string fields;           //Поля таблицы для выборки
+        private static string fields;            //Поля таблицы для выборки
         private static string[] fieldsArray;    //Массив полей для вставки
 
         public string FirstName;                //Имя сотрудника
@@ -41,6 +41,10 @@ namespace medic {
             return tableName + "." + field;
         }
 
+        //Возвращает список полей
+        public static string GetFields() {
+            return fields;
+        }
 
 
         //Возвращает данные списка сотрудников
@@ -75,7 +79,7 @@ namespace medic {
             string countSql = "SELECT count(*) as row_count FROM " + Worker.GetTableName() +
                              " JOIN workers_specialties ON workers_specialties.worker_id = " + Worker.GetFieldName("id");
 
-            //Создаем фильтр по статусу Удален и идентификатору сервиса
+            //Создаем фильтр по статусу Удален и идентификатору специальности
             SqlFilter filterGroup = new SqlFilter(SqlLogicalOperator.And);
             SqlFilterCondition removedFilter = new SqlFilterCondition(Worker.GetFieldName("removed"), SqlComparisonOperator.Equal);
             SqlFilterCondition serviceFilter = new SqlFilterCondition("workers_specialties.specialty_id", SqlComparisonOperator.Equal);
@@ -137,7 +141,7 @@ namespace medic {
             if (listData.List != null) {
                 foreach (string[] data in listData.List) {
                     Worker worker = new Worker(listData.Connection);
-                    worker.loadData(data);
+                    worker.LoadData(data);
                     list.Add(worker);
                 }
             }
@@ -150,12 +154,12 @@ namespace medic {
         //Конструктор
         public Worker(DBConnection connection, int id = 0) : base(connection) {
             if (id <= 0) return;
-            List<string[]> data = connection.Select("SELECT id, " + fields + " FROM " + tableName + " WHERE removed = 0 AND id = " + id.ToString());
+            List<string[]> data = connection.Select("SELECT " + fields + " FROM " + tableName + " WHERE id = " + id.ToString());
             if (data.Count == 0) {
                 this.id = -1;
                 return;
             }
-            loadData(data[0]);
+            LoadData(data[0]);
         }
 
 
@@ -250,7 +254,7 @@ namespace medic {
 
 
         //Загружает данные в поля
-        private void loadData(string[] data) {
+        public void LoadData(string[] data) {
             id = Int32.Parse(data[0]);
             FirstName = data[1];
             MiddleName = data[2];

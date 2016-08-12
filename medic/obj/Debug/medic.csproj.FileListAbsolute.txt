@@ -24,3 +24,4 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.SaleListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.PatientEditForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.PatientListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.VisitEditForm.resources

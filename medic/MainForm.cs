@@ -14,12 +14,20 @@ using medic.Components;
 namespace medic {
 
     public partial class mainForm : Form {
+        private string[] tableFields;                   //Список полей соответвующих колонкам
+
         DBConnection connection;
 
         private Cursor tempCursor;
 
         private ListData listData;
         private List<Patient> patientsList;
+
+        private SqlFilter filter;                       //Фильтр для запросов
+        private SqlFilterCondition[] fullNameFilter;    //Условия фильтра
+
+        private SqlSorter sorter;                       //Сортировка для запросов
+        private SqlSorterCondition sorterItem;          //Поля сортировки
 
         protected TablePager tblPager;
 
@@ -49,10 +57,40 @@ namespace medic {
             tblPager = new TablePager();
             tblPager.Parent = this;
             tblPager.Dock = DockStyle.Bottom;
-
             tblPager.AddChangeEvent(tblPagerPageChange_Event);
 
-            listData = Patient.GetListData(connection, 25);
+
+            //Инициализируем имена
+            tableFields = new string[] { "first_name", "last_name", "middle_name", "sex", "birthday" };
+
+            //Создаем фильтр по имени
+            filter = new SqlFilter(SqlLogicalOperator.And);
+            string fullNameFilterField = QueryBuilder.BuildConcatStatement(
+                Patient.GetTableName(),
+                new string[] { "first_name", "last_name", "middle_name" }
+            );
+            fullNameFilter = new SqlFilterCondition[] {
+                new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like),
+                new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like),
+                new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like)
+            };
+            filter.AddItems(fullNameFilter);
+
+            //Создаем сортировщик
+            sorter = new SqlSorter();
+            sorterItem = new SqlSorterCondition();
+            sorter.AddItem(sorterItem);
+
+            listData = Patient.GetListData(
+                connection, 
+                25,
+                0,
+                filter,
+                sorter
+            );
+
+            btnSearch.Click += btnSearch_Click;
+
             reloadData();
         }
 
@@ -92,7 +130,7 @@ namespace medic {
             table.Rows[rowIndex].Cells[0].Value = patient.FirstName;
             table.Rows[rowIndex].Cells[1].Value = patient.LastName;
             table.Rows[rowIndex].Cells[2].Value = patient.MiddleName;
-            table.Rows[rowIndex].Cells[3].Value = patient.Sex;
+            table.Rows[rowIndex].Cells[3].Value = patient.GetStringSex();
             table.Rows[rowIndex].Cells[4].Value = patient.Birthday.ToString(AppConfig.DateFormat);
         }
 
@@ -171,6 +209,54 @@ namespace medic {
 
                 patientsList.Insert(0, patient);
             }
+        }
+
+
+        private void btnAddVitit_Click(object sender, EventArgs e) {
+            Patient patient = patientsList[table.CurrentCell.RowIndex];
+            Visit visit = new Visit(connection);
+
+            VisitEditForm visitEditForm = new VisitEditForm(visit, patient);
+            visitEditForm.ShowDialog();
+        }
+
+        private void menuItemVisits_Click(object sender, EventArgs e) {
+            ListData visitsListData = Visit.GetListData(connection, 25);
+            visitsListData.Update();
+            VisitListForm visitsListForm = new VisitListForm(visitsListData);
+            visitsListForm.ShowDialog();
+        }
+
+
+        //Событие клика по кнопке Найти
+        private void btnSearch_Click(object sender, EventArgs e) {
+            string[] names = txtBoxSearch.Text.Trim().Split(" ".ToCharArray(), 3, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < fullNameFilter.Length; i++)
+                fullNameFilter[i].SetValue(i < names.Length ? "\"%" + QueryBuilder.EscapeLikeString(names[i]) + "%\"" : null);
+
+            reloadData(true);
+        }
+
+        //Событие сортировки таблицы по полю
+        private void tblSortChange_Event(object sender, DataGridViewCellMouseEventArgs e) {
+            DataGridViewColumnHeaderCell headerCell = table.Columns[e.ColumnIndex].HeaderCell;
+
+            sorterItem.SetField(Patient.GetTableName(), tableFields[e.ColumnIndex]);
+
+            switch (headerCell.SortGlyphDirection) {
+                case SortOrder.Ascending:
+                    sorterItem.SetOrder(SqlOrder.Asc);
+                    break;
+                case SortOrder.Descending:
+                    sorterItem.SetOrder(SqlOrder.Desc);
+                    break;
+                case SortOrder.None:
+                    sorterItem.SetOrder(SqlOrder.None);
+                    break;
+            }
+
+            reloadData(true);
         }
 
     }

@@ -23,3 +23,6 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medi
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.SpecialtyListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.SpecialtySelectForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.PatientEditForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.PatientListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Release\medic.Forms.VisitEditForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Release\medic.Forms.VisitListForm.resources

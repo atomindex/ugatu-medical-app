@@ -20,7 +20,7 @@ namespace medic {
         public string FirstName;                //Имя пациента
         public string MiddleName;               //Отчество пациента
         public string LastName;                 //Фамилия пациента
-        public string Sex;                      //Пол пациента
+        public int Sex;                         //Пол пациента
         public DateTime Birthday;               //Дата рождения пациента
 
 
@@ -28,7 +28,7 @@ namespace medic {
         //Статический конструктор
         static Patient() {
             tableName = "patients";
-            fields = "patients.id, patients.first_name, patients.middle_name, patients.last_name, patients.sex, DATE_FORMAT(patients.birthday, '%Y-%m-%d')";
+            fields = "patients.id, patients.first_name, patients.middle_name, patients.last_name, patients.sex, DATE_FORMAT(patients.birthday,'%Y-%m-%d')";
             fieldsArray = new string[] { "first_name", "middle_name", "last_name", "sex", "birthday" };
         }
 
@@ -42,6 +42,17 @@ namespace medic {
         //Возвращает имя поля с таблицей
         public static string GetFieldName(string field) {
             return tableName + "." + field;
+        }
+
+        //Возвращает список полей
+        public static string GetFields() {
+            return fields;
+        }
+
+        //Возвращает название пола по индексу
+        public static string GetSex(int sex) {
+            int index = Array.IndexOf(SexKeys, sex.ToString());
+            return SexValues[index > -1 ? index : 0];
         }
 
 
@@ -76,7 +87,7 @@ namespace medic {
             if (listData.List != null) {
                 foreach (string[] data in listData.List) {
                     Patient patient = new Patient(listData.Connection);
-                    patient.loadData(data);
+                    patient.LoadData(data);
                     list.Add(patient);
                 }
             }
@@ -89,12 +100,12 @@ namespace medic {
         //Конструктор
         public Patient(DBConnection connection, int id = 0) : base(connection) {
             if (id <= 0) return;
-            List<string[]> data = connection.Select("SELECT id, " + fields + " FROM " + tableName + " WHERE removed = 0 AND id = " + id.ToString());
+            List<string[]> data = connection.Select("SELECT " + fields + " FROM " + tableName + " WHERE id = " + id.ToString());
             if (data.Count == 0) {
                 this.id = -1;
                 return;
             }
-            loadData(data[0]);
+            LoadData(data[0]);
         }
 
 
@@ -124,15 +135,30 @@ namespace medic {
 
 
         public string GetStringSex() {
-            int index = Array.IndexOf(SexKeys, Sex);
-            return SexValues[index > -1 ? index : 0];
+            return GetSex(Sex);
         }
+
+        public int GetAge() {
+            DateTime now = DateTime.Now;
+            int years = now.Year - Birthday.Year;
+            if (now.Month < Birthday.Month || now.Month == Birthday.Month && now.Day < Birthday.Day)
+                years--;
+            return years;
+        }
+
+        public int GetVisitCount() {
+            string sql = "SELECT COUNT(*) FROM visits WHERE patient_id = " + id.ToString();
+            List<string[]> result = connection.Select(sql);
+            return Int32.Parse(result[0][0]);
+        }
+
+
 
         //Сохраняет пациента
         public override int Save() {
             id = save(
                 tableName, fieldsArray,
-                new string[] { FirstName, MiddleName, LastName, Sex, Birthday.ToString("yyyy-MM-dd") }
+                new string[] { FirstName, MiddleName, LastName, Sex.ToString(), Birthday.ToString(AppConfig.DatabaseDateFormat) }
             );
             return id;
         }
@@ -145,13 +171,13 @@ namespace medic {
 
 
         //Загружает данные в поля
-        private void loadData(string[] data) {
+        public void LoadData(string[] data) {
             id = Int32.Parse(data[0]);
             FirstName = data[1];
             MiddleName = data[2];
             LastName = data[3];
-            Sex = data[4];
-            Birthday = DateTime.ParseExact(data[5], "yyyy-MM-dd", null);
+            Sex = Int32.Parse(data[4]);
+            Birthday = DateTime.ParseExact(data[5], AppConfig.DatabaseDateFormat, null);
         }
     
     }

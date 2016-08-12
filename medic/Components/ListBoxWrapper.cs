@@ -19,9 +19,8 @@ namespace medic.Components {
 
 
         //Конструктор
-        public ListBoxWrapper(string labelText, ListBox field) : base(labelText, field) {
+        public ListBoxWrapper(string labelText, ListBox field) : base(null, field) {
             field.Height = 60;
-            LblLabel.Visible = false;
 
             tlsListManager = new ToolStrip();
             tlsListManager.GripStyle = ToolStripGripStyle.Hidden;

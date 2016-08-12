@@ -8,14 +8,17 @@ using System.Windows.Forms;
 namespace medic.Components {
     
     //Класс выпадающих списков с текстовым полем ввода и надписями
-    public class ComboTextBoxWrapper : FieldWrapper {
+    public class ComboNumericBoxWrapper : FieldWrapper {
 
         private ComboBox cmbList;       //Выпадающий список
 
 
 
         //Конструктор
-        public ComboTextBoxWrapper(string labelText, string[] comboItems, TextBox field) : base(labelText, field) {
+        public ComboNumericBoxWrapper(string labelText, string[] comboItems, NumericUpDown field, int minValue = -1, int maxValue = -1) : base(labelText, field) {
+            field.Minimum = minValue > -1 ? minValue : Int32.MinValue;
+            field.Maximum = maxValue > -1 ? maxValue : Int32.MaxValue;
+            
             cmbList = new ComboBox();
             cmbList.Items.AddRange(comboItems);
             cmbList.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -63,12 +66,19 @@ namespace medic.Components {
 
         //Возвращает значение поля ввода
         public override string GetValue() {
-            return (CtrlField as TextBox).Text;
+            return (CtrlField as NumericUpDown).Value.ToString();
         }
 
         //Устанавливает значение поля ввода
         public override void SetValue(string value) {
-            (CtrlField as TextBox).Text = value;
+            NumericUpDown nud = (CtrlField as NumericUpDown);
+            nud.Value = Math.Min(nud.Maximum, Math.Max(nud.Minimum, Int32.Parse(value)));
+        }
+
+        //Устанавливает значение поля ввода
+        public void SetValue(int value) {
+            NumericUpDown nud = (CtrlField as NumericUpDown);
+            nud.Value = Math.Min(nud.Maximum, Math.Max(nud.Minimum, value));
         }
 
     }

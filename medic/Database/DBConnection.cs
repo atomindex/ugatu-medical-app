@@ -159,6 +159,7 @@ namespace medic.Database {
                 MySqlCommand command = new MySqlCommand("SET AUTOCOMMIT = 0; START TRANSACTION;", connection);
                 command.ExecuteNonQuery();
                 transactionStarted = true;
+                Entity.StartTransaction();
                 return true;
             } catch (MySqlException ex) {
                 transactionStarted = false;
@@ -175,6 +176,7 @@ namespace medic.Database {
                 MySqlCommand command = new MySqlCommand("COMMIT; SET AUTOCOMMIT = 1;", connection);
                 command.ExecuteNonQuery();
                 transactionStarted = false;
+                Entity.CommitTransaction();
                 return true;
             } catch (MySqlException ex) {
                 MessageBox.Show(ex.Message);
@@ -190,6 +192,7 @@ namespace medic.Database {
                 MySqlCommand command = new MySqlCommand("ROLLBACK; SET AUTOCOMMIT = 1;", connection);
                 command.ExecuteNonQuery();
                 transactionStarted = false;
+                Entity.RollbackTransaction();
                 return true;
             } catch (MySqlException ex) {
                 MessageBox.Show(ex.Message);

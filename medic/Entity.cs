@@ -7,14 +7,41 @@ using medic.Database;
 
 namespace medic {
 
+    class EntityTransaction {
+        public Entity entity;
+        public int id;
+
+        public EntityTransaction(Entity entity, int id) {
+            this.entity = entity;
+            this.id = id;
+        }
+    }
+
     //Базовый класс сущности
     public abstract class Entity {
+
+        private static List<EntityTransaction> transactionObjects;
 
         protected DBConnection connection;      //Соединение с базой
 
         protected int id;                       //Идентификатор записи
 
 
+        public static void StartTransaction() {
+            transactionObjects = new List<EntityTransaction>();
+        }
+
+        public static void CommitTransaction() {
+            transactionObjects.Clear();
+            transactionObjects = null;
+        }
+
+        public static void RollbackTransaction() {
+            foreach (EntityTransaction et in transactionObjects)
+                et.entity.id = et.id;
+            transactionObjects.Clear();
+            transactionObjects = null;
+        }
 
         //Конструктор
         public Entity(DBConnection connection) {
@@ -50,6 +77,8 @@ namespace medic {
                 escapedValues[i] = QueryBuilder.EscapeString(values[i], true);
 
             if (id <= 0) {
+                if (transactionObjects != null)
+                    transactionObjects.Add(new EntityTransaction(this, id));
                 id = connection.Insert("INSERT INTO " + table + " (" + String.Join(", ", fields) + ") VALUES (" + String.Join(",", escapedValues) + ")");
             } else {
                 string[] updateValues = new string[escapedValues.Length];
@@ -61,10 +90,20 @@ namespace medic {
         }
 
         //Удаляет запись
-        protected void remove(string table) {
-            connection.Update("UPDATE " + table + " SET removed = 1 WHERE id = " + id.ToString());
+        protected int remove(string table) {
+            int result = connection.Update("UPDATE " + table + " SET removed = 1 WHERE id = " + id.ToString());
+            return result;
         }
 
+        protected int removePermanently(string table) {
+            int result = connection.Delete("DELETE FROM " + table + " WHERE id = " + id.ToString());
+            if (result > 0) {
+                if (transactionObjects != null)
+                    transactionObjects.Add(new EntityTransaction(this, id));
+                id = -1;
+            }
+            return result;
+        }
     }
 
 }

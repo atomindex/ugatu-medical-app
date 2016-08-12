@@ -7,82 +7,162 @@ using medic.Database;
 
 namespace medic {
 
-    public class SaleCondition {
+    public abstract class SaleCondition {
+        public abstract bool Compare(object comparedValue);
+
+        public abstract SaleCondition Clone();
+
+        public abstract void SetCondition(string conditionData);
+    }
+
+    public class SaleConditionInt : SaleCondition {
+        public static string[] Operators = new string[] { "", "=", "<>", ">", "<", ">=", "<=", "%", "!%" };
 
         public string name;
         public string op;
-        public string value;
+        public int value;
 
-        public SaleCondition(string name, string op = "", string value = "") {
+        public SaleConditionInt(string name, string op = "", int value = 0) {
             this.name = name;
             this.op = op;
             this.value = value;
         }
 
-        public SaleCondition(string name, string conditionData) {
+        public SaleConditionInt(string name, string conditionData) {
             this.name = name;
             SetCondition(conditionData);
         }
 
-        public bool Compare(string comparedValue) {
-            if (value == null || value.Length == 0 || op == null || op.Length == 0)
+        public override bool Compare(object comparedValue) {
+            if (op == null || op.Length == 0)
                 return true;
+
+            int visitValue = (int)comparedValue;
 
             switch (op) {
 
                 case "=":
-                    return value == comparedValue;
+                    return visitValue == value;
 
                 case "<>":
-                    return value != comparedValue;
+                    return visitValue != value;
 
                 case ">":
-                    return Int32.Parse(value) > Int32.Parse(comparedValue);
+                    return visitValue > value;
 
                 case "<":
-                    return Int32.Parse(value) < Int32.Parse(comparedValue);
+                    return visitValue < value;
 
                 case ">=":
-                    return Int32.Parse(value) >= Int32.Parse(comparedValue);
+                    return visitValue >= value;
 
                 case "<=":
-                    return Int32.Parse(value) <= Int32.Parse(comparedValue);
+                    return visitValue <= value;
 
                 case "%":
-                    return Int32.Parse(comparedValue) % Int32.Parse(value) == 0;
+                    return visitValue % value == 0;
 
                 case "!%":
-                    return Int32.Parse(comparedValue) % Int32.Parse(value) != 0;
+                    return visitValue % value != 0;
 
             }
 
             return false;
         }
 
-        public SaleCondition Clone() {
-            return new SaleCondition(name, op, value);
+        public override SaleCondition Clone() {
+            return new SaleConditionInt(name, op, value);
         }
 
-        public void SetCondition(string conditionData) {
-            string[] conditionTokens = conditionData.Split(new string[] { "|" }, 2, StringSplitOptions.RemoveEmptyEntries);
-            this.name = name;
+        public override void SetCondition(string conditionData) {
+            string[] conditionTokens = conditionData.Split(new string[] { "|" }, 2, StringSplitOptions.None);
             op = conditionTokens.Length > 0 ? conditionTokens[0] : "";
-            value = conditionTokens.Length > 1 ? conditionTokens[1] : "";
+            value = conditionTokens.Length > 1 ? Int32.Parse(conditionTokens[1]) : 0;
         }
 
         public override string ToString() {
- 	        return op + "|" + value;
+            return op + "|" + value.ToString();
         }
-
     }
 
+
+    public class SaleConditionDatetime : SaleCondition {
+
+        public static string[] Operators = new string[] { "", "=", "<>", ">", "<", ">=", "<=" };
+
+        public string name;
+        public string op;
+        public DateTime value;
+
+        public SaleConditionDatetime(string name) {
+            this.name = name;
+            this.op = "";
+            this.value = DateTime.MinValue;
+        }
+
+        public SaleConditionDatetime(string name, string conditionData) {
+            this.name = name;
+            SetCondition(conditionData);
+        }
+
+        public SaleConditionDatetime(string name, string op, DateTime value) {
+            this.name = name;
+            this.op = "";
+            this.value = value;
+        }
+
+        public override bool Compare(object comparedValue) {
+            if (op == null || op.Length == 0)
+                return true;
+
+            DateTime? visitValue = (DateTime?)comparedValue;
+
+            switch (op) {
+                case "=":
+                    return visitValue == value;
+
+                case "<>":
+                    return visitValue != value;
+
+                case ">":
+                    return visitValue > value;
+
+                case "<":
+                    return visitValue < value;
+
+                case ">=":
+                    return visitValue >= value;
+
+                case "<=":
+                    return visitValue <= value;
+            }
+
+            return false;
+        }
+
+        public override SaleCondition Clone() {
+            return new SaleConditionDatetime(name, op, value);
+        }
+
+        public override void SetCondition(string conditionData) {
+            string[] conditionTokens = conditionData.Split(new string[] { "|" }, 2, StringSplitOptions.None);
+            op = conditionTokens.Length > 0 ? conditionTokens[0] : "";
+            value = conditionTokens.Length > 1 ? DateTime.ParseExact(conditionTokens[1], AppConfig.DatabaseDateFormat, null) : DateTime.MinValue;
+        }
+
+        public override string ToString() {
+            return op + "|" + value.ToString(AppConfig.DatabaseDateFormat);
+        }
+    }
+
+
     public class VisitData {
-        public string ServicesCount;
-        public string ServicesSumPrice;
-        public string PatientAge;
-        public string PatientSex;
-        public string VisitNumber;
-        public string VisitDate;
+        public int ServicesCount;
+        public int ServicesSumPrice;
+        public int PatientAge;
+        public int PatientSex;
+        public int VisitNumber;
+        public DateTime VisitDate;
     }
 
     //Класс услуги
@@ -90,21 +170,21 @@ namespace medic {
 
         public static string[] Operators = new string[] { "=", "<>", ">", "<", ">=", "<=", "%", "!%" };
 
-        private static string tableName;        //Имя таблицы
-        private static string fields;           //Поля таблицы для выборки
-        private static string[] fieldsArray;    //Массив полей для вставки
-        private static string[] conditionsFieldsArray; //Массив полей с условиями
+        private static string tableName;                //Имя таблицы
+        private static string fields;                   //Поля таблицы для выборки
+        private static string[] fieldsArray;            //Массив полей для вставки
+        private static string[] conditionsFieldsArray;  //Массив полей с условиями
 
-        public string Name;                     //Название скидки
-        public string Description;              //Описание скидки
-        public int Percent;                     //Процент скидки
+        public string Name;                             //Название скидки
+        public string Description;                      //Описание скидки
+        public int Percent;                             //Процент скидки
 
-        public SaleCondition CondServicesCount;
-        public SaleCondition CondServicesSumPrice;
-        public SaleCondition CondPatientAge;
-        public SaleCondition CondPatientSex;
-        public SaleCondition CondVisitNumber;
-        public SaleCondition CondVisitDate;
+        public SaleConditionInt CondServicesCount;
+        public SaleConditionInt CondServicesSumPrice;
+        public SaleConditionInt CondPatientAge;
+        public SaleConditionInt CondPatientSex;
+        public SaleConditionInt CondVisitNumber;
+        public SaleConditionDatetime CondVisitDate;
 
 
 
@@ -147,6 +227,9 @@ namespace medic {
             return tableName + "." + field;
         }
 
+        public static string GetFields() {
+            return fields;
+        }
 
 
         //Возвращает данные списка скидок
@@ -179,7 +262,7 @@ namespace medic {
             if (listData.List != null) {
                 foreach (string[] data in listData.List) {
                     Sale sale = new Sale(listData.Connection);
-                    sale.loadData(data);
+                    sale.LoadData(data);
                     list.Add(sale);
                 }
             }
@@ -188,24 +271,43 @@ namespace medic {
         }
 
 
+        public static List<Sale> GetSuitableSales(List<Sale> salesList, VisitData visitData) {
+            List<Sale> suitableSales = new List<Sale>();
+
+            foreach (Sale sale in salesList) {
+
+                if (
+                    sale.CondServicesCount.Compare(visitData.ServicesCount) &&
+                    sale.CondServicesSumPrice.Compare(visitData.ServicesSumPrice) &&
+                    sale.CondPatientAge.Compare(visitData.PatientAge) &&
+                    sale.CondPatientSex.Compare(visitData.PatientSex) &&
+                    sale.CondVisitNumber.Compare(visitData.VisitNumber) &&
+                    sale.CondVisitDate.Compare(visitData.VisitDate)
+                ) suitableSales.Add(sale);
+
+            }
+
+            return suitableSales;
+        }
+
 
         //Конструктор
         public Sale(DBConnection connection, int id = 0) : base(connection) {
-            CondServicesCount = new SaleCondition("cond_services_count");
-            CondServicesSumPrice = new SaleCondition("cond_services_sum_price");
-            CondPatientAge = new SaleCondition("cond_patient_age");
-            CondPatientSex = new SaleCondition("cond_patient_sex");
-            CondVisitNumber = new SaleCondition("cond_visit_number");
-            CondVisitDate = new SaleCondition("cond_visit_date");
+            CondServicesCount = new SaleConditionInt("cond_services_count");
+            CondServicesSumPrice = new SaleConditionInt("cond_services_sum_price");
+            CondPatientAge = new SaleConditionInt("cond_patient_age");
+            CondPatientSex = new SaleConditionInt("cond_patient_sex");
+            CondVisitNumber = new SaleConditionInt("cond_visit_number");
+            CondVisitDate = new SaleConditionDatetime("cond_visit_date");
 
             if (id <= 0) return;
-            List<string[]> data = connection.Select("SELECT id, " + fields + " FROM " + tableName + " WHERE removed = 0 AND id = " + id.ToString());
+            List<string[]> data = connection.Select("SELECT id, " + fields + " FROM " + tableName + " WHERE id = " + id.ToString());
             if (data.Count == 0) {
                 this.id = -1;
                 return;
             }
 
-            loadData(data[0]);
+            LoadData(data[0]);
         }
 
 
@@ -218,12 +320,12 @@ namespace medic {
             sale.Description = Description;
             sale.Percent = Percent;
 
-            sale.CondServicesCount = CondServicesCount.Clone();
-            sale.CondServicesSumPrice = CondServicesSumPrice.Clone();
-            sale.CondPatientAge = CondPatientAge.Clone();
-            sale.CondPatientSex = CondPatientSex.Clone();
-            sale.CondVisitNumber = CondVisitNumber.Clone();
-            sale.CondVisitDate = CondVisitDate.Clone();
+            sale.CondServicesCount = (SaleConditionInt)CondServicesCount.Clone();
+            sale.CondServicesSumPrice = (SaleConditionInt)CondServicesSumPrice.Clone();
+            sale.CondPatientAge = (SaleConditionInt)CondPatientAge.Clone();
+            sale.CondPatientSex = (SaleConditionInt)CondPatientSex.Clone();
+            sale.CondVisitNumber = (SaleConditionInt)CondVisitNumber.Clone();
+            sale.CondVisitDate = (SaleConditionDatetime)CondVisitDate.Clone();
 
             return sale;
         }
@@ -255,9 +357,31 @@ namespace medic {
         }
 
 
+        public int AddSales(List<Sale> saleList) {
+            if (saleList.Count == 0) return 0;
+
+            string[] values = new string[saleList.Count];
+            for (int i = 0; i < saleList.Count; i++)
+                values[i] = "(" + id.ToString() + "," + saleList[i].GetId().ToString() + "," + saleList[i].Percent.ToString() + ")";
+
+            string sql = "INSERT IGNORE INTO visit_sales (visit_id, sale_id, sale_percent) VALUES " + String.Join(",", values);
+            return connection.Insert(sql); ;
+        }
+
+        public int RemoveSales(List<Sale> saleList) {
+            if (saleList.Count == 0) return 0;
+
+            string[] salesIds = new string[saleList.Count];
+            for (int i = 0; i < saleList.Count; i++)
+                salesIds[i] = saleList[i].GetId().ToString();
+
+            string sql = "DELETE FROM visit_sales WHERE visit_id = " + id.ToString() + " AND sale_id IN (" + String.Join(",", salesIds) + ")";
+            return connection.Delete(sql);
+        }
+
 
         //Загружает данные в поля
-        private void loadData(string[] data) {
+        public void LoadData(string[] data) {
             id = Int32.Parse(data[0]);
 
             Name = data[1];

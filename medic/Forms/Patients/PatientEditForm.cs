@@ -65,7 +65,7 @@ namespace medic.Forms {
             tbwFirstName.SetValue(patient.FirstName);
             tbwLastName.SetValue(patient.LastName);
             tbwMiddleName.SetValue(patient.MiddleName);
-            cbwSex.SetValue(patient.Sex);
+            cbwSex.SetValue(patient.Sex.ToString());
             dpwBirthday.SetDate(patient.Birthday);
         }
 
@@ -94,7 +94,7 @@ namespace medic.Forms {
             patient.MiddleName = tbwMiddleName.GetValue();
             patient.LastName = tbwLastName.GetValue();
             patient.Birthday = dpwBirthday.GetDate();
-            patient.Sex = cbwSex.GetValue();
+            patient.Sex = Int32.Parse(cbwSex.GetValue());
 
             return patient.Save() != -1;
         }

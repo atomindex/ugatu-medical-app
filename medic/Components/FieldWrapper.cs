@@ -37,21 +37,27 @@ namespace medic.Components {
             LblError.AutoSize = true;
             LblError.ForeColor = Color.OrangeRed;
             LblError.Padding = new Padding(0, 2, 0, 0);
+            LblError.FlatStyle = FlatStyle.System;
             LblError.Visible = false;
             LblError.Parent = this;
 
             //Помещаем компонент ввода на панель
-            CtrlField = field;
-            CtrlField.Parent = this;
-            CtrlField.Dock = DockStyle.Top;
+            if (field != null) {
+                CtrlField = field;
+                CtrlField.Parent = this;
+                CtrlField.Dock = DockStyle.Top;
+            }
 
             //Создаем подпись
-            LblLabel = new Label();
-            LblLabel.Text = labelText;
-            LblLabel.Dock = DockStyle.Top;
-            LblLabel.AutoSize = true;
-            LblLabel.Padding = new Padding(0, 0, 0, 5);
-            LblLabel.Parent = this;
+            if (labelText != null) {
+                LblLabel = new Label();
+                LblLabel.Text = labelText;
+                LblLabel.Dock = DockStyle.Top;
+                LblLabel.AutoSize = true;
+                LblLabel.Padding = new Padding(0, 0, 0, 5);
+                LblLabel.FlatStyle = FlatStyle.System;
+                LblLabel.Parent = this;
+            }
         }
 
 
