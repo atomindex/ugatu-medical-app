@@ -40,7 +40,7 @@ namespace medic {
             return tableName + "." + field;
         }
 
-        //Возвращает данные списка сотрудников
+        //Возвращает данные списка посещений
         public static ListData GetListData(DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
             string baseSql = "SELECT " + Visit.fields + " FROM " + Visit.GetTableName() +
                             " JOIN patients ON patients.id = visits.patient_id";
@@ -65,7 +65,19 @@ namespace medic {
             );
         }
 
-        //Возвращает список сотрудников из данных списка
+        //Возвращат данные списка посещений, указанного пациента
+        public static ListData GetPatientListData(int patientId, DBConnection connection, int limit = 0, int pageIndex = 0, SqlFilter filter = null, SqlSorter sorter = null) {
+
+            SqlFilter patientFilter = new SqlFilter(SqlLogicalOperator.And);
+            SqlFilterCondition patientFilterCondition = new SqlFilterCondition(Visit.GetFieldName("patient_id"), SqlComparisonOperator.Equal);
+            patientFilterCondition.SetValue(patientId);
+            patientFilter.AddItem(patientFilterCondition);
+            patientFilter.AddItem(filter);
+
+            return GetListData(connection, limit, pageIndex, patientFilter, sorter);
+        }
+
+        //Возвращает список посещений из данных списка
         public static List<Visit> GetList(ListData listData) {
             //Формируем список сотрудников
             List<Visit> list = new List<Visit>();

@@ -28,6 +28,7 @@ namespace medic.Forms {
         //Конструктор
         public WorkerSelectForm(ListData initialListData) : base(initialListData.Connection) {
             InitializeComponent();
+            Text = "Выбор сотрудников";
 
             this.connection = initialListData.Connection;
 

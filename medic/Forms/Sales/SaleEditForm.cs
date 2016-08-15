@@ -43,7 +43,7 @@ namespace medic.Forms {
             ctbwCondVisitNumber.Parent = panel;
 
             //Создаем поле  Пол пациента
-            ctbwCondPatientSex = new ComboComboBoxWrapper("Пол пациента", SaleConditionInt.Operators, Patient.SexKeys, Patient.SexValues, new ComboBox());
+            ctbwCondPatientSex = new ComboComboBoxWrapper("Пол пациента", SaleConditionInt.OperatorsForArray, Patient.SexKeys, Patient.SexValues, new ComboBox());
             ctbwCondPatientSex.Dock = DockStyle.Top;
             ctbwCondPatientSex.Parent = panel;
 

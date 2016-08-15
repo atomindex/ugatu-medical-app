@@ -28,6 +28,7 @@ namespace medic.Forms {
         //Конструктор
         public CategorySelectForm(ListData initialListData) : base(initialListData.Connection) {
             InitializeComponent();
+            Text = "Выбор категорий";
 
             selectedPatientCategories = new Dictionary<int, Category>();
 

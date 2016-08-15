@@ -218,10 +218,14 @@ namespace medic {
 
 
         private void btnAddVitit_Click(object sender, EventArgs e) {
+            if (patientsList.Count == 0)
+                return;
+
             Patient patient = patientsList[table.CurrentCell.RowIndex];
             Visit visit = new Visit(connection);
 
             VisitEditForm visitEditForm = new VisitEditForm(visit, patient);
+            visitEditForm.Text = "Добавление нового посещения";
             visitEditForm.ShowDialog();
         }
 
@@ -262,6 +266,16 @@ namespace medic {
             }
 
             reloadData(true);
+        }
+
+        private void btnShowPatientVisits_Click(object sender, EventArgs e) {
+            if (patientsList.Count == 0)
+                return;
+
+            Patient patient = patientsList[table.CurrentCell.RowIndex];
+            ListData visitsListData = Visit.GetPatientListData(patient.GetId(), connection, 5);
+            VisitListForm visitListForm = new VisitListForm(visitsListData);
+            visitListForm.ShowDialog();
         }
 
     }
