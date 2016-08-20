@@ -98,6 +98,8 @@ namespace medic.Database {
                 case SqlComparisonOperator.NotLike: return "NOT LIKE";
                 case SqlComparisonOperator.In: return "IN";
                 case SqlComparisonOperator.NotIn: return "NOT IN";
+                case SqlComparisonOperator.Is: return "IS";
+                case SqlComparisonOperator.NotIs: return "NOT IS";
             }
             return "=";
         }

@@ -278,6 +278,42 @@ namespace medic {
             visitListForm.ShowDialog();
         }
 
+        private void menuItemReport1_Click(object sender, EventArgs e) {
+            ServicesProfitReport report = new ServicesProfitReport(connection);
+            report.ShowDialog();
+        }
+
+        private void menuItemReport2_Click(object sender, EventArgs e) {
+            ListData listData = Worker.GetListData(connection, 25);
+            WorkerSelectForm workerSelectForm = new WorkerSelectForm(listData);
+
+            if (workerSelectForm.ShowDialog() == DialogResult.OK) {
+                List<Worker> workers = workerSelectForm.GetSelected();
+                if (workers.Count == 0)
+                    return;
+                WorkerServicesReport workerServicesReport = new WorkerServicesReport(connection, workers);
+                workerServicesReport.ShowDialog();
+            }
+        }
+
+        private void menuItemReport3_Click(object sender, EventArgs e) {
+            ListData listData = Patient.GetListData(connection, 25);
+            PatientSelectForm patientSelectForm = new PatientSelectForm(listData);
+
+            if (patientSelectForm.ShowDialog() == DialogResult.OK) {
+                List<Patient> patients = patientSelectForm.GetSelected();
+                if (patients.Count == 0)
+                    return;
+                PatientsVisitsReport patientsVisitsReport = new PatientsVisitsReport(connection, patients);
+                patientsVisitsReport.ShowDialog();
+            }
+        }
+
+        private void menuItemReport4_Click(object sender, EventArgs e) {
+            ServicesReport servicesReport = new ServicesReport(connection);
+            servicesReport.ShowDialog();
+        }
+
     }
 
 }

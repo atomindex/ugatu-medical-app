@@ -29,3 +29,5 @@ C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Release\medi
 C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Release\medic.Forms.CategoryEditForm.resources
 C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Release\medic.Forms.CategoryListForm.resources
 C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Release\medic.Forms.CategorySelectForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Release\medic.Forms.ReportForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Release\medic.Forms.PatientSelectForm.resources

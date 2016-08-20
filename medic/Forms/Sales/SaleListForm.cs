@@ -105,7 +105,7 @@ namespace medic.Forms {
 
         //Загрузка данных скидки в строку таблицы
         private void loadDataToRow(int rowIndex, Sale sale) {
-            table.Rows[rowIndex].Cells[0].Value = sale.Name;
+            table.Rows[rowIndex].Cells[0].Value = sale.Description;
             table.Rows[rowIndex].Cells[1].Value = sale.Percent.ToString();
         }
 

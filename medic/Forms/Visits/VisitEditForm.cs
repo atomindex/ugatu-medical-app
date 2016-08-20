@@ -181,6 +181,7 @@ namespace medic.Forms {
             }
             vcbwServices.ResumeLayout();
 
+            sidePanel.ClearSales();
             foreach (VisitSale visitSale in visitSales)
                 sidePanel.AddSale(visitSale.RelatedSale.Name, visitSale.Percent.ToString());
         }

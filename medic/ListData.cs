@@ -64,6 +64,12 @@ namespace medic {
             private set;
         }
 
+        //Группировка
+        public string GroupBy {
+            get;
+            private set;
+        }
+
         //Список
         public List<string[]> List {
             get;
@@ -73,7 +79,7 @@ namespace medic {
 
 
         //Конструктор
-        public ListData(DBConnection connection, string baseSql, string countSql, SqlFilter filter, SqlSorter sorter, int limit, int pageIndex) {
+        public ListData(DBConnection connection, string baseSql, string countSql, SqlFilter filter, SqlSorter sorter, int limit, int pageIndex, string groupBy = "") {
             this.Connection = connection;
 
             this.BaseSql = baseSql;
@@ -81,6 +87,7 @@ namespace medic {
 
             this.Filter = filter;
             this.Sorter = sorter;
+            this.GroupBy = groupBy;
 
             this.Limit = limit;
             this.PageIndex = pageIndex;
@@ -95,8 +102,9 @@ namespace medic {
             string where_statement = Filter != null ? Filter.ToString(" WHERE ", " ") : "";
             string order_statement = Sorter != null ? Sorter.ToString(" ORDER BY ", " ") : "";
             string limit_statement = QueryBuilder.BuildLimit(Limit, pageIndex);
+            string groupby_statement = GroupBy.Length > 0 ? " GROUP BY " + GroupBy + " " : "";
 
-            List = Connection.Select(BaseSql + where_statement + order_statement + limit_statement);
+            List = Connection.Select(BaseSql + where_statement + groupby_statement + order_statement + limit_statement);
             List<string[]> countResult = Connection.Select(CountSql + where_statement);
             Count = Int32.Parse(countResult[0][0]);
 

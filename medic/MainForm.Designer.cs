@@ -29,14 +29,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.menuItemLists = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemCategories = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemPatients = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSpecialties = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemWorkers = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemServices = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSpecialties = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSales = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemPatients = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemCategories = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemVisitLists = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemVisits = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReport1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReport2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReport3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemReport4 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTool = new System.Windows.Forms.ToolStrip();
@@ -48,7 +53,6 @@
             this.btnSearch = new System.Windows.Forms.ToolStripButton();
             this.btnAddPatient = new System.Windows.Forms.ToolStripButton();
             this.table = new System.Windows.Forms.DataGridView();
-            this.menuItemReports = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.mainTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
@@ -80,6 +84,27 @@
             this.menuItemLists.Size = new System.Drawing.Size(94, 20);
             this.menuItemLists.Text = "Справочники";
             // 
+            // menuItemCategories
+            // 
+            this.menuItemCategories.Name = "menuItemCategories";
+            this.menuItemCategories.Size = new System.Drawing.Size(160, 22);
+            this.menuItemCategories.Text = "Категории";
+            this.menuItemCategories.Click += new System.EventHandler(this.menuItemCategories_Click);
+            // 
+            // menuItemPatients
+            // 
+            this.menuItemPatients.Name = "menuItemPatients";
+            this.menuItemPatients.Size = new System.Drawing.Size(160, 22);
+            this.menuItemPatients.Text = "Пациенты";
+            this.menuItemPatients.Click += new System.EventHandler(this.menuItemPatients_Click);
+            // 
+            // menuItemSpecialties
+            // 
+            this.menuItemSpecialties.Name = "menuItemSpecialties";
+            this.menuItemSpecialties.Size = new System.Drawing.Size(160, 22);
+            this.menuItemSpecialties.Text = "Специальности";
+            this.menuItemSpecialties.Click += new System.EventHandler(this.menuItemSpecialties_Click);
+            // 
             // menuItemWorkers
             // 
             this.menuItemWorkers.Name = "menuItemWorkers";
@@ -94,33 +119,12 @@
             this.menuItemServices.Text = "Услуги";
             this.menuItemServices.Click += new System.EventHandler(this.menuItemServices_Click);
             // 
-            // menuItemSpecialties
-            // 
-            this.menuItemSpecialties.Name = "menuItemSpecialties";
-            this.menuItemSpecialties.Size = new System.Drawing.Size(160, 22);
-            this.menuItemSpecialties.Text = "Специальности";
-            this.menuItemSpecialties.Click += new System.EventHandler(this.menuItemSpecialties_Click);
-            // 
             // menuItemSales
             // 
             this.menuItemSales.Name = "menuItemSales";
             this.menuItemSales.Size = new System.Drawing.Size(160, 22);
             this.menuItemSales.Text = "Скидки";
             this.menuItemSales.Click += new System.EventHandler(this.menuItemSales_Click);
-            // 
-            // menuItemPatients
-            // 
-            this.menuItemPatients.Name = "menuItemPatients";
-            this.menuItemPatients.Size = new System.Drawing.Size(160, 22);
-            this.menuItemPatients.Text = "Пациенты";
-            this.menuItemPatients.Click += new System.EventHandler(this.menuItemPatients_Click);
-            // 
-            // menuItemCategories
-            // 
-            this.menuItemCategories.Name = "menuItemCategories";
-            this.menuItemCategories.Size = new System.Drawing.Size(160, 22);
-            this.menuItemCategories.Text = "Категории";
-            this.menuItemCategories.Click += new System.EventHandler(this.menuItemCategories_Click);
             // 
             // menuItemVisitLists
             // 
@@ -136,6 +140,45 @@
             this.menuItemVisits.Size = new System.Drawing.Size(182, 22);
             this.menuItemVisits.Text = "Список посещений";
             this.menuItemVisits.Click += new System.EventHandler(this.menuItemVisits_Click);
+            // 
+            // menuItemReports
+            // 
+            this.menuItemReports.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemReport1,
+            this.menuItemReport2,
+            this.menuItemReport3,
+            this.menuItemReport4});
+            this.menuItemReports.Name = "menuItemReports";
+            this.menuItemReports.Size = new System.Drawing.Size(60, 20);
+            this.menuItemReports.Text = "Отчеты";
+            // 
+            // menuItemReport1
+            // 
+            this.menuItemReport1.Name = "menuItemReport1";
+            this.menuItemReport1.Size = new System.Drawing.Size(200, 22);
+            this.menuItemReport1.Text = "Доход по услугам";
+            this.menuItemReport1.Click += new System.EventHandler(this.menuItemReport1_Click);
+            // 
+            // menuItemReport2
+            // 
+            this.menuItemReport2.Name = "menuItemReport2";
+            this.menuItemReport2.Size = new System.Drawing.Size(200, 22);
+            this.menuItemReport2.Text = "Оказанные услуги";
+            this.menuItemReport2.Click += new System.EventHandler(this.menuItemReport2_Click);
+            // 
+            // menuItemReport3
+            // 
+            this.menuItemReport3.Name = "menuItemReport3";
+            this.menuItemReport3.Size = new System.Drawing.Size(200, 22);
+            this.menuItemReport3.Text = "Посещения пациентов";
+            this.menuItemReport3.Click += new System.EventHandler(this.menuItemReport3_Click);
+            // 
+            // menuItemReport4
+            // 
+            this.menuItemReport4.Name = "menuItemReport4";
+            this.menuItemReport4.Size = new System.Drawing.Size(200, 22);
+            this.menuItemReport4.Text = "Статистика по услугам";
+            this.menuItemReport4.Click += new System.EventHandler(this.menuItemReport4_Click);
             // 
             // menuItemHelp
             // 
@@ -277,12 +320,6 @@
             this.table.Size = new System.Drawing.Size(830, 348);
             this.table.TabIndex = 4;
             // 
-            // menuItemReports
-            // 
-            this.menuItemReports.Name = "menuItemReports";
-            this.menuItemReports.Size = new System.Drawing.Size(60, 20);
-            this.menuItemReports.Text = "Отчеты";
-            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -330,6 +367,10 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemPatients;
         private System.Windows.Forms.ToolStripMenuItem menuItemCategories;
         private System.Windows.Forms.ToolStripMenuItem menuItemReports;
+        private System.Windows.Forms.ToolStripMenuItem menuItemReport1;
+        private System.Windows.Forms.ToolStripMenuItem menuItemReport2;
+        private System.Windows.Forms.ToolStripMenuItem menuItemReport3;
+        private System.Windows.Forms.ToolStripMenuItem menuItemReport4;
     }
 }
 

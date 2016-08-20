@@ -31,12 +31,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">
       <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -118,6 +123,30 @@
     </Compile>
     <Compile Include="Forms\Patients\PatientListForm.Designer.cs">
       <DependentUpon>PatientListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Patients\PatientSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Patients\PatientSelectForm.Designer.cs">
+      <DependentUpon>PatientSelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Reports\ReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Reports\ReportForm.Designer.cs">
+      <DependentUpon>ReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Reports\PatientsVisitsReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Reports\ServicesReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Reports\WorkerServicesReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Reports\ServicesProfitReport.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Sales\SaleEditForm.cs">
       <SubType>Form</SubType>
@@ -238,6 +267,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\SqlFilter\SqlFilter.cs" />
+    <Compile Include="Report.cs" />
     <Compile Include="Sale.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="VisitSale.cs" />
@@ -255,6 +285,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Patients\PatientListForm.resx">
       <DependentUpon>PatientListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Patients\PatientSelectForm.resx">
+      <DependentUpon>PatientSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Reports\ReportForm.resx">
+      <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sales\SaleEditForm.resx">
       <DependentUpon>SaleEditForm.cs</DependentUpon>

@@ -111,6 +111,8 @@ namespace medic {
             Visit visit = new Visit(connection);
             visit.id = id;
             visit.VisitDate = VisitDate;
+            visit.PatientAge = PatientAge;
+            visit.PatientSex = PatientSex;
             visit.RelatedPatient = RelatedPatient.Clone();
             return visit;
         }
