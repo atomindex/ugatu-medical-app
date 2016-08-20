@@ -43,16 +43,19 @@ namespace medic.Forms {
 
             tlsFilter.Items.Add(btnApply);
             AddApplyEvent(btnApply_Click);
-
-            reload();
         }
 
-        private void reload() {
+        protected override bool reload() {
             StartDocument();
             NewHeader("Оказанные услуги", "за период с " + dtpDateFrom.Value.ToString(AppConfig.DateFormat) + " до " + dtpDateTo.Value.ToString(AppConfig.DateFormat));
 
             foreach (Worker worker in workers) {
                 List<string[]> data = Report.GetWorkerServicesList(worker.GetId(), connection, dtpDateFrom.Value, dtpDateTo.Value);
+                if (data == null) {
+                    Rollback();
+                    return false;
+                }
+
                 NewSubtitle(worker.GetFullName());
 
                 if (data.Count > 0) {
@@ -70,6 +73,8 @@ namespace medic.Forms {
             }
 
             EndDocument();
+
+            return true;
         }
 
         private void btnApply_Click(object sender, EventArgs e) {

@@ -97,24 +97,33 @@ namespace medic {
 
         //Обновления списка
         public List<string[]> Update(int pageIndex = 0) {
-            PageIndex = pageIndex;
-
             string where_statement = Filter != null ? Filter.ToString(" WHERE ", " ") : "";
             string order_statement = Sorter != null ? Sorter.ToString(" ORDER BY ", " ") : "";
             string limit_statement = QueryBuilder.BuildLimit(Limit, pageIndex);
             string groupby_statement = GroupBy.Length > 0 ? " GROUP BY " + GroupBy + " " : "";
 
-            List = Connection.Select(BaseSql + where_statement + groupby_statement + order_statement + limit_statement);
+            List<string[]> newList = Connection.Select(BaseSql + where_statement + groupby_statement + order_statement + limit_statement);
+            if (newList == null)
+                return null;
+            
             List<string[]> countResult = Connection.Select(CountSql + where_statement);
-            Count = Int32.Parse(countResult[0][0]);
+            if (countResult == null)
+                return null;
+            int count = Int32.Parse(countResult[0][0]);
+
 
             //Если номер страницы вышел за пределы, подгружаем послеюнюю страницу
-            if (Count > 0 && List.Count == 0) {
-                pageIndex = (int)(Count / (double)Limit);
+            if (count > 0 && newList.Count == 0) {
+                pageIndex = (int)(count / (double)Limit);
                 limit_statement = QueryBuilder.BuildLimit(Limit, pageIndex);
-                List = Connection.Select(BaseSql + where_statement + order_statement + limit_statement);
+                newList = Connection.Select(BaseSql + where_statement + order_statement + limit_statement);
+                if (newList == null)
+                    return null;
             }
 
+            List = newList;
+            PageIndex = pageIndex;
+            Count = count;
             Pages = Limit > 0 ? (int)Math.Ceiling(Count / (double)Limit) : 0;
 
             return List;

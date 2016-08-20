@@ -26,19 +26,18 @@ namespace medic.Forms {
 
 
         //Конструктор
-        public PatientListForm(ListData initialListData)
-            : base(initialListData.Connection) {
+        public PatientListForm(ListData initialListData) : base(initialListData.Connection) {
             InitializeComponent();
 
             //Инициализируем имена
-            tableColumnNames = new string[] { "Имя", "Фамилия", "Отчество", "Пол", "Дата рождения" };
-            tableFields = new string[] { "first_name", "last_name", "middle_name", "sex", "birthday" };
+            tableColumnNames = new string[] { "Фамилия", "Имя", "Отчество", "Пол", "Дата рождения" };
+            tableFields = new string[] { "last_name", "first_name", "middle_name", "sex", "birthday" };
 
             //Создаем фильтр по имени
             filter = new SqlFilter(SqlLogicalOperator.And);
             string fullNameFilterField = QueryBuilder.BuildConcatStatement(
                 Patient.GetTableName(),
-                new string[] { "first_name", "last_name", "middle_name" }
+                new string[] { "last_name", "first_name", "middle_name" }
             );
             fullNameFilter = new SqlFilterCondition[] {
                 new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like),
@@ -88,16 +87,18 @@ namespace medic.Forms {
             AddRemoveEvent(btnRemove_Click);
             AddSearchEvent(btnSearch_Click);
             AddSortChangeEvent(tblSortChange_Event);
-
-            //Подгружаем начальные данные
-            reloadData();
         }
 
 
 
         //Перезагрузка данных в таблицу
-        protected override void reloadData(bool resetPageIndex = false) {
-            listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
+        protected override bool reloadData(bool resetPageIndex = false) {
+            if (listData.Update(resetPageIndex ? 0 : tblPager.GetPage()) == null) {
+                DialogResult = DialogResult.Abort;
+                Close();
+                return false;
+            }
+
             patientsList = Patient.GetList(listData);
 
             if (patientsList.Count == 0) {
@@ -109,12 +110,13 @@ namespace medic.Forms {
             }
 
             tblPager.SetData(listData.Count, listData.Pages, listData.PageIndex);
+            return true;
         }
 
         //Загрузка данных пациента в строку таблицы
         private void loadDataToRow(int rowIndex, Patient patient) {
-            table.Rows[rowIndex].Cells[0].Value = patient.FirstName;
-            table.Rows[rowIndex].Cells[1].Value = patient.LastName;
+            table.Rows[rowIndex].Cells[0].Value = patient.LastName;
+            table.Rows[rowIndex].Cells[1].Value = patient.FirstName;
             table.Rows[rowIndex].Cells[2].Value = patient.MiddleName;
             table.Rows[rowIndex].Cells[3].Value = patient.GetStringSex();
             table.Rows[rowIndex].Cells[4].Value = patient.Birthday.ToString(AppConfig.DateFormat);

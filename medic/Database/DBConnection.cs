@@ -17,7 +17,6 @@ namespace medic.Database {
         private Timer closeTimer;
         private bool transactionStarted;
 
-
         //Конструктор
         public DBConnection(string server, string database, string username, string password, int closeTimeout = 60) {
             connection = new MySqlConnection(
@@ -53,7 +52,7 @@ namespace medic.Database {
                         break;
 
                     default:
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                 }
                 return false;
@@ -71,7 +70,7 @@ namespace medic.Database {
                 closeTimer.Stop();
                 return true;
             } catch (MySqlException ex) {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -87,7 +86,7 @@ namespace medic.Database {
                 int rowsCount = command.ExecuteNonQuery();
                 return rowsCount > 0 ? (int)command.LastInsertedId : 0;
             } catch (MySqlException ex) {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
             }
         }
@@ -101,7 +100,7 @@ namespace medic.Database {
                 int rowsCount = command.ExecuteNonQuery();
                 return rowsCount;
             } catch (MySqlException ex) {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
             }
         }
@@ -115,7 +114,7 @@ namespace medic.Database {
                 int rowsCount = command.ExecuteNonQuery();
                 return rowsCount;
             } catch (MySqlException ex) {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
             }
         }
@@ -129,7 +128,7 @@ namespace medic.Database {
                 MySqlCommand command = new MySqlCommand(query, connection);
                 reader = command.ExecuteReader();
             } catch (MySqlException ex) {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
             
@@ -163,7 +162,7 @@ namespace medic.Database {
                 return true;
             } catch (MySqlException ex) {
                 transactionStarted = false;
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -179,7 +178,7 @@ namespace medic.Database {
                 Entity.CommitTransaction();
                 return true;
             } catch (MySqlException ex) {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -195,7 +194,7 @@ namespace medic.Database {
                 Entity.RollbackTransaction();
                 return true;
             } catch (MySqlException ex) {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }

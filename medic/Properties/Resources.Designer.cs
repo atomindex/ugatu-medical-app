@@ -93,9 +93,9 @@ namespace medic.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icon {
+        internal static System.Drawing.Bitmap Icon {
             get {
-                object obj = ResourceManager.GetObject("icon", resourceCulture);
+                object obj = ResourceManager.GetObject("Icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,29 @@ namespace medic.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap patient {
+        internal static System.Drawing.Bitmap Patient {
             get {
-                object obj = ResourceManager.GetObject("patient", resourceCulture);
+                object obj = ResourceManager.GetObject("Patient", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Reload {
+            get {
+                object obj = ResourceManager.GetObject("Reload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReloadLarge {
+            get {
+                object obj = ResourceManager.GetObject("ReloadLarge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +153,9 @@ namespace medic.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap search_large {
+        internal static System.Drawing.Bitmap SearchLarge {
             get {
-                object obj = ResourceManager.GetObject("search_large", resourceCulture);
+                object obj = ResourceManager.GetObject("SearchLarge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +163,9 @@ namespace medic.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap visit {
+        internal static System.Drawing.Bitmap Visit {
             get {
-                object obj = ResourceManager.GetObject("visit", resourceCulture);
+                object obj = ResourceManager.GetObject("Visit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +173,9 @@ namespace medic.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap visit_list {
+        internal static System.Drawing.Bitmap VisitsList {
             get {
-                object obj = ResourceManager.GetObject("visit_list", resourceCulture);
+                object obj = ResourceManager.GetObject("VisitsList", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

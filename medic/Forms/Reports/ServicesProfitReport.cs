@@ -37,12 +37,14 @@ namespace medic.Forms {
 
             tlsFilter.Items.Add(btnApply);
             AddApplyEvent(btnApply_Click);
-
-            reload();
         }
 
-        private void reload() {
+        protected override bool reload() {
             List<string[]> data = Report.GetServicesProfitList(connection, dtpDateFrom.Value, dtpDateTo.Value);
+            if (data == null) {
+                Rollback();
+                return false;
+            }
 
             StartDocument();
             NewHeader("Доход по услугам", "за период с " + dtpDateFrom.Value.ToString(AppConfig.DateFormat) + " до " + dtpDateTo.Value.ToString(AppConfig.DateFormat));
@@ -56,10 +58,10 @@ namespace medic.Forms {
             }
 
             EndTable();
-
             NewSummary("Общий доход", totalProfit.ToString() + " р.");
-            
             EndDocument();
+
+            return true;
         }
 
         private void btnApply_Click(object sender, EventArgs e) {

@@ -67,9 +67,6 @@ namespace medic.Forms {
             //Добавляем события
             AddSearchEvent(btnSearch_Click);
             AddCheckEvent(lstCheck_Event);
-
-            //Подгружаем начальные данные
-            reloadData();
         }
 
 
@@ -82,10 +79,15 @@ namespace medic.Forms {
 
 
         //Перезагрузка данных в список
-        protected override void reloadData(bool resetPageIndex = false) {
+        protected override bool reloadData(bool resetPageIndex = false) {
             lockSelectUpdate = true;
 
-            listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
+            if (listData.Update(resetPageIndex ? 0 : tblPager.GetPage()) == null) {
+                DialogResult = DialogResult.Abort;
+                lockSelectUpdate = false;
+                Close();
+                return false;
+            }
             servicesList = Service.GetList(listData);
 
             list.Items.Clear();
@@ -95,6 +97,8 @@ namespace medic.Forms {
             tblPager.SetData(listData.Count, listData.Pages, listData.PageIndex);
 
             lockSelectUpdate = false;
+
+            return true;
         }
 
 

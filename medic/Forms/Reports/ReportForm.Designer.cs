@@ -59,7 +59,7 @@
             // 
             // btnApply
             // 
-            this.btnApply.Image = global::medic.Properties.Resources.Search;
+            this.btnApply.Image = global::medic.Properties.Resources.Reload;
             this.btnApply.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnApply.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
             this.btnApply.Name = "btnApply";

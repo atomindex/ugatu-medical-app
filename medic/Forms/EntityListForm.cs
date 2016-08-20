@@ -16,6 +16,13 @@ namespace medic.Forms {
         protected TablePager tblPager;        //Пейджер таблицы
 
 
+        public DialogResult ShowDialog() {
+            if (reloadData())
+                return base.ShowDialog();
+            else
+                return DialogResult.Abort;
+        }
+
 
         //Очистка таблицы
         protected static void ClearTable(DataGridView table) {
@@ -52,7 +59,7 @@ namespace medic.Forms {
 
 
         //Перезагружкает данные в таблицу
-        protected virtual void reloadData(bool resetPageIndex = false) { }
+        protected virtual bool reloadData(bool resetPageIndex = false) { return true; }
 
 
 

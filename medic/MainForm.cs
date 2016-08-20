@@ -14,9 +14,10 @@ using medic.Components;
 namespace medic {
 
     public partial class mainForm : Form {
+
         private string[] tableFields;                   //Список полей соответвующих колонкам
 
-        DBConnection connection;
+        private DBConnection connection;
 
         private Cursor tempCursor;
 
@@ -47,8 +48,8 @@ namespace medic {
             );
 
             table.ColumnCount = 5;
-            table.Columns[0].HeaderText = "Имя";
-            table.Columns[1].HeaderText = "Фамилия";
+            table.Columns[0].HeaderText = "Фамилия";
+            table.Columns[1].HeaderText = "Имя";
             table.Columns[2].HeaderText = "Отчество";
             table.Columns[3].HeaderText = "Пол";
             table.Columns[4].HeaderText = "Дата рождения";
@@ -61,13 +62,13 @@ namespace medic {
 
 
             //Инициализируем имена
-            tableFields = new string[] { "first_name", "last_name", "middle_name", "sex", "birthday" };
+            tableFields = new string[] { "last_name", "first_name", "middle_name", "sex", "birthday" };
 
             //Создаем фильтр по имени
             filter = new SqlFilter(SqlLogicalOperator.And);
             string fullNameFilterField = QueryBuilder.BuildConcatStatement(
                 Patient.GetTableName(),
-                new string[] { "first_name", "last_name", "middle_name" }
+                new string[] { "last_name", "first_name", "middle_name" }
             );
             fullNameFilter = new SqlFilterCondition[] {
                 new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like),
@@ -81,13 +82,7 @@ namespace medic {
             sorterItem = new SqlSorterCondition();
             sorter.AddItem(sorterItem);
 
-            listData = Patient.GetListData(
-                connection, 
-                25,
-                0,
-                filter,
-                sorter
-            );
+            listData = Patient.GetListData(connection, AppConfig.BaseLimit, 0, filter, sorter);
 
             btnSearch.Click += btnSearch_Click;
 
@@ -95,8 +90,13 @@ namespace medic {
         }
 
         //Перезагрузка данных в таблицу
-        protected void reloadData(bool resetPageIndex = false) {
-            listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
+        protected bool reloadData(bool resetPageIndex = false) {
+            if (listData.Update(resetPageIndex ? 0 : tblPager.GetPage()) == null) {
+                refreshTimer.Enabled = false;
+                return false;
+            }
+            refreshTimer.Enabled = true;
+
             patientsList = Patient.GetList(listData);
 
             if (patientsList.Count == 0) {
@@ -108,6 +108,8 @@ namespace medic {
             }
 
             tblPager.SetData(listData.Count, listData.Pages, listData.PageIndex);
+            
+            return true;
         }
 
         //Очистка таблицы
@@ -144,39 +146,39 @@ namespace medic {
 
 
         private void menuItemWorkers_Click(object sender, EventArgs e) {
-            ListData listData = Worker.GetListData(connection, 25);
+            ListData listData = Worker.GetListData(connection, AppConfig.BaseLimit);
             WorkerListForm workersListForm = new WorkerListForm(listData);
-            workersListForm.Show();
+            workersListForm.ShowDialog();
         }
 
         private void menuItemServices_Click(object sender, EventArgs e) {
-            ListData listData = Service.GetListData(connection, 25);
+            ListData listData = Service.GetListData(connection, AppConfig.BaseLimit);
             ServiceListForm servicesListForm = new ServiceListForm(listData);
-            servicesListForm.Show();
+            servicesListForm.ShowDialog();
         }
 
         private void menuItemSpecialties_Click(object sender, EventArgs e) {
-            ListData listData = Specialty.GetListData(connection, 25);
+            ListData listData = Specialty.GetListData(connection, AppConfig.BaseLimit);
             SpecialtyListForm specialtiesListForm = new SpecialtyListForm(listData);
-            specialtiesListForm.Show();
+            specialtiesListForm.ShowDialog();
         }
 
         private void menuItemSales_Click(object sender, EventArgs e) {
             ListData listData = Sale.GetListData(connection, 25);
             SaleListForm saleListForm = new SaleListForm(listData);
-            saleListForm.Show();
+            saleListForm.ShowDialog();
         }
 
         private void menuItemPatients_Click(object sender, EventArgs e) {
-            ListData listData = Patient.GetListData(connection, 25);
+            ListData listData = Patient.GetListData(connection, AppConfig.BaseLimit);
             PatientListForm patientListForm = new PatientListForm(listData);
-            patientListForm.Show();
+            patientListForm.ShowDialog();
         }
 
         private void menuItemCategories_Click(object sender, EventArgs e) {
-            ListData listData = Category.GetListData(connection, 25);
+            ListData listData = Category.GetListData(connection, AppConfig.BaseLimit);
             CategoryListForm categoryListForm = new CategoryListForm(listData);
-            categoryListForm.Show();
+            categoryListForm.ShowDialog();
         }
 
 
@@ -312,6 +314,15 @@ namespace medic {
         private void menuItemReport4_Click(object sender, EventArgs e) {
             ServicesReport servicesReport = new ServicesReport(connection);
             servicesReport.ShowDialog();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e) {
+            if (reloadData() && !refreshTimer.Enabled)
+                    refreshTimer.Enabled = true;
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e) {
+            reloadData();
         }
 
     }

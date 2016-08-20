@@ -80,16 +80,17 @@ namespace medic.Forms {
             AddRemoveEvent(btnRemove_Click);
             AddSearchEvent(btnSearch_Click);
             AddSortChangeEvent(tblSortChange_Event);
-
-            //Подгружаем начальные данные
-            reloadData();
         }
 
 
 
         //Перезагрузка данных в таблицу
-        protected override void reloadData(bool resetPageIndex = false) {
-            listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
+        protected override bool reloadData(bool resetPageIndex = false) {
+            if (listData.Update(resetPageIndex ? 0 : tblPager.GetPage()) == null) {
+                DialogResult = DialogResult.Abort;
+                Close();
+                return false;
+            }
             salesList = Sale.GetList(listData);
 
             if (salesList.Count == 0) {
@@ -101,6 +102,8 @@ namespace medic.Forms {
             }
 
             tblPager.SetData(listData.Count, listData.Pages, listData.PageIndex);
+
+            return true;
         }
 
         //Загрузка данных скидки в строку таблицы

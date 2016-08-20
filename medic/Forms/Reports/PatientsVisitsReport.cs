@@ -23,18 +23,20 @@ namespace medic.Forms {
             widths = new double[] { 10, 50, 10, 10, 10, 10 };
 
             tlsFilter.Visible = false;
-
-            reload();
         }
 
-        private void reload() {
-            
 
+
+        protected override bool reload() {
             StartDocument();
             NewHeader("Посещения пациентов", "");
 
             foreach (Patient patient in patients) {
                 List<string[]> data = Report.GetPatientVisitsList(patient.GetId(), connection);
+                if (data == null) {
+                    Rollback();
+                    return false;
+                }
                 NewSubtitle(patient.GetFullName());
 
                 StartTable(titles, widths);
@@ -51,6 +53,8 @@ namespace medic.Forms {
             }
 
             EndDocument();
+
+            return true;
         }
 
         private void btnApply_Click(object sender, EventArgs e) {

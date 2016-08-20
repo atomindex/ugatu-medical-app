@@ -29,8 +29,17 @@ namespace medic.Forms {
 
 
 
+        public DialogResult ShowDialog() {
+            if (!reloadData())
+                return DialogResult.Abort;
+
+            return base.ShowDialog();
+        }
+
+
+
         //Перезагружкат данные в список
-        protected virtual void reloadData(bool resetPageIndex = false) { }
+        protected virtual bool reloadData(bool resetPageIndex = false) { return true; }
 
 
 

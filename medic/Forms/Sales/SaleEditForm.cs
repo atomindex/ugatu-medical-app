@@ -30,6 +30,9 @@ namespace medic.Forms {
         public SaleEditForm(Sale sale) : base() {
             InitializeComponent();
 
+            connection = sale.GetConnection();
+            this.sale = sale;
+
             Panel panel = GetPanel();
 
             //Создаем поле Дата посещения
@@ -108,9 +111,6 @@ namespace medic.Forms {
 
         //Привязывает услугу к форме, подгружает данные в форму
         public void AssignService(Sale sale) {
-            connection = sale.GetConnection();
-            this.sale = sale;
-
             //Подгружаем основные данные скидки в форму
             tbwName.SetValue(sale.Name);
             tbwDescription.SetValue(sale.Description);

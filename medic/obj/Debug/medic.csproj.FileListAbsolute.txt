@@ -25,3 +25,9 @@ C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.PatientEditForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.PatientListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.VisitEditForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.PatientSelectForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.ReportForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.CategoryEditForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.CategoryListForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.CategorySelectForm.resources
+C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.VisitListForm.resources

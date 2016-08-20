@@ -32,12 +32,11 @@ namespace medic.Forms {
 
             tlsFilter.Items.Add(btnApply);
             AddApplyEvent(btnApply_Click);
-
-            reload();
         }
 
-        private void reload() {
+        protected override bool reload() {
             List<string[]> data = Report.GetServicesList(connection, dtpDate.Value);
+            if (data == null) return false;
 
             StartDocument();
             NewHeader("Оказанные услуги", "за " + dtpDate.Value.ToString(AppConfig.DateFormat));
@@ -73,6 +72,8 @@ namespace medic.Forms {
             NewSummary("Общий доход", totalPrice.ToString());
 
             EndDocument();
+
+            return true;
         }
 
         private void btnApply_Click(object sender, EventArgs e) {

@@ -26,6 +26,9 @@ namespace medic.Forms {
         public ServiceEditForm(Service service) : base() {
             InitializeComponent();
 
+            connection = service.GetConnection();
+            this.service = service;
+
             Panel panel = GetPanel();
 
             lbwWorkers = new ListBoxWrapper("Сотрудники предоставляющие услугу", new ListBox());
@@ -45,23 +48,26 @@ namespace medic.Forms {
             panel.TabIndex = 0;
             toolsPanel.TabIndex = 1;
             FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
+        }
 
-            //Подгружаем данные услуги
-            AssignService(service);
+
+
+        public DialogResult ShowDialog() {
+            if (!AssignService(service))
+                return DialogResult.Abort;
+            return base.ShowDialog();
         }
 
 
 
         //Привязывает услугу к форме, подгружает данные в форму
-        public void AssignService(Service service) {
-            connection = service.GetConnection();
-            this.service = service;
-
+        public bool AssignService(Service service) {
             tbwName.SetValue(service.Name);
             nbwPrice.SetValue(service.Price.ToString());
 
             ListData workersData = Worker.GetServiceWorkersListData(service.GetId(), service.GetConnection(), 25);
-            workersData.Update();
+            if (workersData.Update() == null)
+                return false;
             serviceWorkers = Worker.GetList(workersData);
             serviceRemovedWorkers = new List<Worker>();
 
@@ -71,6 +77,8 @@ namespace medic.Forms {
             foreach (Worker workerService in serviceWorkers)
                 lstBoxWorkers.Items.Add(workerService.GetFullName());
             lstBoxWorkers.ResumeLayout();
+
+            return true;
         }
 
         //Проверяет кооректность введенных данных

@@ -30,14 +30,14 @@ namespace medic.Forms {
             InitializeComponent();
 
             //Инициализируем имена
-            tableColumnNames = new string[] { "Имя", "Фамилия", "Отчество", "Телефон", "Адрес" };
-            tableFields = new string[] { "first_name", "last_name", "middle_name", "phone", "address" };
+            tableColumnNames = new string[] { "Фамилия", "Имя", "Отчество", "Телефон", "Адрес" };
+            tableFields = new string[] { "last_name", "first_name", "middle_name", "phone", "address" };
 
             //Создаем фильтр по имени
             filter = new SqlFilter(SqlLogicalOperator.And);
             string fullNameFilterField = QueryBuilder.BuildConcatStatement(
                 Worker.GetTableName(),
-                new string[] { "first_name", "last_name", "middle_name" }
+                new string[] { "last_name", "first_name", "middle_name" }
             );
             fullNameFilter = new SqlFilterCondition[] {
                 new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like),
@@ -87,16 +87,17 @@ namespace medic.Forms {
             AddRemoveEvent(btnRemove_Click);
             AddSearchEvent(btnSearch_Click);
             AddSortChangeEvent(tblSortChange_Event);
-
-            //Подгружаем начальные данные
-            reloadData();
         }
 
 
 
         //Перезагрузка данных в таблицу
-        protected override void reloadData(bool resetPageIndex = false) {
-            listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
+        protected override bool reloadData(bool resetPageIndex = false) {
+            if (listData.Update(resetPageIndex ? 0 : tblPager.GetPage()) == null) {
+                DialogResult = DialogResult.Abort;
+                Close();
+                return false;
+            }
             workersList = Worker.GetList(listData);
 
             if (workersList.Count == 0) {
@@ -108,12 +109,14 @@ namespace medic.Forms {
             }
 
             tblPager.SetData(listData.Count, listData.Pages, listData.PageIndex);
+
+            return true;
         }
 
         //Загрузка данных сотрудника в строку таблицы
         private void loadDataToRow(int rowIndex, Worker worker) {
-            table.Rows[rowIndex].Cells[0].Value = worker.FirstName;
-            table.Rows[rowIndex].Cells[1].Value = worker.LastName;
+            table.Rows[rowIndex].Cells[0].Value = worker.LastName;
+            table.Rows[rowIndex].Cells[1].Value = worker.FirstName;
             table.Rows[rowIndex].Cells[2].Value = worker.MiddleName;
             table.Rows[rowIndex].Cells[3].Value = worker.Phone;
             table.Rows[rowIndex].Cells[4].Value = worker.Address;

@@ -38,7 +38,7 @@ namespace medic.Forms {
             filter = new SqlFilter(SqlLogicalOperator.And);
             string fullNameFilterField = QueryBuilder.BuildConcatStatement(
                 Worker.GetTableName(),
-                new string[] { "first_name", "last_name", "middle_name" }
+                new string[] { "last_name", "first_name", "middle_name" }
             );
             fullNameFilter = new SqlFilterCondition[] {
                 new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like),
@@ -51,8 +51,8 @@ namespace medic.Forms {
             //Создаем сортировщик по имени
             sorter = new SqlSorter();
             sorter.AddItems(new SqlSorterCondition[] {
-                new SqlSorterCondition(Worker.GetTableName(), "first_name", SqlOrder.Asc),
                 new SqlSorterCondition(Worker.GetTableName(), "last_name", SqlOrder.Asc),
+                new SqlSorterCondition(Worker.GetTableName(), "first_name", SqlOrder.Asc),
                 new SqlSorterCondition(Worker.GetTableName(), "middle_name", SqlOrder.Asc),
             });
             sorter.AddItem(initialListData.Sorter);
@@ -81,9 +81,6 @@ namespace medic.Forms {
             //Добавляем события
             AddSearchEvent(btnSearch_Click);
             AddCheckEvent(lstCheck_Event);
-
-            //Подгружаем начальные данные
-            reloadData();
         }
 
 
@@ -96,10 +93,15 @@ namespace medic.Forms {
 
 
         //Перезагрузка данных в список
-        protected override void reloadData(bool resetPageIndex = false) {
+        protected override bool reloadData(bool resetPageIndex = false) {
             lockSelectUpdate = true;
 
-            listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
+            if (listData.Update(resetPageIndex ? 0 : tblPager.GetPage()) == null) {
+                DialogResult = DialogResult.Abort;
+                lockSelectUpdate = false;
+                Close();
+                return false;
+            }
             workersList = Worker.GetList(listData);
 
             list.Items.Clear();
@@ -109,6 +111,8 @@ namespace medic.Forms {
             tblPager.SetData(listData.Count, listData.Pages, listData.PageIndex);
 
             lockSelectUpdate = false;
+
+            return true;
         }
 
 

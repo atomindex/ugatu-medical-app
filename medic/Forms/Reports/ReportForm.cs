@@ -12,13 +12,26 @@ using System.Web;
 namespace medic.Forms {
     public partial class ReportForm : Form {
         private StringBuilder html;
+        private string temp;
 
         public ReportForm() {
             InitializeComponent();
             html = new StringBuilder();
         }
 
+
+
+        public DialogResult ShowDialog() {
+            if (!reload())
+                return DialogResult.Abort;
+            return base.ShowDialog();
+        }
+
+
+
         public void StartDocument() {
+            temp = wb.DocumentText;
+
             html.Clear();
             html.Append("<!DOCTYPE html><html><head><style>" +
                         " html { margin: 0; padding: 0; }" +
@@ -46,8 +59,18 @@ namespace medic.Forms {
                 wb.Document.OpenNew(true);
                 wb.Document.Write(html.ToString());
             }
-                
         }
+
+        public void Rollback() {
+            if (wb.Document == null)
+                wb.DocumentText = temp;
+            else {
+                wb.Document.OpenNew(true);
+                wb.Document.Write(temp);
+            }
+        }
+
+        protected virtual bool reload() { return true; }
 
         public void NewHeader(string title, string subtitle) {
             html.Append("<div class='report-header'>");

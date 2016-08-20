@@ -25,6 +25,9 @@ namespace medic.Forms {
         public SpecialtyEditForm(Specialty specialty) : base() {
             InitializeComponent();
 
+            connection = specialty.GetConnection();
+            this.specialty = specialty;
+
             Panel panel = GetPanel();
 
             lbwWorkers = new ListBoxWrapper("Сотрудники имеющие специальность", new ListBox());
@@ -40,22 +43,25 @@ namespace medic.Forms {
             panel.TabIndex = 0;
             toolsPanel.TabIndex = 1;
             FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
+        }
 
-            //Подгружаем данные специальности
-            AssignSpecialty(specialty);
+
+
+        public DialogResult ShowDialog() {
+            if (!AssignSpecialty(specialty))
+                return DialogResult.Abort;
+            return base.ShowDialog();
         }
 
 
 
         //Привязывает специальность к форме, подгружает данные в форму
-        public void AssignSpecialty(Specialty specialty) {
-            connection = specialty.GetConnection();
-            this.specialty = specialty;
-
+        public bool AssignSpecialty(Specialty specialty) {
             tbwName.SetValue(specialty.Name);
 
             ListData workersData = Worker.GetSpecialtyWorkersListData(specialty.GetId(), specialty.GetConnection(), 25);
-            workersData.Update();
+            if (workersData.Update() == null)
+                return false;
             specialtyWorkers = Worker.GetList(workersData);
             specialtyRemovedWorkers = new List<Worker>();
 
@@ -65,6 +71,8 @@ namespace medic.Forms {
             foreach (Worker workerSpecialty in specialtyWorkers)
                 lstBoxWorkers.Items.Add(workerSpecialty.GetFullName());
             lstBoxWorkers.ResumeLayout();
+
+            return true;
         }
 
         //Проверяет кооректность введенных данных

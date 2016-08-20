@@ -25,6 +25,8 @@ namespace medic {
         public static string DatabasePassword = "";
         public static int DatabaseConnectTime = 60;
 
+        public static int BaseLimit = 30;
+
     }
 
 }

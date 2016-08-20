@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -45,14 +46,16 @@
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTool = new System.Windows.Forms.ToolStrip();
-            this.btnAddVitit = new System.Windows.Forms.ToolStripButton();
-            this.btnShowPatientVisits = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lblSearch = new System.Windows.Forms.ToolStripLabel();
             this.txtBoxSearch = new System.Windows.Forms.ToolStripTextBox();
+            this.table = new System.Windows.Forms.DataGridView();
+            this.btnAddVitit = new System.Windows.Forms.ToolStripButton();
+            this.btnShowPatientVisits = new System.Windows.Forms.ToolStripButton();
             this.btnSearch = new System.Windows.Forms.ToolStripButton();
             this.btnAddPatient = new System.Windows.Forms.ToolStripButton();
-            this.table = new System.Windows.Forms.DataGridView();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.mainMenu.SuspendLayout();
             this.mainTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
@@ -67,7 +70,7 @@
             this.menuItemHelp});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(830, 24);
+            this.mainMenu.Size = new System.Drawing.Size(951, 24);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -200,6 +203,7 @@
             this.mainTool.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.mainTool.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAddVitit,
+            this.btnRefresh,
             this.btnShowPatientVisits,
             this.toolStripSeparator1,
             this.lblSearch,
@@ -210,34 +214,9 @@
             this.mainTool.Name = "mainTool";
             this.mainTool.Padding = new System.Windows.Forms.Padding(0, 3, 1, 3);
             this.mainTool.ShowItemToolTips = false;
-            this.mainTool.Size = new System.Drawing.Size(830, 37);
+            this.mainTool.Size = new System.Drawing.Size(951, 37);
             this.mainTool.TabIndex = 2;
             this.mainTool.Text = "toolStrip1";
-            // 
-            // btnAddVitit
-            // 
-            this.btnAddVitit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(108)))), ((int)(((byte)(255)))));
-            this.btnAddVitit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnAddVitit.ForeColor = System.Drawing.Color.White;
-            this.btnAddVitit.Image = global::medic.Properties.Resources.visit;
-            this.btnAddVitit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAddVitit.Margin = new System.Windows.Forms.Padding(0, 1, 7, 2);
-            this.btnAddVitit.Name = "btnAddVitit";
-            this.btnAddVitit.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.btnAddVitit.Size = new System.Drawing.Size(150, 28);
-            this.btnAddVitit.Tag = "1";
-            this.btnAddVitit.Text = "Новое посещение";
-            this.btnAddVitit.Click += new System.EventHandler(this.btnAddVitit_Click);
-            // 
-            // btnShowPatientVisits
-            // 
-            this.btnShowPatientVisits.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnShowPatientVisits.Image = global::medic.Properties.Resources.visit_list;
-            this.btnShowPatientVisits.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowPatientVisits.Name = "btnShowPatientVisits";
-            this.btnShowPatientVisits.Size = new System.Drawing.Size(154, 28);
-            this.btnShowPatientVisits.Text = "Посещения пациента";
-            this.btnShowPatientVisits.Click += new System.EventHandler(this.btnShowPatientVisits_Click);
             // 
             // toolStripSeparator1
             // 
@@ -255,28 +234,6 @@
             // 
             this.txtBoxSearch.Name = "txtBoxSearch";
             this.txtBoxSearch.Size = new System.Drawing.Size(180, 31);
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSearch.Image = global::medic.Properties.Resources.search_large;
-            this.btnSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(28, 28);
-            this.btnSearch.Text = "toolStripButton4";
-            this.btnSearch.ToolTipText = "Поиск";
-            // 
-            // btnAddPatient
-            // 
-            this.btnAddPatient.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnAddPatient.Image = global::medic.Properties.Resources.patient;
-            this.btnAddPatient.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAddPatient.Margin = new System.Windows.Forms.Padding(0, 1, 7, 2);
-            this.btnAddPatient.Name = "btnAddPatient";
-            this.btnAddPatient.Size = new System.Drawing.Size(121, 28);
-            this.btnAddPatient.Text = "Новый пациент";
-            this.btnAddPatient.Click += new System.EventHandler(this.btnAddPatient_Click);
             // 
             // table
             // 
@@ -317,14 +274,77 @@
             this.table.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.table.RowHeadersVisible = false;
             this.table.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.table.Size = new System.Drawing.Size(830, 348);
+            this.table.Size = new System.Drawing.Size(951, 348);
             this.table.TabIndex = 4;
+            // 
+            // btnAddVitit
+            // 
+            this.btnAddVitit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(108)))), ((int)(((byte)(255)))));
+            this.btnAddVitit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnAddVitit.ForeColor = System.Drawing.Color.White;
+            this.btnAddVitit.Image = global::medic.Properties.Resources.Visit;
+            this.btnAddVitit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddVitit.Margin = new System.Windows.Forms.Padding(0, 1, 7, 2);
+            this.btnAddVitit.Name = "btnAddVitit";
+            this.btnAddVitit.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.btnAddVitit.Size = new System.Drawing.Size(150, 28);
+            this.btnAddVitit.Tag = "1";
+            this.btnAddVitit.Text = "Новое посещение";
+            this.btnAddVitit.Click += new System.EventHandler(this.btnAddVitit_Click);
+            // 
+            // btnShowPatientVisits
+            // 
+            this.btnShowPatientVisits.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnShowPatientVisits.Image = global::medic.Properties.Resources.VisitsList;
+            this.btnShowPatientVisits.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowPatientVisits.Name = "btnShowPatientVisits";
+            this.btnShowPatientVisits.Size = new System.Drawing.Size(154, 28);
+            this.btnShowPatientVisits.Text = "Посещения пациента";
+            this.btnShowPatientVisits.Click += new System.EventHandler(this.btnShowPatientVisits_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSearch.Image = global::medic.Properties.Resources.SearchLarge;
+            this.btnSearch.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(28, 28);
+            this.btnSearch.Text = "toolStripButton4";
+            this.btnSearch.ToolTipText = "Поиск";
+            // 
+            // btnAddPatient
+            // 
+            this.btnAddPatient.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnAddPatient.Image = global::medic.Properties.Resources.Patient;
+            this.btnAddPatient.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddPatient.Margin = new System.Windows.Forms.Padding(0, 1, 7, 2);
+            this.btnAddPatient.Name = "btnAddPatient";
+            this.btnAddPatient.Size = new System.Drawing.Size(121, 28);
+            this.btnAddPatient.Text = "Новый пациент";
+            this.btnAddPatient.Click += new System.EventHandler(this.btnAddPatient_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRefresh.Image = global::medic.Properties.Resources.ReloadLarge;
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(28, 28);
+            this.btnRefresh.Text = "toolStripButton1";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // refreshTimer
+            // 
+            this.refreshTimer.Interval = 30000;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(830, 409);
+            this.ClientSize = new System.Drawing.Size(951, 409);
             this.Controls.Add(this.table);
             this.Controls.Add(this.mainTool);
             this.Controls.Add(this.mainMenu);
@@ -371,6 +391,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemReport2;
         private System.Windows.Forms.ToolStripMenuItem menuItemReport3;
         private System.Windows.Forms.ToolStripMenuItem menuItemReport4;
+        private System.Windows.Forms.ToolStripButton btnRefresh;
+        private System.Windows.Forms.Timer refreshTimer;
     }
 }
 

@@ -28,6 +28,9 @@ namespace medic.Forms {
         public PatientEditForm(Patient patient) : base() {
             InitializeComponent();
 
+            connection = patient.GetConnection();
+            this.patient = patient;
+
             Panel panel = GetPanel();
 
             lbwCategories = new ListBoxWrapper("Категории", new ListBox());
@@ -59,18 +62,20 @@ namespace medic.Forms {
             panel.TabIndex = 0;
             toolsPanel.TabIndex = 1;
             FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
+        }
 
-            //Подгружаем данные пациента
-            AssignPatient(patient);
+
+
+        public DialogResult ShowDialog() {
+            if (!AssignPatient(patient))
+                return DialogResult.Abort;
+            return base.ShowDialog();
         }
 
 
 
         //Привязывает пациента к форме, подгружает данные в форму
-        public void AssignPatient(Patient patient) {
-            this.connection = patient.GetConnection();
-            this.patient = patient;
-
+        public bool AssignPatient(Patient patient) {
             tbwFirstName.SetValue(patient.FirstName);
             tbwLastName.SetValue(patient.LastName);
             tbwMiddleName.SetValue(patient.MiddleName);
@@ -78,7 +83,8 @@ namespace medic.Forms {
             dpwBirthday.SetDate(patient.Birthday);
 
             ListData categoriesData = Category.GetPatientCategoriesListData(patient.GetId(), patient.GetConnection());
-            categoriesData.Update();
+            if (categoriesData.Update() == null)
+                return false;
             patientCategories = Category.GetList(categoriesData);
             patientRemovedCategories = new List<Category>();
 
@@ -89,6 +95,8 @@ namespace medic.Forms {
             foreach (Category patientCategory in patientCategories)
                 lstBoxSpecialties.Items.Add(patientCategory.Name);
             lstBoxSpecialties.ResumeLayout();
+
+            return true;
         }
 
         //Проверяет кооректность введенных данных

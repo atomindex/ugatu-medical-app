@@ -32,14 +32,14 @@ namespace medic.Forms {
             btnAdd.Visible = false;
 
             //Инициализируем имена
-            tableColumnNames = new string[] { "ФИО", "Дата посещения", "Цена" };
-            tableFields = new string[] { "CONCAT(visits.last_name, ' ', visits.first_name, ' ', visit.middle_name)", "visits.visit_date", "visits.price" };
+            tableColumnNames = new string[] { "Дата посещения", "ФИО", "Цена" };
+            tableFields = new string[] { "visits.visit_date", "CONCAT(visits.last_name, ' ', visits.first_name, ' ', visit.middle_name)", "visits.price" };
 
             //Создаем фильтр по имени
             filter = new SqlFilter(SqlLogicalOperator.And);
             string fullNameFilterField = QueryBuilder.BuildConcatStatement(
                 Patient.GetTableName(),
-                new string[] { "first_name", "last_name", "middle_name" }
+                new string[] { "last_name", "first_name", "middle_name" }
             );
             fullNameFilter = new SqlFilterCondition[] {
                 new SqlFilterCondition(fullNameFilterField, SqlComparisonOperator.Like),
@@ -66,13 +66,13 @@ namespace medic.Forms {
                 pageIndex: initialListData.PageIndex
             );
 
-
             Text = "Список посещений";
 
             //Инициализируем столбцы таблицы
             table.ColumnCount = tableColumnNames.Length;
             for (int i = 0; i < tableColumnNames.Length; i++)
                 table.Columns[i].HeaderText = tableColumnNames[i];
+            table.Columns[0].Width = 150;
 
             //Добавляем компоненты фильтра
             tlsLblVisitName = new ToolStripLabel("ФИО");
@@ -88,16 +88,17 @@ namespace medic.Forms {
             AddRemoveEvent(btnRemove_Click);
             AddSearchEvent(btnSearch_Click);
             AddSortChangeEvent(tblSortChange_Event);
-
-            //Подгружаем начальные данные
-            reloadData();
         }
 
 
 
         //Перезагрузка данных в таблицу
-        protected override void reloadData(bool resetPageIndex = false) {
-            listData.Update(resetPageIndex ? 0 : tblPager.GetPage());
+        protected override bool reloadData(bool resetPageIndex = false) {
+            if (listData.Update(resetPageIndex ? 0 : tblPager.GetPage()) == null) {
+                DialogResult = DialogResult.Abort;
+                Close();
+                return false;
+            }
             visitsList = Visit.GetList(listData);
 
             if (visitsList.Count == 0) {
@@ -109,12 +110,14 @@ namespace medic.Forms {
             }
 
             tblPager.SetData(listData.Count, listData.Pages, listData.PageIndex);
+
+            return true;
         }
 
         //Загрузка данных посещения в строку таблицы
         private void loadDataToRow(int rowIndex, Visit visit) {
-            table.Rows[rowIndex].Cells[0].Value = visit.RelatedPatient.GetFullName();
-            table.Rows[rowIndex].Cells[1].Value = visit.VisitDate.ToString(AppConfig.DateFormat);
+            table.Rows[rowIndex].Cells[0].Value = visit.VisitDate.ToString(AppConfig.DateFormat);
+            table.Rows[rowIndex].Cells[1].Value = visit.RelatedPatient.GetFullName();
             table.Rows[rowIndex].Cells[2].Value = visit.Price.ToString(); 
         }
 

@@ -14,6 +14,7 @@ namespace medic.Forms {
         private List<Sale> sales;
 
         private Visit visit;                                //Редактируемое посещение
+        private Patient patient;
         private List<VisitService> visitServices;
         private List<VisitService> removedVisitServices;
         private List<List<Worker>> servicesWorkers;
@@ -22,12 +23,17 @@ namespace medic.Forms {
 
         private VisitInfoPanel sidePanel;
         private DatepickerWrapper dpwVisitDate;             //Поле Дата посещения
+        private DateTimePicker dtpVisitDate;
         private ValueComboBoxWrapper vcbwServices;
 
 
         //Конструктор
         public VisitEditForm(Visit visit, Patient patient = null) : base() {
             InitializeComponent();
+
+            connection = visit.GetConnection();
+            this.visit = visit;
+            this.patient = patient;
 
             MinimumSize = new Size(900, 0);
 
@@ -63,7 +69,7 @@ namespace medic.Forms {
             vcbwServices.AddRemoveEvent(btnRemoveService_Event);
             vcbwServices.AddChangeEvent(comboBoxServiceWorkerChange_Event);
 
-            DateTimePicker dtpVisitDate = new DateTimePicker();
+            dtpVisitDate = new DateTimePicker();
             dpwVisitDate = new DatepickerWrapper("Дата посещения", dtpVisitDate);
             dpwVisitDate.Dock = DockStyle.Top;
             dpwVisitDate.Parent = panel;
@@ -71,32 +77,36 @@ namespace medic.Forms {
             panel.TabIndex = 0;
             toolsPanel.TabIndex = 1;
             FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
-
-            //Подгружаем данные посещения
-            if (patient == null) {
-                AssignVisit(visit);
-                dpwVisitDate.Visible = false;
-            } else {
-                AssignVisit(visit, patient);
-                dtpVisitDate.ValueChanged += dtpVisitDate_ValueChanged;
-            }
-         
-            calcPrices();
         }
 
 
-        //Привязывает сотрудника к форме, подгружает данные в форму
-        private void AssignVisit(Visit visit, Patient patient) {
-            this.connection = visit.GetConnection();
-            this.visit = visit;
 
+        public DialogResult ShowDialog() {
+            //Подгружаем данные посещения
+            if (patient == null) {
+                if (!AssignVisit(visit))
+                    return DialogResult.Abort;
+                dpwVisitDate.Visible = false;
+            } else {
+                if (!AssignVisit(visit, patient))
+                    return DialogResult.Abort;
+                dtpVisitDate.ValueChanged += dtpVisitDate_ValueChanged;
+            }
+            return base.ShowDialog();
+        }
+
+
+
+        //Привязывает сотрудника к форме, подгружает данные в форму
+        private bool AssignVisit(Visit visit, Patient patient) {
             visit.VisitDate = dpwVisitDate.GetDate();
             visit.RelatedPatient = patient;
             visit.PatientSex = patient.Sex;
             visit.PatientAge = patient.GetAge();
 
             ListData salesListData = Sale.GetListData(connection);
-            salesListData.Update();
+            if (salesListData.Update() == null)
+                return false;
             sales = Sale.GetList(salesListData);
 
             servicesWorkers = new List<List<Worker>>();
@@ -110,29 +120,35 @@ namespace medic.Forms {
             sidePanel.SetPatientAge(patient.GetAge());
 
             updateSales();
+            calcPrices();
+
+            return true;
         }
 
 
 
-        private void AssignVisit(Visit visit) {
+        private bool AssignVisit(Visit visit) {
             this.connection = visit.GetConnection();
             this.visit = visit;
 
             ListData salesListData = Sale.GetListData(connection);
-            salesListData.Update();
+            if (salesListData.Update() == null)
+                return false;
             sales = Sale.GetList(salesListData);
 
             servicesWorkers = new List<List<Worker>>();
 
             //Получаем все услуги посещения
             ListData visitServicesListData = VisitService.GetListData(visit.GetId(), visit.GetConnection());
-            visitServicesListData.Update();
+            if (visitServicesListData.Update() == null)
+                return false; ;
             visitServices = VisitService.GetList(visitServicesListData);
             removedVisitServices = new List<VisitService>();
 
             //Получаем все скидки посещения
             ListData visitSalesListData = VisitSale.GetListData(visit.GetId(), visit.GetConnection());
-            visitSalesListData.Update();
+            if (visitSalesListData.Update() == null)
+                return false;
             visitSales = VisitSale.GetList(visitSalesListData);
 
             //Устанавливаем данные посещения
@@ -153,7 +169,8 @@ namespace medic.Forms {
 
                 //Получаем всех сотрудников, предоставляющих данную услугу
                 ListData serviceWorkersListData = Worker.GetServiceWorkersListData(visitService.RelatedService.GetId(), connection, 10000);
-                serviceWorkersListData.Update();
+                if (serviceWorkersListData.Update() == null)
+                    return false;
                 List<Worker> serviceWorkers = Worker.GetList(serviceWorkersListData);
                 servicesWorkers.Add(serviceWorkers);
 
@@ -184,6 +201,10 @@ namespace medic.Forms {
             sidePanel.ClearSales();
             foreach (VisitSale visitSale in visitSales)
                 sidePanel.AddSale(visitSale.RelatedSale.Name, visitSale.Percent.ToString());
+
+            calcPrices();
+
+            return true;
         }
 
 

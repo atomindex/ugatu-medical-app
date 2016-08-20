@@ -34,6 +34,9 @@ namespace medic.Forms {
         public WorkerEditForm(Worker worker) : base() {
             InitializeComponent();
 
+            connection = worker.GetConnection();
+            this.worker = worker;
+
             Panel panel = GetPanel();
 
             lbwServices = new ListBoxWrapper("Предоставляемые услуги", new ListBox());
@@ -71,18 +74,20 @@ namespace medic.Forms {
             panel.TabIndex = 0;
             toolsPanel.TabIndex = 1;
             FormUtils.UpdateTabIndex(panel, FormUtils.UpdateTabIndex(toolsPanel, 2));
+        }
 
-            //Подгружаем данные сотрудника
-            AssignWorker(worker);
+
+
+        public DialogResult ShowDialog() {
+            if (!AssignWorker(worker))
+                return DialogResult.Abort;
+            return base.ShowDialog();
         }
 
 
 
         //Привязывает сотрудника к форме, подгружает данные в форму
-        public void AssignWorker(Worker worker) {
-            this.connection = worker.GetConnection();
-            this.worker = worker;
-
+        public bool AssignWorker(Worker worker) {
             tbwFirstName.SetValue(worker.FirstName);
             tbwLastName.SetValue(worker.LastName);
             tbwMiddleName.SetValue(worker.MiddleName);
@@ -90,12 +95,14 @@ namespace medic.Forms {
             tbwAddress.SetValue(worker.Address);
 
             ListData specialtiesData = Specialty.GetWorkerSpecialtiesListData(worker.GetId(), worker.GetConnection());
-            specialtiesData.Update();
+            if (specialtiesData.Update() == null)
+                return false;
             workerSpecialties = Specialty.GetList(specialtiesData);
             workerRemovedSpecialties = new List<Specialty>();
 
             ListData servicesData = Service.GetWorkerServicesListData(worker.GetId(), worker.GetConnection());
-            servicesData.Update();
+            if (servicesData.Update() == null)
+                return false;
             workerServices = Service.GetList(servicesData);
             workerRemovedServices = new List<Service>();
 
@@ -113,6 +120,8 @@ namespace medic.Forms {
             foreach(Service workerService in workerServices)
                 lstBoxServices.Items.Add(workerService.Name);
             lstBoxServices.ResumeLayout();
+
+            return true;
         }
 
         //Проверяет кооректность введенных данных

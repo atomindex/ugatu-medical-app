@@ -20,6 +20,9 @@ namespace medic.Forms {
         public CategoryEditForm(Category category) : base() {
             InitializeComponent();
 
+            connection = category.GetConnection();
+            this.category = category;
+
             Panel panel = GetPanel();
 
             tbwName = new TextBoxWrapper("Название", new TextBox());
@@ -38,9 +41,6 @@ namespace medic.Forms {
 
         //Привязывает категорию к форме, подгружает данные в форму
         public void AssignCategory(Category category) {
-            connection = category.GetConnection();
-            this.category = category;
-
             tbwName.SetValue(category.Name);
         }
 
