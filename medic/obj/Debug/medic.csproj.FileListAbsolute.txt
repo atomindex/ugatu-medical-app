@@ -31,3 +31,4 @@ C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.
 C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.CategoryListForm.resources
 C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.CategorySelectForm.resources
 C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.VisitListForm.resources
+C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.AboutForm.resources

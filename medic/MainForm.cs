@@ -325,6 +325,11 @@ namespace medic {
             reloadData();
         }
 
+        private void menuItemAbout_Click(object sender, EventArgs e) {
+            AboutForm aboutForm = new AboutForm();
+            aboutForm.ShowDialog();
+        }
+
     }
 
 }

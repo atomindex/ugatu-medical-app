@@ -142,6 +142,7 @@
             this.Controls.Add(this.listPanel);
             this.Controls.Add(this.tlsFilter);
             this.Controls.Add(this.toolsPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EntitySelectForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EntitySelectForm";
