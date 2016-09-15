@@ -32,3 +32,37 @@ C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.
 C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.CategorySelectForm.resources
 C:\Users\Atom\documents\visual studio 2013\Projects\medic\medic\obj\Debug\medic.Forms.VisitListForm.resources
 C:\Users\Atom\Documents\Visual Studio 2013\Projects\medic\medic\obj\Debug\medic.AboutForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\bin\Debug\medic.exe.config
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.exe
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.pdb
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\bin\Debug\medic.exe
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\bin\Debug\medic.pdb
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\bin\Debug\MySql.Data.dll
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.csprojResolveAssemblyReference.cache
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.AboutForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.EntitySelectForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.PatientEditForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.PatientListForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.PatientSelectForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.ReportForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.SaleEditForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.SaleListForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.CategoryEditForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.CategoryListForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.CategorySelectForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.SpecialtyEditForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.SpecialtyListForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.SpecialtySelectForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.ServiceSelectForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.VisitListForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.VisitEditForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.WorkerSelectForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.mainForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.EntityEditForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.EntityListForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.ServiceEditForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.ServiceListForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.WorkerEditForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Forms.WorkerListForm.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.Properties.Resources.resources
+D:\Atom\Education\ПРО\ПРО-306\bd\complete\курсовая\medic\medic\obj\Debug\medic.csproj.GenerateResource.Cache

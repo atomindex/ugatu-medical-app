@@ -56,6 +56,8 @@
             this.btnAddPatient = new System.Windows.Forms.ToolStripButton();
             this.table = new System.Windows.Forms.DataGridView();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.mainTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
@@ -64,6 +66,7 @@
             // mainMenu
             // 
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemFile,
             this.menuItemLists,
             this.menuItemVisitLists,
             this.menuItemReports,
@@ -194,7 +197,7 @@
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(149, 22);
             this.menuItemAbout.Text = "О программе";
             this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
@@ -341,6 +344,21 @@
             this.refreshTimer.Interval = 30000;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
+            // menuItemFile
+            // 
+            this.menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemExit});
+            this.menuItemFile.Name = "menuItemFile";
+            this.menuItemFile.Size = new System.Drawing.Size(48, 20);
+            this.menuItemFile.Text = "Файл";
+            // 
+            // menuItemExit
+            // 
+            this.menuItemExit.Name = "menuItemExit";
+            this.menuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.menuItemExit.Text = "Выход";
+            this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -394,6 +412,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemReport4;
         private System.Windows.Forms.ToolStripButton btnRefresh;
         private System.Windows.Forms.Timer refreshTimer;
+        private System.Windows.Forms.ToolStripMenuItem menuItemFile;
+        private System.Windows.Forms.ToolStripMenuItem menuItemExit;
     }
 }
 

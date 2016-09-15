@@ -330,6 +330,10 @@ namespace medic {
             aboutForm.ShowDialog();
         }
 
+        private void menuItemExit_Click(object sender, EventArgs e) {
+            Application.Exit();
+        }
+
     }
 
 }
