@@ -1,0 +1,555 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="medic.AboutForm" Collapsed="true">
+    <Position X="24.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAAASAAEACAAAAAAAAGAACIEAFAJA=</HashCode>
+      <FileName>AboutForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.AppConfig" Collapsed="true">
+    <Position X="26" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAQQAAAAAAIAAAAAAAACAAAAIEAAEAAgAAARAAI=</HashCode>
+      <FileName>AppConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.ButtonRenderer" Collapsed="true">
+    <Position X="27.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>ButtonRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Category" Collapsed="true">
+    <Position X="15.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAIQAgAAQAAAAAACABAQAAABAAAABAAEAAABAABI=</HashCode>
+      <FileName>Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.EntityTransaction" Collapsed="true">
+    <Position X="31.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Entity" Collapsed="true">
+    <Position X="11.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAIACAQAAEAAABBCAAAAAAAAAIAAAAABIAIgA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.FormUtils" Collapsed="true">
+    <Position X="24.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>FormUtils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.ListData" Collapsed="true">
+    <Position X="26" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAAAAAAGgAAAAEQQgABAAAAAAAAAAAAAgAAI=</HashCode>
+      <FileName>ListData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.mainForm" Collapsed="true">
+    <Position X="27.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KAgEHiFgCyCYjAJBAQCBMkIiCCQAMiAhoQAgEwKhQII=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Patient" Collapsed="true">
+    <Position X="7.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gADAAMQAgABQBgAAAACQBAAEAAAIQJAJAAEAAAAAABo=</HashCode>
+      <FileName>Patient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Program" Collapsed="true">
+    <Position X="29.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Report" Collapsed="true">
+    <Position X="24.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAI=</HashCode>
+      <FileName>Report.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.SaleCondition" Collapsed="true">
+    <Position X="17" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAIABIAAAAABA=</HashCode>
+      <FileName>Sale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.SaleConditionInt" Collapsed="true">
+    <Position X="16.25" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAgAACAAIABAAAAAIBA=</HashCode>
+      <FileName>Sale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.SaleConditionDatetime" Collapsed="true">
+    <Position X="18" Y="17.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAACAAIABAAAAAIBA=</HashCode>
+      <FileName>Sale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.VisitData" Collapsed="true">
+    <Position X="24.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAACAAAAAAAAAAAAAAGCAAAAAAgAAAQAAAAAAA=</HashCode>
+      <FileName>Sale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Sale" Collapsed="true">
+    <Position X="12.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABDAAIQAgAA0IAAAAACABAQAEAgAgQgFAAEACAAEIBI=</HashCode>
+      <FileName>Sale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Service" Collapsed="true">
+    <Position X="14" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAIQAgQAQAAAgAACgRAQAAAAAAAABAAEAAAAAABI=</HashCode>
+      <FileName>Service.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Specialty" Collapsed="true">
+    <Position X="9.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAJQAAAAAAAAgAAKARAQAAAAAAAABAAEAAAAAABI=</HashCode>
+      <FileName>Specialty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Visit" Collapsed="true">
+    <Position X="11.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAJQAAQAgAAAIAACABAAECAAAAAABAAEAAAAAABI=</HashCode>
+      <FileName>Visit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.VisitSale" Collapsed="true">
+    <Position X="13.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAgJQAQAAAAAAAAACABAAAAAAAAQABAAEACAAAABI=</HashCode>
+      <FileName>VisitSale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.VisitService" Collapsed="true">
+    <Position X="8.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAJQAQQAAABAAIACABAAAAAQAAAABgAEAAAAAABI=</HashCode>
+      <FileName>VisitService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Worker" Collapsed="true">
+    <Position X="10.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADACMQAgAAQAAAEQACQBQgAgAAAAAALAAEAIAAAABo=</HashCode>
+      <FileName>Worker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.ComboBoxWrapper" Collapsed="true">
+    <Position X="8" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIABAAgAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Components\ComboBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.ComboComboBoxWrapper" Collapsed="true">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iAAAAAAAIAAAggAQAAEAAAAAAAAAACAAAAIAAAAAAAA=</HashCode>
+      <FileName>Components\ComboComboBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.ComboDatetimeWrapper" Collapsed="true">
+    <Position X="13.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAABAAIAEAggAAAAAAAAAAAAAAACAAAAIAAAAAAAA=</HashCode>
+      <FileName>Components\ComboDatetimeWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.ComboNumericBoxWrapper" Collapsed="true">
+    <Position X="15" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAIAAAggAAAAAAAAAAAAAAACAAAAIAAAAAAAA=</HashCode>
+      <FileName>Components\ComboNumericBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.ComboTextBoxWrapper" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAIAAAggAAAAAAAAAAAAAAACAAAAIAAAAAAAA=</HashCode>
+      <FileName>Components\ComboTextBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.DatepickerWrapper" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAIAEAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\DatepickerWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.FieldWrapper" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAICEAAgAIAASAAAAGAAQAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Components\FieldWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.ListBoxWrapper" Collapsed="true">
+    <Position X="13.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAABAMAAAAgAAAIEAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ListBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.NumericBoxWrapper" Collapsed="true">
+    <Position X="15.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\NumericBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.TablePager" Collapsed="true">
+    <Position X="29.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgBABAAAAAEAAAAAAEBABAAAUACIBAAAAAAEAAAA=</HashCode>
+      <FileName>Components\TablePager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.TextBoxWrapper" Collapsed="true">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\TextBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.ValueComboBoxWrapperItem" Collapsed="true">
+    <Position X="31.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAhBQAAQEBAAAAAACACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ValueComboBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.ValueComboBoxWrapper" Collapsed="true">
+    <Position X="11.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAABBAIAAAAkAAAIkAAACQgAAECAIAAAAAAAAOIAA=</HashCode>
+      <FileName>Components\ValueComboBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Components.VisitInfoPanel" Collapsed="true">
+    <Position X="26" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEgSAEAAQAAAIAAAAAQAAQCQAAACAJAAAIYCBGAAAYQ=</HashCode>
+      <FileName>Components\VisitInfoPanel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Database.DBConnection" Collapsed="true">
+    <Position X="29.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAJAAAACAAAAABADAAAQEAIAAAAAAAQAAAIAA=</HashCode>
+      <FileName>Database\DBConnection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Database.QueryBuilder" Collapsed="true">
+    <Position X="31.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAQAACAAAAAAAAAAQAAAAAAAgAAAAAAEIAICAA=</HashCode>
+      <FileName>Database\QueryBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Database.SqlFilter" Collapsed="true">
+    <Position X="16" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAEAAgAACAAgAAAAAAAAAAIAABAAAA=</HashCode>
+      <FileName>Database\SqlFilter\SqlFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Database.SqlFilterCondition" Collapsed="true">
+    <Position X="17.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAgAEAAAAAKAAAAAAACABAAAIAAAAAAA=</HashCode>
+      <FileName>Database\SqlFilter\SqlFilterCondition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Database.SqlFilterItem" Collapsed="true">
+    <Position X="17" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\SqlFilter\SqlFilterItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Database.SqlSorter" Collapsed="true">
+    <Position X="14.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAEAAgAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\SqlSorter\SqlSorter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Database.SqlSorterCondition" Collapsed="true">
+    <Position X="16.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAgBAAEAAAAEAAAAAIAAAAAAAAABAAAAAAAAAQA=</HashCode>
+      <FileName>Database\SqlSorter\SqlSorterCondition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Database.SqlSorterItem" Collapsed="true">
+    <Position X="15.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\SqlSorter\SqlSorterItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.CategoryEditForm" Collapsed="true">
+    <Position X="10.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAACCAAAAAAACBAAACAAACAAAAAAAIAAABAAA=</HashCode>
+      <FileName>Forms\Categories\CategoryEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.CategoryListForm" Collapsed="true">
+    <Position X="10.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAIAACAABAAAAAiIMCAiACAAIAAggQAgAAAkAAI=</HashCode>
+      <FileName>Forms\Categories\CategoryListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.CategorySelectForm" Collapsed="true">
+    <Position X="8.25" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAIBAAIAAiAEAAiACAAIAAgAAACQAAIAAE=</HashCode>
+      <FileName>Forms\Categories\CategorySelectForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.EntityEditForm" Collapsed="true">
+    <Position X="10.75" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAYAAACSAAAAAAACAAAACAAAIAAAAAAAQYQABAAA=</HashCode>
+      <FileName>Forms\EntityEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.EntityListForm" Collapsed="true">
+    <Position X="10.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAiAMAQCAAAABQAACBQAGCQCAAgABBkQAAAAABBII=</HashCode>
+      <FileName>Forms\EntityListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.EntitySelectForm" Collapsed="true">
+    <Position X="9.25" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACgEAACQAAAAAAACBAAECASAAAIAAkAAwIAABBAI=</HashCode>
+      <FileName>Forms\EntitySelectForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.PatientEditForm" Collapsed="true">
+    <Position X="12" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ADAIAIUAACCAAACBAACBAAECAAgAAoAAAABAAAIAAAA=</HashCode>
+      <FileName>Forms\Patients\PatientEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.PatientListForm" Collapsed="true">
+    <Position X="11" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEDAAAACCABAAAAACKMAACACAAIAAggQAgAAAkAAI=</HashCode>
+      <FileName>Forms\Patients\PatientListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.PatientSelectForm" Collapsed="true">
+    <Position X="7.5" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAACAAAACCIBAAIABCCEAACACAAIAAgAAAAAAAIAAA=</HashCode>
+      <FileName>Forms\Patients\PatientSelectForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.PatientsVisitsReport" Collapsed="true">
+    <Position X="15.5" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAQAABCAAAAAAMAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\Reports\PatientsVisitsReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.ReportForm" Collapsed="true">
+    <Position X="16.5" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABCAEAACAAACECAICAAAEGAACoAACAEAAQAAoAAEA=</HashCode>
+      <FileName>Forms\Reports\ReportForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.ServicesProfitReport" Collapsed="true">
+    <Position X="17.25" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABCAAQAAAIBAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\Reports\ServicesProfitReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.ServicesReport" Collapsed="true">
+    <Position X="19" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAQAABCAAAAAAIAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Forms\Reports\ServicesReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.WorkerServicesReport" Collapsed="true">
+    <Position X="13.75" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAQAABCAAQAAAIBCAAAAAAAAAAAAA=</HashCode>
+      <FileName>Forms\Reports\WorkerServicesReport.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.SaleEditForm" Collapsed="true">
+    <Position X="9.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAoAAACCAAAAAAIiDCAACAEIAAAAgAAAAAAABQAA=</HashCode>
+      <FileName>Forms\Sales\SaleEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.SaleListForm" Collapsed="true">
+    <Position X="9.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAACgABAQAAACIMAAiACAAKAAggQAgAAAkAAI=</HashCode>
+      <FileName>Forms\Sales\SaleListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.ServiceEditForm" Collapsed="true">
+    <Position X="9" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEIAAACCAACAAAACBAAECAEAAAAAAAEAAAAABAAM=</HashCode>
+      <FileName>Forms\Services\ServiceEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.ServiceListForm" Collapsed="true">
+    <Position X="8.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAQCAABAACAACIMAAiACAAIAAggRAgAAAkAAI=</HashCode>
+      <FileName>Forms\Services\ServiceListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.ServiceSelectForm" Collapsed="true">
+    <Position X="11" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQCAIBAAKAACAEAAiACAAIAAgABAAAAAIAAA=</HashCode>
+      <FileName>Forms\Services\ServiceSelectForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.SpecialtyEditForm" Collapsed="true">
+    <Position X="12.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEIAAACCRACAACACBAAMCAAAAAAAAAAAAAAABAAI=</HashCode>
+      <FileName>Forms\Specialties\SpecialtyEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.SpecialtyListForm" Collapsed="true">
+    <Position X="12" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAEAAAAACAABAAAAACIMAAiACAAIAgggQAgAAAkAAI=</HashCode>
+      <FileName>Forms\Specialties\SpecialtyListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.SpecialtySelectForm" Collapsed="true">
+    <Position X="10.25" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAACAIBAAIAACAEAAiACQAIAggAAAAAAAIAAA=</HashCode>
+      <FileName>Forms\Specialties\SpecialtySelectForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.VisitEditForm" Collapsed="true">
+    <Position X="7.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAIAJAAyCCIAIAEAAiFBAEiBgAAABAAQAAAAABAAAA=</HashCode>
+      <FileName>Forms\Visits\VisitEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.VisitListForm" Collapsed="true">
+    <Position X="7.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAECACCABAAAAACIMAACACAAIAAggQQgAAAkAAA=</HashCode>
+      <FileName>Forms\Visits\VisitListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.WorkerEditForm" Collapsed="true">
+    <Position X="13.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoCAANQACCGQAAABAgCBAAECAAgAAAAAAAAIAAIAICA=</HashCode>
+      <FileName>Forms\Workers\WorkerEditForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.WorkerListForm" Collapsed="true">
+    <Position X="12.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAACCABAAAABCIMAASACAAIAAggQAgAAAkAAI=</HashCode>
+      <FileName>Forms\Workers\WorkerListForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Forms.WorkerSelectForm" Collapsed="true">
+    <Position X="9.25" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACCIBAAIABCAEAASACAAIACgAAAAAAAMAAA=</HashCode>
+      <FileName>Forms\Workers\WorkerSelectForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Properties.Resources" Collapsed="true">
+    <Position X="26" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAQAAEAAAAAQAAAABFAACAQEAAAACCAAAAAEgDIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="medic.Properties.Settings" Collapsed="true">
+    <Position X="27.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="medic.Database.SqlLogicalOperator" Collapsed="true">
+    <Position X="26" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Database\SqlFilter\SqlFilterEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="medic.Database.SqlComparisonOperator" Collapsed="true">
+    <Position X="24.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAACAAAAgIBAAAAgAABIAAAAQAAAAAQBACA=</HashCode>
+      <FileName>Database\SqlFilter\SqlFilterEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="medic.Database.SqlOrder" Collapsed="true">
+    <Position X="27.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAEAAAA=</HashCode>
+      <FileName>Database\SqlSorter\SqlSorterEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="medic.Components.ValueComboBoxWrapperRemoveClick" Collapsed="true">
+    <Position X="26" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ValueComboBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="medic.Components.ValueComboBoxWrapperChange" Collapsed="true">
+    <Position X="24.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ValueComboBoxWrapper.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

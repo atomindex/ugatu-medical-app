@@ -31,7 +31,7 @@ namespace medic.Forms {
 
             //Инициализируем имена
             tableColumnNames = new string[] { "Название", "Процент" };
-            tableFields = new string[] { "name", "percent" };
+            tableFields = new string[] { "description", "percent" };
 
             //Создаем фильтр по названию
             filter = new SqlFilter(SqlLogicalOperator.And);
@@ -175,7 +175,7 @@ namespace medic.Forms {
             //Создаем и добавляем условия для фильтра по имени 
             nameFilterGroup.Clear();
             for (int i = 0; i < names.Length; i++) {
-                SqlFilterCondition nameFilter = new SqlFilterCondition(Sale.GetFieldName("name"), SqlComparisonOperator.Like);
+                SqlFilterCondition nameFilter = new SqlFilterCondition(Sale.GetFieldName("description"), SqlComparisonOperator.Like);
                 nameFilter.SetValue(i < names.Length ? "\"%" + QueryBuilder.EscapeLikeString(names[i]) + "%\"" : null);
                 nameFilterGroup.AddItem(nameFilter);
             }
