@@ -1,5 +1,5 @@
 ﻿namespace medic {
-    partial class mainForm {
+    partial class MainForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -27,7 +27,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.menuItemLists = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemCategories = new System.Windows.Forms.ToolStripMenuItem();

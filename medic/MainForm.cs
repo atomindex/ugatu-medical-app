@@ -13,7 +13,7 @@ using medic.Components;
 
 namespace medic {
 
-    public partial class mainForm : Form {
+    public partial class MainForm : Form {
 
         private string[] tableFields;                   //Список полей соответвующих колонкам
 
@@ -32,7 +32,7 @@ namespace medic {
 
         protected TablePager tblPager;
 
-        public mainForm() {
+        public MainForm() {
             InitializeComponent();
 
             mainTool.Renderer = new ButtonRenderer();
