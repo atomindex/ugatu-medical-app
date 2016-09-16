@@ -191,7 +191,7 @@ namespace medic.Forms {
             }
 
             //Создаем формы для добавления услуг
-            ListData specialtiesListData = Specialty.GetListData(connection, 25, 0, selectedFilter);
+            ListData specialtiesListData = Specialty.GetListData(connection, AppConfig.BaseLimit, 0, selectedFilter);
             SpecialtySelectForm specialtySelectForm = new SpecialtySelectForm(specialtiesListData);
 
             if (specialtySelectForm.ShowDialog() == DialogResult.OK) {
@@ -235,7 +235,7 @@ namespace medic.Forms {
             }
 
             //Создаем формы для добавления услуг
-            ListData servicesListData = Service.GetListData(connection, 25, 0, selectedFilter);
+            ListData servicesListData = Service.GetListData(connection, AppConfig.BaseLimit, 0, selectedFilter);
             ServiceSelectForm serviceSelectForm = new ServiceSelectForm(servicesListData);
 
             if (serviceSelectForm.ShowDialog() == DialogResult.OK) {
