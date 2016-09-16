@@ -133,7 +133,7 @@ namespace medic.Forms {
             }
 
             //Создаем форму для добавления сотрудников
-            ListData workersListData = Worker.GetListData(connection, 25, 0, avalaibleWorkersFilter);
+            ListData workersListData = Worker.GetListData(connection, AppConfig.BaseLimit, 0, avalaibleWorkersFilter);
             WorkerSelectForm workerSelectForm = new WorkerSelectForm(workersListData);
 
             if (workerSelectForm.ShowDialog() == DialogResult.OK) {

@@ -167,7 +167,7 @@ namespace medic.Forms {
             }
 
             //Создаем формы для добавления услуг
-            ListData categoriesListData = Category.GetListData(connection, 25, 0, selectedFilter);
+            ListData categoriesListData = Category.GetListData(connection, AppConfig.BaseLimit, 0, selectedFilter);
             CategorySelectForm specialtySelectForm = new CategorySelectForm(categoriesListData);
 
             if (specialtySelectForm.ShowDialog() == DialogResult.OK) {

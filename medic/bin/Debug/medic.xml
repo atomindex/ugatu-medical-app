@@ -1,0 +1,3 @@
+<root>
+   <database host="localhost" dbname="medic" user="root" password="" duration="60" />
+</root>
